@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="portrait" id="pt">
-    <img src="/portrait-placeholder.svg" alt="蔡峻豪地政士形象照" />
+    <img src="/portrait-placeholder.svg" alt="蔡峻豪地政士形象照" width="300" height="380" />
   </div>
   <div class="watermark" id="wm">蔡峻豪代書</div>
 </header>
@@ -51,6 +51,7 @@ h1{font-size:clamp(38px,6.2vw,76px); line-height:1.24; font-weight:900; letter-s
   .portrait{max-width:66%; margin:0 auto}
 }
 @media (prefers-reduced-motion: reduce){
+  /* 勿刪：motion.ts 的降級分支不含 .eyebrow/.hero .sub/.btns/.portrait，這裡是 reduced-motion 下唯一可見性來源 */
   .eyebrow,.line-inner,.hero .sub,.btns,.portrait{animation:none; opacity:1; transform:none}
 }
 </style>

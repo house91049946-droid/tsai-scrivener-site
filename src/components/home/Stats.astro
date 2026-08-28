@@ -2,9 +2,9 @@
 // src/components/home/Stats.astro
 ---
 <div class="stats" data-io>
-  <div class="stat reveal d1"><b data-count="3">0<i></i></b><span>重專業資格</span></div>
-  <div class="stat reveal d2"><b data-count="3600">0<i>+</i></b><span>社群追蹤</span></div>
-  <div class="stat reveal d3"><b data-count="100">0<i>%</i></b><span>文章附法條依據</span></div>
+  <div class="stat reveal d1"><b data-count="3">3<i></i></b><span>重專業資格</span></div>
+  <div class="stat reveal d2"><b data-count="3600">3,600<i>+</i></b><span>社群追蹤</span></div>
+  <div class="stat reveal d3"><b data-count="100">100<i>%</i></b><span>文章附法條依據</span></div>
 </div>
 
 <style>
@@ -14,10 +14,7 @@
 .stat b i{font-style:normal; color:var(--gold); font-size:.55em; vertical-align:8px; margin-left:2px}
 .stat span{font-size:13px; letter-spacing:.2em; color:#9EA2AB}
 
-.reveal{opacity:0; transform:translateY(46px); transition:opacity .8s ease, transform .9s cubic-bezier(.19,1,.22,1)}
-.in .reveal{opacity:1; transform:none}
-.in .reveal.d1{transition-delay:.08s}.in .reveal.d2{transition-delay:.18s}
-.in .reveal.d3{transition-delay:.28s}.in .reveal.d4{transition-delay:.38s}
+.reveal{opacity:0; transform:translateY(46px)}
 
 @media (prefers-reduced-motion: reduce){
   .reveal{opacity:1; transform:none; transition:none}

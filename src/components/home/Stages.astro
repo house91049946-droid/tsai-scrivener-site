@@ -40,17 +40,14 @@ section.block{padding:110px 5vw 0; max-width:1200px; margin:0 auto}
 .sec-eyebrow{font-size:12px; letter-spacing:.3em; color:var(--gold); font-weight:700; margin-bottom:14px}
 h2{font-size:clamp(26px,3.6vw,42px); font-weight:900; line-height:1.35; letter-spacing:.01em; margin-bottom:14px; text-wrap:balance}
 .sec-sub{color:var(--sub); font-size:15px; max-width:36em; margin-bottom:44px}
-.reveal{opacity:0; transform:translateY(46px); transition:opacity .8s ease, transform .9s cubic-bezier(.19,1,.22,1)}
-.in .reveal{opacity:1; transform:none}
-.in .reveal.d1{transition-delay:.08s}.in .reveal.d2{transition-delay:.18s}
-.in .reveal.d3{transition-delay:.28s}.in .reveal.d4{transition-delay:.38s}
+.reveal{opacity:0; transform:translateY(46px)}
 
 .stages{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
 .stage{border:1.5px solid var(--hairline); border-radius:16px; padding:32px 28px; background:var(--paper);
   transition:transform .35s cubic-bezier(.19,1,.22,1), box-shadow .35s, border-color .35s}
 .stage:hover{transform:translateY(-6px); box-shadow:0 20px 44px rgba(21,23,28,.08); border-color:var(--gold)}
 .stage .ph{font-size:12px; letter-spacing:.26em; color:var(--gold); font-weight:700; margin-bottom:10px}
-.stage h3{font-size:20px; font-weight:800; margin-bottom:18px}
+.stage h3{font-size:20px; font-weight:900; margin-bottom:18px}
 .stage ul{list-style:none; padding:0; display:grid; gap:12px}
 .stage li{font-size:13.5px; color:var(--sub); padding-left:22px; position:relative}
 .stage li::before{content:""; position:absolute; left:0; top:.62em; width:10px; height:2px; background:var(--gold)}

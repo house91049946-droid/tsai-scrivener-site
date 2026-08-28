@@ -26,8 +26,8 @@ const posts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.da
   border-bottom:1px solid var(--hairline); text-decoration:none;
   transition:padding-left .35s cubic-bezier(.19,1,.22,1)}
 .row:hover{padding-left:26px}
-.row time{font-size:12.5px; color:#9A9C95; min-width:88px}
-.row h2{font-size:clamp(16px,2.2vw,21px); font-weight:800; flex:1}
+.row time{font-size:12.5px; color:var(--sub); min-width:88px}
+.row h2{font-size:clamp(16px,2.2vw,21px); font-weight:900; flex:1}
 .cat{font-size:11.5px; color:var(--gold-dark); border:1px solid #E2D9C8;
   padding:2px 12px; letter-spacing:.14em; border-radius:999px}
 </style>

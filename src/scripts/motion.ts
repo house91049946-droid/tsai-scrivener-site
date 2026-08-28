@@ -2,17 +2,15 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export function initMotion() {
   if (reduced) {
-    // 降級：全部直接呈現
+    // 降級：全部直接呈現，數字牆保留 HTML 既有的真值不動
     document.querySelectorAll<HTMLElement>('.reveal, .line-inner, .goldline')
       .forEach((el) => { el.style.opacity = '1'; el.style.transform = 'none'; });
-    document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
-      el.childNodes[0]!.textContent = (+el.dataset.count!).toLocaleString();
-    });
     return;
   }
   gsap.registerPlugin(ScrollTrigger);
@@ -31,17 +29,19 @@ export function initMotion() {
     .to('.hero .btns', { opacity: 1, duration: 0.7 }, 1.2)
     .to('.portrait', { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out' }, 0.7);
 
-  // 捲動觸發進場
+  // 捲動觸發進場：只抓屬於本 section 的 reveal，避免巢狀 data-io（如 Stats）被外層提早播完
   document.querySelectorAll('[data-io]').forEach((sec) => {
-    gsap.to(sec.querySelectorAll('.reveal'), {
+    const els = [...sec.querySelectorAll('.reveal')].filter((el) => el.closest('[data-io]') === sec);
+    gsap.to(els, {
       opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', stagger: 0.1,
       scrollTrigger: { trigger: sec, start: 'top 80%' },
     });
   });
 
-  // 數字牆
+  // 數字牆：先把 HTML 真值歸零，再動畫數到 data-count
   document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
     const end = +el.dataset.count!;
+    el.childNodes[0]!.textContent = '0';
     const obj = { v: 0 };
     gsap.to(obj, {
       v: end, duration: 1.5, ease: 'power3.out',
