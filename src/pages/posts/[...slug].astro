@@ -17,6 +17,7 @@ const d = post.data.date.toISOString().slice(0, 10);
     <p class="meta"><span class="cat">{post.data.category}</span><time>{d}</time></p>
     <h1>{post.data.title}</h1>
     <Content />
+    <p class="disclaimer">本文為一般性說明，非個案法律意見。發文日期：{d}。</p>
     <aside class="lawrefs">
       <h2>本文引用法條</h2>
       <ul>{post.data.lawRefs.map((r) => <li><a href={r.url} rel="noopener">{r.name}</a></li>)}</ul>
@@ -30,6 +31,7 @@ const d = post.data.date.toISOString().slice(0, 10);
 .article :global(p){margin:0 0 1.2em; color:#3A3D45}
 .article :global(strong){box-shadow:inset 0 -0.22em var(--gold-tint)}
 .meta{display:flex; gap:14px; align-items:center; font-size:13px; color:var(--sub)}
+.disclaimer{font-size:13px; color:var(--sub); margin-top:40px}
 .cat{color:var(--gold-dark); border:1px solid #E2D9C8; padding:2px 12px; border-radius:999px}
 .lawrefs{margin-top:56px; border-top:2px solid var(--ink); padding-top:20px}
 .lawrefs h2{font-size:15px; letter-spacing:.14em}
