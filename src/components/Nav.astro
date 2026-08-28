@@ -27,11 +27,3 @@ nav .links a:hover::after{right:0}
   nav .links{display:none}
 }
 </style>
-
-<script>
-  (function(){
-    var nav = document.getElementById('nav');
-    if(!nav) return;
-    addEventListener('scroll', function(){ nav.classList.toggle('scrolled', scrollY > 40); }, {passive:true});
-  })();
-</script>

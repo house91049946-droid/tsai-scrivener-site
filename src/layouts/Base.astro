@@ -37,10 +37,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       articleSection: article.category,
     })} />
   )}
+  <noscript>
+    <style>
+      .reveal, .line-inner, .eyebrow, .hero .sub, .btns, .portrait {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
 </head>
 <body>
   <Nav />
   <slot />
   <Footer />
+  <script>
+    import '../scripts/motion.ts';
+  </script>
 </body>
 </html>
