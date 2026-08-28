@@ -2,13 +2,14 @@
 // src/components/home/Chips.astro
 ---
 <div class="chips" id="svc">
-  <span class="chip">買賣過戶</span><span class="chip">繼承登記</span><span class="chip">贈與規劃</span>
-  <span class="chip">抵押權設定</span><span class="chip">塗銷登記</span><span class="chip">稅務試算</span>
+  <a class="chip" href="/services/#estate-tax">遺產稅規劃</a><a class="chip" href="/services/#gift-tax">贈與稅試算</a><a
+    class="chip" href="/services/#inheritance">繼承登記</a><a class="chip" href="/services/#succession">財產傳承規劃</a><a
+    class="chip" href="/services/#property-tax">房地合一稅</a><a class="chip" href="/services/#transfer">買賣過戶</a>
 </div>
 
 <style>
 .chips{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; padding:36px 5vw 0; position:relative; z-index:2}
-.chip{border:1.5px solid #E2E0DA; border-radius:999px; padding:9px 26px; font-size:14px; font-weight:700;
+.chip{text-decoration:none; border:1.5px solid #E2E0DA; border-radius:999px; padding:9px 26px; font-size:14px; font-weight:700;
   color:#3A3D45; background:var(--paper); transition:all .3s}
 .chip:hover{border-color:var(--gold); color:var(--gold-dark); transform:translateY(-2px)}
 </style>

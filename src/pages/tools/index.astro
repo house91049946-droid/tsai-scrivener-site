@@ -2,27 +2,33 @@
 // src/pages/tools/index.astro — 試算工具總覽
 import Base from '../../layouts/Base.astro';
 ---
-<Base title="試算工具｜中友地政士事務所"
-  description="房產稅費線上試算：贈與稅、土地增值稅、房地合一稅。中友地政士事務所——三位地政士的代書世家。">
+<Base title="遺產稅・贈與稅線上試算工具｜台中中友地政士事務所"
+  description="免費線上試算遺產稅與贈與稅：2026（115年度）免稅額、扣除額與級距自動計算，附法條依據。台中中友地政士事務所提供。">
   <main class="tools">
     <h1>試算工具</h1>
-    <p class="lead">先算清楚，再做決定。數字有眉角的地方，我們再幫你把關。</p>
+    <p class="lead">傳承的每個決定都牽動稅金。先自己算清楚，數字有眉角的地方，我們再幫你把關。</p>
     <div class="grid" data-io>
-      <a class="card reveal d1" href="/tools/gift-tax/">
+      <a class="card reveal d1" href="/tools/estate-tax/">
+        <div class="tag">已上線</div>
+        <h2>遺產稅試算</h2>
+        <p>免稅額 1,333 萬、配偶 553 萬、子女每人 56 萬，三級距自動算。</p>
+        <span class="go">開始試算 →</span>
+      </a>
+      <a class="card reveal d2" href="/tools/gift-tax/">
         <div class="tag">已上線</div>
         <h2>贈與稅試算</h2>
         <p>免稅額 244 萬怎麼用最省？父母雙方、婚嫁贈與一次算清。</p>
         <span class="go">開始試算 →</span>
       </a>
-      <div class="card soon reveal d2">
-        <div class="tag">籌備中</div>
-        <h2>土地增值稅試算</h2>
-        <p>一般稅率與自用住宅 10% 差多少，賣屋前先算。</p>
-      </div>
       <div class="card soon reveal d3">
         <div class="tag">籌備中</div>
         <h2>房地合一稅試算</h2>
         <p>持有年限決定稅率 45% 還是 15%，時點就是錢。</p>
+      </div>
+      <div class="card soon reveal d4">
+        <div class="tag">籌備中</div>
+        <h2>土地增值稅試算</h2>
+        <p>一般稅率與自用住宅 10% 差多少，移轉前先算。</p>
       </div>
     </div>
   </main>

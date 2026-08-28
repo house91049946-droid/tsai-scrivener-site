@@ -1,0 +1,236 @@
+---
+// src/pages/services.astro — SEO 主力頁：稅務與財產傳承服務
+// 稅率與金額依 115 年度（2026）現行規定，來源為財政部公告，勿憑印象修改。
+import Base from '../layouts/Base.astro';
+
+const services = [
+  {
+    id: 'estate-tax',
+    name: '遺產稅申報與規劃',
+    kw: '遺產稅',
+    lead: '長輩過世後 6 個月內要申報遺產稅。多數家庭卡的不是稅率，是「錢不夠繳稅、房子又動不了」。',
+    points: [
+      '遺產範圍清點：不動產、存款、股票、保單、債務逐項盤點',
+      '免稅額與扣除額試算：1,333 萬免稅額、配偶 553 萬、直系血親卑親屬每人 56 萬',
+      '繳稅方式規劃：現金、分期、實物抵繳的可行性評估',
+      '申報書件製作與國稅局送件、核定後續辦繼承登記',
+    ],
+  },
+  {
+    id: 'gift-tax',
+    name: '贈與稅試算與分年贈與',
+    kw: '贈與稅',
+    lead: '每人每年 244 萬免稅額用得好，是最穩健的傳承工具；用錯時點，一次多繳幾十萬。',
+    points: [
+      '分年贈與規劃：父母各 244 萬，一年合計 488 萬免稅空間',
+      '婚嫁贈與：子女結婚登記前後 6 個月內，每位贈與人另有 100 萬免稅額',
+      '不動產贈與：贈與稅、土地增值稅、契稅一次試算',
+      '二親等間買賣視同贈與的申報與舉證',
+    ],
+  },
+  {
+    id: 'inheritance',
+    name: '繼承登記與遺產分割',
+    kw: '繼承登記',
+    lead: '沒完成繼承登記，房子就是不能賣、不能貸、不能處分。拖越久，家族成員越多，越難談。',
+    points: [
+      '繼承系統表、戶籍謄本調閱與繼承人確認',
+      '遺產分割協議書撰擬，應繼分與特留分試算',
+      '公同共有維持登記與分別共有的差異說明',
+      '逾期未登記案件處理：列冊管理、罰鍰與補辦程序',
+    ],
+  },
+  {
+    id: 'succession',
+    name: '家族財產傳承規劃',
+    kw: '財產傳承規劃',
+    lead: '傳承不是一次交易，是一套順序。先算稅、再排時程、最後才動登記。',
+    points: [
+      '生前贈與 vs 身後繼承：兩條路的稅負對照表',
+      '不動產、農地、公司股權的分年移轉安排',
+      '自益／他益信託、剩餘財產差額分配請求權的實務評估',
+      '接手世代的持有成本試算（地價稅、房屋稅、日後出售稅負）',
+    ],
+  },
+  {
+    id: 'property-tax',
+    name: '房地合一稅與土地增值稅',
+    kw: '房地合一稅',
+    lead: '同一間房，賣的時點差一年，稅率可能從 45% 掉到 20%。動手前先算。',
+    points: [
+      '房地合一稅 2.0 持有期間與稅率適用判斷',
+      '自用住宅優惠稅率、重購退稅的資格檢核',
+      '土地增值稅一般稅率與自用住宅 10% 優惠試算',
+      '繼承、受贈取得的持有期間如何併計',
+    ],
+  },
+  {
+    id: 'transfer',
+    name: '不動產買賣過戶與設定',
+    kw: '不動產過戶',
+    lead: '產權移轉是傳承的最後一哩路，也是最容易出事的一段。',
+    points: [
+      '簽約前產權調查：謄本、限制登記、抵押權狀況',
+      '價金信託與履約保證安排',
+      '完稅、用印、送件到領狀的全程管理',
+      '抵押權設定與塗銷登記',
+    ],
+  },
+];
+
+const faq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: '遺產稅要在什麼時候申報？可以延期嗎？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '應於被繼承人死亡之日起 6 個月內向國稅局申報。有正當理由不能如期申報者，得於期限屆滿前申請延期，一般延期以 3 個月為限。逾期申報會有滯報金與利息問題。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '遺產稅繳不出現金怎麼辦？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '遺產稅本稅在一定金額以上且納稅義務人確有困難時，可以申請分期繳納；符合法定要件者，也可以申請以被繼承人遺留的實物（例如土地）抵繳。實物抵繳有價值認定與比例限制，建議在申報階段就一併評估，避免核定後才發現繳不出來。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '不動產要生前贈與給子女，總共要繳哪些稅？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '主要有三項：贈與稅（以土地公告現值與房屋評定現值計算贈與價值，超過 244 萬免稅額的部分課 10% 至 20%）、土地增值稅（由贈與人負擔）、契稅（由受贈人負擔）。此外要注意受贈人日後出售時，房地合一稅的取得成本是以受贈時的公告現值計算，可能墊高日後稅負。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '兄弟姊妹對遺產分割談不攏，可以先辦繼承登記嗎？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '可以。全體繼承人可先辦理「公同共有」的繼承登記，把 6 個月的登記期限守住，避免罰鍰與列冊管理，之後再協議分割或訴請裁判分割。要提醒的是，公同共有狀態下處分該不動產須全體同意，實務上仍建議儘早完成分割協議。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '台中地區可以到府或到醫院辦理嗎？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '可以。中友地政士事務所位於台中市東區東英七街 55 號，另有太平中山路四段 122 號服務據點，服務範圍以台中市與中彰投地區為主。長輩行動不便或住院的案件，可安排到府、到院辦理對保與簽署。',
+      },
+    },
+  ],
+};
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: '中友地政士事務所服務項目',
+  itemListElement: services.map((s, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'Service',
+      name: s.name,
+      serviceType: s.kw,
+      provider: { '@id': 'https://zoyoland.com/#organization' },
+      areaServed: { '@type': 'City', name: '臺中市' },
+      url: `https://zoyoland.com/services/#${s.id}`,
+    },
+  })),
+};
+---
+<Base
+  title="遺產稅・贈與稅・繼承登記服務｜台中中友地政士事務所"
+  description="台中中友地政士事務所服務項目：遺產稅申報與規劃、贈與稅試算、繼承登記與遺產分割、家族財產傳承規劃、房地合一稅與土地增值稅試算。三位地政士的代書世家。"
+  schema={[faq, serviceSchema]}
+>
+  <main class="svc">
+    <p class="crumb"><a href="/">首頁</a> / 服務項目</p>
+    <h1>稅務與財產傳承服務</h1>
+    <p class="lead">
+      我們把重心放在<strong>稅</strong>——遺產稅、贈與稅、房地合一稅、土地增值稅。
+      因為在傳承這件事上，登記只是最後一步，決定你多繳還是少繳的，是前面那些沒人跟你算清楚的數字。
+    </p>
+    <p class="lead">
+      台中中友地政士事務所，三位地政士的代書世家。案子進門，三張執照一起看。
+      <a href="/tools/">試算工具</a>先自己算，覺得數字不對勁再<a href="/#contact">找我們談</a>。
+    </p>
+
+    {services.map((s) => (
+      <section class="item" id={s.id} data-io>
+        <h2 class="reveal">{s.name}</h2>
+        <p class="item-lead reveal d1">{s.lead}</p>
+        <ul class="reveal d2">{s.points.map((pt) => <li>{pt}</li>)}</ul>
+      </section>
+    ))}
+
+    <section class="faq" data-io>
+      <h2 class="reveal">常見問題</h2>
+      {faq.mainEntity.map((q, i) => (
+        <details class="reveal" open={i === 0}>
+          <summary>{q.name}</summary>
+          <p>{q.acceptedAnswer.text}</p>
+        </details>
+      ))}
+    </section>
+
+    <section class="cta-band" data-io>
+      <h2 class="reveal">不確定該走贈與還是繼承？</h2>
+      <p class="reveal d1">把財產狀況講給我們聽，兩條路的稅額算給你看，再決定。</p>
+      <div class="btns reveal d2">
+        <a class="btn dark" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 諮詢</a>
+        <a class="btn ghost" href="tel:+886955377283">電話 0955-377-283</a>
+      </div>
+    </section>
+
+    <p class="disclaimer">
+      本頁所述稅額、免稅額與級距依 115 年度（2026）現行規定，僅供一般性參考；
+      個案適用結果因財產種類、持有期間與家庭狀況而異，實際稅額以稽徵機關核定為準。
+      本文非個案法律或稅務意見，詳見<a href="/disclaimer/">免責聲明</a>。
+    </p>
+  </main>
+</Base>
+
+<style>
+.svc{max-width:52em; margin:0 auto; padding:130px 5vw 0; font-size:16.5px}
+.crumb{font-size:13px; color:var(--sub); margin-bottom:10px}
+.crumb a{color:var(--gold-dark); text-decoration:none}
+.svc h1{font-size:clamp(30px,4.6vw,48px); margin-bottom:20px}
+.lead{color:#3A3D45; margin-bottom:1.1em; line-height:1.9}
+.lead strong{box-shadow:inset 0 -0.22em var(--gold-tint)}
+.lead a{color:var(--gold-dark); font-weight:700}
+.item{margin-top:64px; scroll-margin-top:90px}
+.item h2{font-size:clamp(21px,2.8vw,28px); font-weight:900; margin-bottom:10px;
+  padding-left:16px; border-left:4px solid var(--seal)}
+.item-lead{color:var(--sub); font-size:15px; margin-bottom:18px}
+.item ul{list-style:none; padding:0; display:grid; gap:12px}
+.item li{position:relative; padding-left:24px; font-size:15px; color:#3A3D45}
+.item li::before{content:""; position:absolute; left:0; top:.68em; width:12px; height:2px; background:var(--gold)}
+.faq{margin-top:80px}
+.faq h2{font-size:clamp(21px,2.8vw,28px); margin-bottom:20px}
+details{border-bottom:1px solid var(--hairline); padding:16px 0}
+summary{font-weight:700; font-size:16px; cursor:pointer; list-style:none; position:relative; padding-right:28px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"＋"; position:absolute; right:0; color:var(--gold-dark); font-weight:900}
+details[open] summary::after{content:"−"}
+details p{margin-top:12px; color:var(--sub); font-size:15px; line-height:1.9}
+.cta-band{margin-top:80px; background:var(--ink); color:var(--paper); border-radius:20px; padding:48px 40px}
+.cta-band h2{font-size:clamp(22px,3vw,32px); margin-bottom:10px}
+.cta-band p{color:#D8D6CF; font-size:15px; margin-bottom:26px}
+.cta-band .btns{display:flex; gap:14px; flex-wrap:wrap}
+.btn{display:inline-block; padding:14px 32px; font-size:14.5px; font-weight:700; letter-spacing:.1em;
+  text-decoration:none; transition:transform .25s cubic-bezier(.2,1.4,.4,1)}
+.btn:hover{transform:translateY(-3px)}
+.btn.dark{background:var(--gold); color:var(--ink)}
+.btn.ghost{border:1.5px solid #4A4D55; color:var(--paper)}
+.btn.ghost:hover{border-color:var(--gold); color:var(--gold)}
+.disclaimer{margin-top:56px; padding-top:18px; border-top:1px solid var(--hairline);
+  font-size:12.5px; color:var(--sub); line-height:1.85}
+.disclaimer a{color:var(--gold-dark)}
+.reveal{opacity:0; transform:translateY(46px)}
+@media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none} }
+</style>

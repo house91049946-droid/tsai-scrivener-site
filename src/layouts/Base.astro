@@ -10,9 +10,49 @@ interface Props {
   title: string;
   description: string;
   article?: { publishedTime: string; category: string };
+  /** 頁面專屬 JSON-LD（FAQPage、Service、BreadcrumbList 等），會與全站組織 schema 併存 */
+  schema?: Record<string, unknown> | Record<string, unknown>[];
 }
-const { title, description, article } = Astro.props;
+const { title, description, article, schema } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+
+// 全站組織 schema：本地商家（台中）＋專業服務，主打稅務與財產傳承
+const org = {
+  '@context': 'https://schema.org',
+  '@type': ['ProfessionalService', 'LegalService'],
+  '@id': 'https://zoyoland.com/#organization',
+  name: '中友地政士事務所',
+  alternateName: ['中友代書', '中友地政士'],
+  description:
+    '台中中友地政士事務所，三位地政士的代書世家。專辦遺產稅、贈與稅、繼承登記與家族財產傳承規劃。',
+  url: 'https://zoyoland.com',
+  telephone: '+886955377283',
+  priceRange: '$$',
+  image: 'https://zoyoland.com/favicon.svg',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '東英七街55號',
+    addressLocality: '東區',
+    addressRegion: '臺中市',
+    addressCountry: 'TW',
+  },
+  areaServed: [
+    { '@type': 'City', name: '臺中市' },
+    { '@type': 'AdministrativeArea', name: '中彰投' },
+  ],
+  knowsAbout: [
+    '遺產稅', '贈與稅', '繼承登記', '遺產分割', '財產傳承規劃', '資產傳承',
+    '房地合一稅', '土地增值稅', '不動產過戶', '抵押權設定', '節稅規劃',
+  ],
+  employee: [
+    { '@type': 'Person', name: '蔡峻豪', jobTitle: '地政士', knowsAbout: ['遺產稅', '贈與稅', '財產傳承規劃'] },
+    { '@type': 'Person', name: '蔡崇欽', jobTitle: '地政士' },
+    { '@type': 'Person', name: '丁玉梅', jobTitle: '地政士' },
+  ],
+  sameAs: ['https://www.facebook.com/chunhao.tsai1'],
+};
+
+const extra = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 ---
 <!doctype html>
 <html lang="zh-Hant-TW">
@@ -23,10 +63,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <meta property="og:site_name" content="中友地政士事務所" />
+  <meta property="og:locale" content="zh_TW" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content={article ? 'article' : 'website'} />
   <meta property="og:url" content={canonical} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <script type="application/ld+json" set:html={JSON.stringify(org)} />
+  {extra.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   {article && (
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
@@ -35,6 +82,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       description,
       datePublished: article.publishedTime,
       author: { '@type': 'Person', name: '蔡峻豪', jobTitle: '地政士' },
+      publisher: { '@id': 'https://zoyoland.com/#organization' },
+      mainEntityOfPage: canonical.href,
       articleSection: article.category,
     })} />
   )}

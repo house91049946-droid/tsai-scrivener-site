@@ -7,8 +7,51 @@ import PainVow from '../components/home/PainVow.astro';
 import Stages from '../components/home/Stages.astro';
 import ColumnList from '../components/home/ColumnList.astro';
 import ContactCta from '../components/home/ContactCta.astro';
+
+// 首頁 FAQ：鎖定「遺產稅免稅額」「贈與稅怎麼算」等高搜尋量問題
+const faq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: '2026（民國115年）遺產稅免稅額是多少？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '遺產稅免稅額為新臺幣 1,333 萬元，115 年度維持不變。另有配偶扣除額 553 萬元、直系血親卑親屬每人 56 萬元、父母每人 138 萬元、喪葬費 138 萬元等扣除額。遺產淨額 5,621 萬元以下適用 10%，5,621 萬至 1 億 1,242 萬元適用 15%，超過部分適用 20%。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '贈與稅一年可以免稅贈與多少？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '每一位贈與人每年有 244 萬元免稅額，父母各自計算，一年合計可免稅贈與 488 萬元。子女婚嫁時，每位贈與人另有 100 萬元免稅額（須於結婚登記前後 6 個月內）。超過免稅額的部分應於贈與行為發生後 30 日內申報。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '生前贈與和身後繼承，哪一種比較省稅？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '沒有一體適用的答案，要看財產種類、金額、持有年限與家庭狀況。不動產生前贈與會產生贈與稅與土地增值稅，受贈人日後出售還可能適用房地合一稅；繼承則有 1,333 萬元免稅額與各項扣除額。實務上常見做法是分年贈與搭配繼承規劃，建議先試算再決定。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '繼承登記有期限嗎？沒辦會怎樣？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '遺產稅應於被繼承人死亡之日起 6 個月內申報，繼承登記亦應自繼承開始之日起 6 個月內申請。逾期未辦理繼承登記可能被處以罰鍰，且土地會被列冊管理；未完成登記前，該不動產無法出售、設定抵押或辦理其他處分。',
+      },
+    },
+  ],
+};
 ---
-<Base title="中友地政士事務所｜不動產登記・繼承・贈與"
-  description="產權的事，白紙黑字才算數。中友地政士事務所——三位地政士的代書世家，買賣過戶、繼承、贈與，每一道手續替你把關。">
+<Base
+  title="遺產稅・贈與稅・財產傳承規劃｜台中中友地政士事務所"
+  description="遺產稅、贈與稅、繼承登記與家族財產傳承規劃。台中中友地政士事務所，三位地政士的代書世家：先把稅算清楚，再決定怎麼傳。諮詢 0955-377-283。"
+  schema={faq}
+>
   <Hero /><Chips /><ThreePeople /><PainVow /><Stages /><ColumnList /><ContactCta />
 </Base>

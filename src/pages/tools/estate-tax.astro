@@ -1,0 +1,206 @@
+---
+// src/pages/tools/estate-tax.astro — 遺產稅試算（115 年度／2026 現行稅制）
+// 法源：遺產及贈與稅法 §13（稅率級距）、§17（扣除額）、§18（免稅額）
+// 數字（財政部公告，115 年度維持不變）：免稅額 1,333 萬；配偶扣除額 553 萬；
+// 直系血親卑親屬每人 56 萬；父母每人 138 萬；喪葬費 138 萬；重度以上身心障礙 693 萬。
+// 級距：淨額 ≤5,621 萬 10%；5,621 萬–1 億 1,242 萬 15%（累進差額 281.05 萬）；
+//       >1 億 1,242 萬 20%（累進差額 843.15 萬）。
+import Base from '../../layouts/Base.astro';
+
+const faq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: '遺產稅怎麼計算？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '遺產淨額＝遺產總額－免稅額 1,333 萬元－各項扣除額（配偶 553 萬元、直系血親卑親屬每人 56 萬元、父母每人 138 萬元、喪葬費 138 萬元等）。再依遺產淨額適用累進稅率：5,621 萬元以下 10%；5,621 萬至 1 億 1,242 萬元 15%（累進差額 281 萬 500 元）；超過 1 億 1,242 萬元 20%（累進差額 843 萬 1,500 元）。',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '遺產總額 3,000 萬要繳多少遺產稅？',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '若被繼承人有配偶與 2 名成年子女，扣除免稅額 1,333 萬、配偶扣除額 553 萬、子女扣除額 112 萬（56 萬×2）與喪葬費 138 萬後，遺產淨額為 864 萬元，適用 10% 稅率，應納遺產稅約 86.4 萬元。實際金額仍須視遺產種類、債務與其他扣除額而定。',
+      },
+    },
+  ],
+};
+---
+<Base
+  title="遺產稅試算 2026｜免稅額 1,333 萬與級距一次算清｜中友地政士事務所"
+  description="2026（115年度）遺產稅線上試算：免稅額 1,333 萬、配偶扣除額 553 萬、子女每人 56 萬，三級距 10%～20% 自動計算。台中中友地政士事務所提供，附法條依據。"
+  schema={faq}
+>
+  <main class="tool">
+    <p class="crumb"><a href="/tools/">試算工具</a> / 遺產稅</p>
+    <h1>遺產稅試算<span class="yr">2026</span></h1>
+    <p class="lead">長輩留下的財產要繳多少稅？輸入遺產總額與家庭狀況，馬上看稅額與適用級距。</p>
+
+    <div class="calc" data-io>
+      <div class="panel reveal">
+        <label for="total">遺產總額（萬元）</label>
+        <input id="total" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 3000" />
+
+        <label class="opt chk"><input type="checkbox" id="spouse" checked />有配偶（扣除額 553 萬）</label>
+
+        <label for="children">直系血親卑親屬人數（子女、孫子女，每人 56 萬）</label>
+        <input id="children" type="number" inputmode="numeric" min="0" max="20" step="1" value="0" />
+
+        <label for="parents">受扶養父母人數（每人 138 萬）</label>
+        <input id="parents" type="number" inputmode="numeric" min="0" max="2" step="1" value="0" />
+
+        <label class="opt chk"><input type="checkbox" id="funeral" checked />計入喪葬費扣除額 138 萬</label>
+        <label class="opt chk"><input type="checkbox" id="disabled" />有重度以上身心障礙繼承人（693 萬）</label>
+
+        <button id="calc-btn" type="button">試算</button>
+      </div>
+
+      <div class="panel result reveal d2" id="result" hidden>
+        <div class="sum"><span>應納遺產稅額</span><b id="tax-out" class="num">0</b><i>元</i></div>
+        <div class="steps" id="steps"></div>
+        <a class="cta" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">繳稅來源與分割方式有眉角——LINE 找我們談</a>
+      </div>
+    </div>
+
+    <section class="ref">
+      <h2>2026（115 年度）遺產稅級距表</h2>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>遺產淨額</th><th>稅率</th><th>累進差額</th></tr></thead>
+          <tbody>
+            <tr><td>5,621 萬元以下</td><td>10%</td><td>—</td></tr>
+            <tr><td>5,621 萬 – 1 億 1,242 萬元</td><td>15%</td><td>281 萬 500 元</td></tr>
+            <tr><td>超過 1 億 1,242 萬元</td><td>20%</td><td>843 萬 1,500 元</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>免稅額與主要扣除額</h2>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>項目</th><th>金額</th></tr></thead>
+          <tbody>
+            <tr><td>免稅額</td><td>1,333 萬元</td></tr>
+            <tr><td>配偶扣除額</td><td>553 萬元</td></tr>
+            <tr><td>直系血親卑親屬扣除額</td><td>每人 56 萬元（未成年者可按距成年年數每年加扣 56 萬元）</td></tr>
+            <tr><td>父母扣除額</td><td>每人 138 萬元</td></tr>
+            <tr><td>喪葬費扣除額</td><td>138 萬元</td></tr>
+            <tr><td>重度以上身心障礙特別扣除額</td><td>693 萬元</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul class="notes">
+        <li>遺產稅應於<b>被繼承人死亡之日起 6 個月內</b>申報；有正當理由得於期限屆滿前申請延期。</li>
+        <li>本試算未涵蓋債務扣除、農業用地扣除、不計入遺產總額項目（如一定額度之保險給付）與生前二年內贈與併計等情形。</li>
+        <li>繳稅有困難者，符合要件時可申請<b>分期繳納或實物抵繳</b>——這常是實務上真正的難題，建議在申報前就一併規劃。</li>
+        <li>算完稅之後，還有<a href="/services/#inheritance">繼承登記與遺產分割</a>要辦；想比較生前贈與，可用<a href="/tools/gift-tax/">贈與稅試算</a>。</li>
+        <li>法條依據：<a href="https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340072&flno=13" rel="noopener">遺產及贈與稅法第 13 條</a>、<a href="https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340072&flno=17" rel="noopener">第 17 條</a>、<a href="https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340072&flno=18" rel="noopener">第 18 條</a>。</li>
+      </ul>
+      <p class="disclaimer">本試算為一般性估算，非個案法律或稅務意見；實際稅額以稽徵機關核定為準。</p>
+    </section>
+  </main>
+</Base>
+
+<script>
+  const fmt = (n: number) => Math.round(n).toLocaleString('zh-Hant-TW');
+  // 遺產淨額（單位：萬）→ 稅額（萬）
+  function estateTax(net: number): number {
+    if (net <= 0) return 0;
+    if (net <= 5621) return net * 0.10;
+    if (net <= 11242) return net * 0.15 - 281.05;
+    return net * 0.20 - 843.15;
+  }
+  const $ = (id: string) => document.getElementById(id)!;
+  const num = (id: string) => Math.max(0, Number(($(id) as HTMLInputElement).value) || 0);
+  const on = (id: string) => ($(id) as HTMLInputElement).checked;
+
+  $('calc-btn').addEventListener('click', () => {
+    const total = num('total');
+    const parts: string[] = [];
+    let deduct = 1333;
+    parts.push('免稅額 1,333 萬');
+    if (on('spouse')) { deduct += 553; parts.push('配偶 553 萬'); }
+    const kids = num('children');
+    if (kids > 0) { deduct += kids * 56; parts.push(`卑親屬 ${kids} 人 ${fmt(kids * 56)} 萬`); }
+    const par = num('parents');
+    if (par > 0) { deduct += par * 138; parts.push(`父母 ${par} 人 ${fmt(par * 138)} 萬`); }
+    if (on('funeral')) { deduct += 138; parts.push('喪葬費 138 萬'); }
+    if (on('disabled')) { deduct += 693; parts.push('身心障礙 693 萬'); }
+
+    const net = Math.max(0, total - deduct);
+    const tax = estateTax(net);
+    const rate = net <= 0 ? '—' : net <= 5621 ? '10%' : net <= 11242 ? '15%' : '20%';
+    const target = tax * 10000;
+
+    $('result').hidden = false;
+    $('steps').innerHTML =
+      `<p>遺產總額 ${fmt(total)} 萬 − 免稅額與扣除額 ${fmt(deduct)} 萬（${parts.join('＋')}）</p>` +
+      `<p>＝ 遺產淨額 <b>${fmt(net)} 萬</b>，適用稅率 <b>${rate}</b></p>` +
+      (net <= 0 ? '<p class="good">在免稅額與扣除額範圍內，免納遺產稅——但仍應依法辦理申報。</p>' : '');
+
+    const out = $('tax-out');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { out.textContent = fmt(target); return; }
+    let t0: number | null = null;
+    const dur = 900;
+    function step(t: number) {
+      if (!t0) t0 = t;
+      const p = Math.min((t - t0) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
+      out.textContent = fmt(target * eased);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+</script>
+
+<style>
+.tool{max-width:46em; margin:0 auto; padding:130px 5vw 0}
+.crumb{font-size:13px; color:var(--sub); margin-bottom:10px}
+.crumb a{color:var(--gold-dark); text-decoration:none}
+.tool h1{font-size:clamp(30px,4.4vw,46px); margin-bottom:12px}
+.tool h1 .yr{font-size:.45em; color:var(--seal); border:1.5px solid var(--seal); border-radius:4px;
+  padding:2px 8px; margin-left:12px; vertical-align:6px; letter-spacing:.1em}
+.lead{color:var(--sub); margin-bottom:36px}
+.calc{display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start}
+.panel{border:1.5px solid var(--hairline); border-radius:16px; padding:28px; background:var(--paper)}
+.panel label{display:block; font-weight:700; font-size:14px; margin-bottom:8px}
+.panel input[type="number"]{width:100%; font-size:20px; font-weight:900; padding:11px 14px;
+  border:1.5px solid #C9C6BD; border-radius:10px; margin-bottom:18px; font-variant-numeric:tabular-nums;
+  background:var(--paper); color:var(--ink)}
+.panel input[type="number"]:focus{outline:2px solid var(--gold); border-color:var(--gold)}
+.opt{display:flex; gap:10px; align-items:flex-start; font-weight:400; font-size:14px; color:#3A3D45;
+  padding:6px 0; cursor:pointer}
+.opt input{margin-top:4px; accent-color:var(--gold-dark)}
+.chk{margin-bottom:14px}
+#calc-btn{width:100%; background:var(--ink); color:var(--paper); border:0; padding:15px; font-size:15px;
+  font-weight:700; letter-spacing:.14em; border-radius:10px; cursor:pointer; margin-top:6px;
+  transition:transform .25s cubic-bezier(.2,1.4,.4,1), box-shadow .25s}
+#calc-btn:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(21,23,28,.22)}
+.result{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+.sum span{display:block; font-size:12.5px; letter-spacing:.24em; color:#9EA2AB; margin-bottom:6px}
+.sum b{font-size:clamp(36px,4.8vw,54px); font-weight:900; line-height:1.1}
+.sum i{font-style:normal; color:var(--gold); margin-left:6px}
+.steps{margin:18px 0 22px; font-size:13.5px; color:#D8D6CF; display:grid; gap:6px}
+.steps b{color:var(--paper)}
+.steps .good{color:var(--gold); font-weight:700}
+.cta{display:block; text-align:center; background:var(--gold); color:var(--ink); font-weight:700;
+  padding:13px 16px; border-radius:10px; text-decoration:none; font-size:14px}
+.ref{margin-top:70px}
+.ref h2{font-size:22px; margin:44px 0 16px}
+.ref h2:first-child{margin-top:0}
+.tbl-wrap{overflow-x:auto}
+table{width:100%; border-collapse:collapse; font-size:14.5px; font-variant-numeric:tabular-nums}
+th,td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--hairline)}
+thead th{border-bottom:2px solid var(--ink); font-size:13px; letter-spacing:.1em}
+.notes{margin:24px 0 0; padding-left:18px; font-size:13.5px; color:var(--sub); display:grid; gap:10px; line-height:1.8}
+.notes b{color:var(--ink)}
+.notes a{color:var(--gold-dark)}
+.disclaimer{margin-top:28px; font-size:12.5px; color:var(--sub); border-top:1px solid var(--hairline); padding-top:16px}
+.reveal{opacity:0; transform:translateY(46px)}
+@media (max-width:780px){ .calc{grid-template-columns:1fr} }
+@media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none} }
+</style>
