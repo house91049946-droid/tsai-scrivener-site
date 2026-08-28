@@ -1,0 +1,46 @@
+---
+// src/pages/about.astro
+import Base from '../layouts/Base.astro';
+---
+<Base title="關於蔡峻豪｜地政士" description="蔡峻豪，逢甲大學畢業，現於有巢氏房屋太平中山富盛加盟店服務。地政士、不動產經紀人、土地開發師，用短影音把法律知識講成人話。">
+  <main class="about">
+    <h1>關於蔡峻豪</h1>
+    <img class="portrait" src="/portrait-placeholder.svg" alt="蔡峻豪 Ted" width="200" height="200" />
+
+    <section class="story">
+      <p>我是蔡峻豪，Ted，逢甲大學畢業。最早的工作經驗是在高雄醫學大學附設中和紀念醫院，每天面對的是病患與家屬最無助的時刻。後來轉進不動產業，說實話一開始也沒想這麼多，但做了之後才發現，房子這件事帶給一個家庭的衝擊，其實不亞於一場病——差別在於，很多時候是可以事先避免的。</p>
+      <p>我看過太多家庭在「房子的事」上吃虧：一份沒看懂的契約、一個沒算清楚的產權、一次來不及問清楚的登記程序，往後可能要花好幾年去收拾。這是我從醫院走進不動產這一行的原因，也是我後來決定考取地政士、不動產經紀人、土地開發師三項專業資格的原因——我想成為那個在事情發生「之前」，能幫忙把關的人。</p>
+      <p>現在我在有巢氏房屋太平中山富盛加盟店（台中太平）服務。平常我也喜歡把工作中遇到的法律眉角，用短影音、貼文的方式講出來，儘量講成大家聽得懂的人話，而不是艱澀的法條——畢竟法律知識如果只留在專業人士手裡，對一般人幫助不大。</p>
+    </section>
+
+    <section class="creds">
+      <h2>專業資格</h2>
+      <ul>
+        <li>地政士（開業執照）</li>
+        <li>不動產經紀人</li>
+        <li>土地開發師</li>
+      </ul>
+    </section>
+
+    <section class="contact-block">
+      <h2>聯絡資訊</h2>
+      <ul>
+        <li><span class="label">電話</span>（待業主提供）</li>
+        <li><span class="label">LINE</span>（待業主提供）</li>
+        <li><span class="label">服務據點</span>（待業主提供）</li>
+      </ul>
+    </section>
+  </main>
+</Base>
+<style>
+.about{max-width:42em; margin:0 auto; padding:130px 5vw 80px; font-size:16.5px}
+.about h1{font-size:clamp(28px,4.4vw,42px); margin:14px 0 34px}
+.portrait{display:block; width:160px; height:160px; border-radius:50%; object-fit:cover; margin:0 0 40px; border:1px solid var(--hairline)}
+.story p{margin:0 0 1.2em; color:#3A3D45}
+.about h2{font-size:22px; margin:44px 0 14px}
+.creds ul, .contact-block ul{list-style:none; padding:0; margin:0}
+.creds li{padding:10px 0; border-bottom:1px solid var(--hairline); color:#3A3D45}
+.contact-block{margin-bottom:0}
+.contact-block li{padding:10px 0; border-bottom:1px solid var(--hairline); color:var(--sub); display:flex; gap:14px}
+.contact-block .label{font-weight:700; color:var(--ink); min-width:5em}
+</style>
