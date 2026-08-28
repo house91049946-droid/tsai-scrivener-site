@@ -3,7 +3,7 @@
   --paper:#FDFDFC; --ink:#15171C; --gold:#B08D57;
   --warm:#F6F5F2; --hairline:#E7E5DF;
   --sub:#5D616B; --gold-dark:#8A6F45;
-  --gold-tint:rgba(176,141,87,.38);
+  --gold-tint:rgba(176,141,87,.38); --seal:#9E2B25;
 }
 *{box-sizing:border-box; margin:0}
 body{
@@ -14,4 +14,4 @@ body{
 h1,h2,h3{font-weight:900; letter-spacing:.01em; line-height:1.3; text-wrap:balance}
 time,.num{font-variant-numeric:tabular-nums}
 a{color:inherit}
-#svc,#flow,#col,#contact{scroll-margin-top:80px}
+#people,#svc,#flow,#col,#contact{scroll-margin-top:80px}

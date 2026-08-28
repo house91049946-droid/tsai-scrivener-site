@@ -3,55 +3,67 @@
 ---
 <header class="hero" id="top">
   <div class="hero-txt">
-    <div class="eyebrow">不動產登記・繼承・贈與</div>
+    <div class="eyebrow">代書世家・三位地政士</div>
     <h1>
-      <span class="line l1"><span class="line-inner">產權的事，</span></span>
-      <span class="line l2"><span class="line-inner"><mark>白紙黑字</mark>才算數。</span></span>
+      <span class="line l1"><span class="line-inner">房子的事，</span></span>
+      <span class="line l2"><span class="line-inner">交給<mark>一家人</mark>把關。</span></span>
     </h1>
-    <p class="sub">房子過戶、繼承、贈與——法律只認登記不認口頭。中友地政士事務所——三位地政士的代書世家，把複雜的手續講成人話，每一步替你把關。</p>
+    <p class="sub">買賣過戶、繼承、贈與——法律只認登記不認口頭。在中友，每一件案子背後是一家人、三張地政士執照。</p>
+    <div class="names"><span>蔡峻豪</span><span>蔡崇欽</span><span>丁玉梅</span></div>
     <div class="btns">
-      <a class="btn dark" href="#contact">預約諮詢</a>
-      <a class="btn ghost" href="#col">看法律專欄</a>
+      <a class="btn dark" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 諮詢</a>
+      <a class="btn ghost" href="tel:+886955377283">電話 0955-377-283</a>
     </div>
   </div>
-  <div class="portrait" id="pt">
-    <img src="/portrait-placeholder.svg" alt="蔡峻豪地政士形象照" width="300" height="380" />
+  <div class="family portrait" id="pt">
+    <img class="p-side left" src="/portrait-tsai-chongqin.svg" alt="蔡崇欽地政士" width="210" height="260" />
+    <img class="p-main" src="/portrait-placeholder.svg" alt="蔡峻豪地政士" width="300" height="380" />
+    <img class="p-side" src="/portrait-ding-yumei.svg" alt="丁玉梅地政士" width="210" height="260" />
   </div>
   <div class="watermark" id="wm">中友代書</div>
 </header>
 
 <style>
-.hero{min-height:100svh; position:relative; display:grid; grid-template-columns:1.25fr .75fr;
+.hero{min-height:100svh; position:relative; display:grid; grid-template-columns:1.1fr .9fr;
   align-items:center; padding:0 5vw; overflow:hidden}
 .hero-txt{position:relative; z-index:2; padding-top:60px}
-.eyebrow{font-size:12.5px; letter-spacing:.32em; color:var(--gold); font-weight:700; margin-bottom:22px;
+.eyebrow{font-size:12.5px; letter-spacing:.32em; color:var(--seal); font-weight:700; margin-bottom:22px;
   opacity:0}
-h1{font-size:clamp(38px,6.2vw,76px); line-height:1.24; font-weight:900; letter-spacing:.01em; text-wrap:balance}
+h1{font-size:clamp(36px,5.8vw,72px); line-height:1.26; font-weight:900; letter-spacing:.01em; text-wrap:balance}
 .line{overflow:hidden}
 .line-inner{display:block; transform:translateY(112%)}
 .l2 mark{background:none; color:inherit; box-shadow:inset 0 -0.22em var(--gold-tint)}
-.hero .sub{color:var(--sub); font-size:16px; max-width:29em; margin:26px 0 34px; opacity:0}
+.hero .sub{color:var(--sub); font-size:16px; max-width:30em; margin:26px 0 12px; opacity:0}
+.names{display:flex; gap:18px; font-size:14px; color:#3A3D45; font-weight:700; margin-bottom:30px;
+  opacity:0; flex-wrap:wrap}
+.names span::before{content:"印"; font-size:10px; color:var(--paper); background:var(--seal); border-radius:3px;
+  padding:1px 4px; margin-right:7px; vertical-align:2px}
 .btns{display:flex; gap:14px; opacity:0; flex-wrap:wrap}
-.btn{display:inline-block; padding:15px 38px; font-size:14.5px; font-weight:700; letter-spacing:.1em;
+.btn{display:inline-block; padding:15px 34px; font-size:14.5px; font-weight:700; letter-spacing:.1em;
   text-decoration:none; transition:transform .25s cubic-bezier(.2,1.4,.4,1), box-shadow .25s}
 .btn:hover{transform:translateY(-3px)}
 .btn.dark{background:var(--ink); color:var(--paper)}
 .btn.dark:hover{box-shadow:0 14px 30px rgba(21,23,28,.25)}
 .btn.ghost{border:1.5px solid #C9C6BD; color:var(--ink)}
 .btn.ghost:hover{border-color:var(--gold); color:var(--gold-dark)}
-.portrait{position:relative; z-index:2; align-self:end; opacity:0; transform:translateY(50px);
-  will-change:transform}
-.portrait img{display:block; width:100%; max-height:78svh}
+.family{position:relative; z-index:2; align-self:end; display:flex; align-items:flex-end;
+  justify-content:center; opacity:0; transform:translateY(50px); will-change:transform}
+.family img{display:block; height:auto}
+.family .p-main{width:min(300px,26vw)}
+.family .p-side{width:min(210px,18vw); margin:0 -30px}
+.family .p-side.left{order:-1}
 .watermark{position:absolute; left:0; right:0; bottom:-4vw; z-index:1; font-weight:900;
-  font-size:clamp(90px,17vw,240px); letter-spacing:.02em; color:#F2F0EB; white-space:nowrap;
+  font-size:clamp(100px,19vw,260px); letter-spacing:.04em; color:#F2F0EB; white-space:nowrap;
   line-height:1; pointer-events:none; will-change:transform; text-align:center}
 
 @media (max-width:780px){
-  .hero{grid-template-columns:1fr; align-items:start; padding-top:80px}
-  .portrait{max-width:66%; margin:0 auto}
+  .hero{grid-template-columns:1fr; align-items:start; padding-top:90px}
+  .family{max-width:92%; margin:0 auto}
+  .family .p-main{width:44vw}
+  .family .p-side{width:30vw; margin:0 -18px}
 }
 @media (prefers-reduced-motion: reduce){
-  /* 勿刪：motion.ts 的降級分支不含 .eyebrow/.hero .sub/.btns/.portrait，這裡是 reduced-motion 下唯一可見性來源 */
-  .eyebrow,.line-inner,.hero .sub,.btns,.portrait{animation:none; opacity:1; transform:none}
+  /* 勿刪：motion.ts 的降級分支不含 .eyebrow/.hero .sub/.names/.btns/.portrait，這裡是 reduced-motion 下唯一可見性來源 */
+  .eyebrow,.line-inner,.hero .sub,.names,.btns,.portrait{animation:none; opacity:1; transform:none}
 }
 </style>

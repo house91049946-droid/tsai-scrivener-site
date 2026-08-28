@@ -1,0 +1,66 @@
+---
+// src/components/home/ThreePeople.astro
+// 注意：蔡崇欽、丁玉梅的介紹句為業主核可 demo 的示意文案；
+// 上線前需業主提供真實專長／資歷改寫，或刪句只留資格 tag（資歷紅線）。
+---
+<section class="block" id="people" data-io>
+  <div class="sec-eyebrow reveal">FAMILY</div>
+  <h2 class="reveal d1">三位地政士，一個家。</h2>
+  <p class="sec-sub reveal d2">代書這一行，中友是用「家」在做的。案子進門，三張執照一起看。</p>
+  <div class="people">
+    <div class="person reveal d1">
+      <div class="ph"><img src="/portrait-card-placeholder.svg" alt="蔡峻豪地政士" width="120" height="120" /><span class="stamp">地政士</span></div>
+      <div class="info">
+        <h3>蔡峻豪<small>專欄主筆</small></h3>
+        <p>把複雜的手續講成人話，短影音與專欄的執筆人。</p>
+        <div class="tags"><span class="tag">地政士</span><span class="tag">不動產經紀人</span><span class="tag">土地開發師</span></div>
+      </div>
+    </div>
+    <div class="person reveal d2">
+      <div class="ph"><img src="/portrait-card-placeholder.svg" alt="蔡崇欽地政士" width="120" height="120" /><span class="stamp">地政士</span></div>
+      <div class="info">
+        <h3>蔡崇欽</h3>
+        <p>登記實務的定盤星，案件把關的最後一道眼。</p>
+        <div class="tags"><span class="tag">地政士</span></div>
+      </div>
+    </div>
+    <div class="person reveal d3">
+      <div class="ph"><img src="/portrait-card-placeholder.svg" alt="丁玉梅地政士" width="120" height="120" /><span class="stamp">地政士</span></div>
+      <div class="info">
+        <h3>丁玉梅</h3>
+        <p>稅務與文件的細節守門人，客戶最安心的窗口。</p>
+        <div class="tags"><span class="tag">地政士</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.block{padding:110px 5vw 0; max-width:1200px; margin:0 auto}
+.sec-eyebrow{font-size:12px; letter-spacing:.3em; color:var(--gold); font-weight:700; margin-bottom:14px}
+h2{font-size:clamp(26px,3.6vw,42px); font-weight:900; line-height:1.35; margin-bottom:14px; text-wrap:balance}
+.sec-sub{color:var(--sub); font-size:15px; max-width:38em; margin-bottom:44px}
+.people{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+.person{border:1.5px solid var(--hairline); border-radius:16px; overflow:hidden; background:var(--paper);
+  transition:transform .35s cubic-bezier(.19,1,.22,1), box-shadow .35s, border-color .35s}
+.person:hover{transform:translateY(-6px); box-shadow:0 20px 44px rgba(21,23,28,.08); border-color:var(--gold)}
+.person .ph{background:var(--warm); aspect-ratio:4/3.4; display:grid; place-items:center; position:relative}
+.person .ph img{width:52%; height:auto}
+.person .ph .stamp{position:absolute; right:12px; bottom:10px; font-size:11px; letter-spacing:.18em;
+  color:var(--seal); border:1.5px solid var(--seal); border-radius:3px; padding:2px 8px; transform:rotate(-3deg); font-weight:900}
+.person .info{padding:20px 22px 24px}
+.person h3{font-size:20px; font-weight:900; margin-bottom:6px}
+.person h3 small{font-size:12.5px; color:var(--gold-dark); font-weight:700; margin-left:8px; letter-spacing:.14em}
+.person p{font-size:13.5px; color:var(--sub); margin:0}
+.person .tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+.person .tag{font-size:11.5px; color:var(--gold-dark); border:1px solid #E2D9C8; padding:2px 10px; letter-spacing:.1em; border-radius:999px}
+
+.reveal{opacity:0; transform:translateY(46px)}
+
+@media (max-width:780px){
+  .people{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1; transform:none; transition:none}
+}
+</style>

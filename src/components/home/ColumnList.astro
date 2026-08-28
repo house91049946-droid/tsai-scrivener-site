@@ -6,7 +6,7 @@ const posts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.da
 <section class="block" id="col" data-io>
   <div class="sec-eyebrow reveal">COLUMN</div>
   <h2 class="reveal d1">法律專欄</h2>
-  <p class="sec-sub reveal d2">每一篇都有法條依據，白紙黑字寫清楚。</p>
+  <p class="sec-sub reveal d2">主筆蔡峻豪。每一篇都有法條依據，白紙黑字寫清楚。</p>
   <div class="rows reveal d3">
     {posts.map((p) => (
       <a class="row" href={`/posts/${p.id.replace(/\.md$/, '')}/`}>

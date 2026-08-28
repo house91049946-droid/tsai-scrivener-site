@@ -26,6 +26,7 @@ export function initMotion() {
     .to('.l1 .line-inner', { y: 0, duration: 1, ease: 'expo.out' }, 0.35)
     .to('.l2 .line-inner', { y: 0, duration: 1, ease: 'expo.out' }, 0.5)
     .to('.hero .sub', { opacity: 1, duration: 0.7 }, 1.0)
+    .to('.names', { opacity: 1, duration: 0.7 }, 1.1)
     .to('.hero .btns', { opacity: 1, duration: 0.7 }, 1.2)
     .to('.portrait', { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out' }, 0.7);
 

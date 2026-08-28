@@ -2,6 +2,7 @@
 // src/components/home/ContactCta.astro
 ---
 <section class="contact" id="contact" data-io>
+  <div class="big-seal" aria-hidden="true">中友</div>
   <h2 class="reveal">有房子的事？<br><span class="gold">找我們聊聊。</span></h2>
   <div class="btns reveal d2">
     <a class="btn dark" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 諮詢</a>
@@ -11,7 +12,10 @@
 </section>
 
 <style>
-.contact{padding:150px 5vw 90px; text-align:left; max-width:1200px; margin:0 auto}
+.contact{padding:150px 5vw 90px; text-align:left; max-width:1200px; margin:0 auto; position:relative}
+.big-seal{position:absolute; right:6vw; top:110px; width:110px; height:110px; border:5px solid var(--seal);
+  border-radius:12px; color:var(--seal); display:grid; place-items:center; font-size:40px; font-weight:900;
+  transform:rotate(-5deg); opacity:.85}
 .contact h2{font-size:clamp(48px,9vw,120px); line-height:1.15; font-weight:900; margin-bottom:36px}
 .contact h2 .gold{color:var(--gold)}
 .contact .btns{display:flex; gap:14px; flex-wrap:wrap}
@@ -25,6 +29,9 @@
 
 .reveal{opacity:0; transform:translateY(46px)}
 
+@media (max-width:780px){
+  .big-seal{display:none}
+}
 @media (prefers-reduced-motion: reduce){
   .reveal{opacity:1; transform:none; transition:none}
 }
