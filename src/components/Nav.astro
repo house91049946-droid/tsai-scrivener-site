@@ -1,0 +1,37 @@
+---
+// src/components/Nav.astro
+---
+<nav id="nav">
+  <div class="logo">蔡峻豪<em>・</em>地政士</div>
+  <div class="links">
+    <a href="/#svc">服務項目</a>
+    <a href="/#flow">承辦流程</a>
+    <a href="/posts/">法律專欄</a>
+    <a href="/about/">關於</a>
+    <a href="/#contact">聯絡</a>
+  </div>
+</nav>
+
+<style>
+nav{position:fixed; top:0; left:0; right:0; z-index:40; display:flex; align-items:center; gap:22px;
+  padding:18px 5vw; transition:background .3s, box-shadow .3s}
+nav.scrolled{background:color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter:blur(10px); box-shadow:0 1px 0 var(--hairline)}
+.logo{font-weight:800; font-size:16.5px; letter-spacing:.1em}
+.logo em{font-style:normal; color:var(--gold)}
+nav .links{display:flex; gap:24px; margin-left:auto; font-size:13.5px; font-weight:600}
+nav .links a{text-decoration:none; position:relative; color:var(--ink)}
+nav .links a::after{content:""; position:absolute; left:0; right:100%; bottom:-5px; height:2px; background:var(--gold); transition:right .3s}
+nav .links a:hover::after{right:0}
+
+@media (max-width:780px){
+  nav .links{display:none}
+}
+</style>
+
+<script>
+  (function(){
+    var nav = document.getElementById('nav');
+    if(!nav) return;
+    addEventListener('scroll', function(){ nav.classList.toggle('scrolled', scrollY > 40); }, {passive:true});
+  })();
+</script>
