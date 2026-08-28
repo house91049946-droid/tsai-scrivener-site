@@ -1,0 +1,33 @@
+---
+// src/pages/posts/index.astro
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+const posts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.data.date);
+---
+<Base title="法律專欄｜蔡峻豪地政士" description="不動產法律專欄：每一篇都有法條依據，白紙黑字寫清楚。">
+  <main class="col">
+    <h1>法律專欄</h1>
+    <div class="rows">
+      {posts.map((p) => (
+        <a class="row" href={`/posts/${p.id.replace(/\.md$/, '')}/`}>
+          <time>{p.data.date.toISOString().slice(0, 10)}</time>
+          <h2>{p.data.title}</h2>
+          <span class="cat">{p.data.category}</span>
+        </a>
+      ))}
+    </div>
+  </main>
+</Base>
+<style>
+.col{max-width:1200px; margin:0 auto; padding:130px 5vw 0}
+.col h1{font-size:clamp(30px,4vw,44px); margin-bottom:34px}
+.rows{border-top:2px solid var(--ink)}
+.row{display:flex; gap:24px; align-items:baseline; padding:26px 8px;
+  border-bottom:1px solid var(--hairline); text-decoration:none;
+  transition:padding-left .35s cubic-bezier(.19,1,.22,1)}
+.row:hover{padding-left:26px}
+.row time{font-size:12.5px; color:#9A9C95; min-width:88px}
+.row h2{font-size:clamp(16px,2.2vw,21px); font-weight:800; flex:1}
+.cat{font-size:11.5px; color:var(--gold-dark); border:1px solid #E2D9C8;
+  padding:2px 12px; letter-spacing:.14em; border-radius:999px}
+</style>
