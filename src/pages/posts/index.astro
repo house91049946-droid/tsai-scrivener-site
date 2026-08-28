@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 const posts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.data.date);
 ---
-<Base title="法律專欄｜蔡峻豪地政士" description="不動產法律專欄：每一篇都有法條依據，白紙黑字寫清楚。">
+<Base title="法律專欄｜中友地政士事務所" description="不動產法律專欄：每一篇都有法條依據，白紙黑字寫清楚。">
   <main class="col">
     <h1>法律專欄</h1>
     <div class="rows">
