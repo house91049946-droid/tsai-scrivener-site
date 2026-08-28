@@ -1,0 +1,48 @@
+---
+// src/pages/tools/index.astro — 試算工具總覽
+import Base from '../../layouts/Base.astro';
+---
+<Base title="試算工具｜中友地政士事務所"
+  description="房產稅費線上試算：贈與稅、土地增值稅、房地合一稅。中友地政士事務所——三位地政士的代書世家。">
+  <main class="tools">
+    <h1>試算工具</h1>
+    <p class="lead">先算清楚，再做決定。數字有眉角的地方，我們再幫你把關。</p>
+    <div class="grid" data-io>
+      <a class="card reveal d1" href="/tools/gift-tax/">
+        <div class="tag">已上線</div>
+        <h2>贈與稅試算</h2>
+        <p>免稅額 244 萬怎麼用最省？父母雙方、婚嫁贈與一次算清。</p>
+        <span class="go">開始試算 →</span>
+      </a>
+      <div class="card soon reveal d2">
+        <div class="tag">籌備中</div>
+        <h2>土地增值稅試算</h2>
+        <p>一般稅率與自用住宅 10% 差多少，賣屋前先算。</p>
+      </div>
+      <div class="card soon reveal d3">
+        <div class="tag">籌備中</div>
+        <h2>房地合一稅試算</h2>
+        <p>持有年限決定稅率 45% 還是 15%，時點就是錢。</p>
+      </div>
+    </div>
+  </main>
+</Base>
+<style>
+.tools{max-width:1200px; margin:0 auto; padding:130px 5vw 0}
+.tools h1{font-size:clamp(30px,4.4vw,46px); margin-bottom:12px}
+.lead{color:var(--sub); margin-bottom:40px}
+.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px}
+.card{border:1.5px solid var(--hairline); border-radius:16px; padding:28px; background:var(--paper);
+  text-decoration:none; color:inherit; display:flex; flex-direction:column; gap:10px;
+  transition:transform .35s cubic-bezier(.19,1,.22,1), box-shadow .35s, border-color .35s}
+a.card:hover{transform:translateY(-6px); box-shadow:0 20px 44px rgba(21,23,28,.08); border-color:var(--gold)}
+.card .tag{font-size:11.5px; letter-spacing:.18em; font-weight:900; color:var(--seal);
+  border:1.5px solid var(--seal); border-radius:3px; padding:2px 8px; width:fit-content; transform:rotate(-2deg)}
+.card.soon .tag{color:var(--sub); border-color:#C9C6BD; transform:none}
+.card h2{font-size:20px; font-weight:900}
+.card p{font-size:13.5px; color:var(--sub); margin:0; flex:1}
+.card .go{font-weight:700; color:var(--gold-dark); font-size:14px}
+.card.soon{opacity:.75}
+.reveal{opacity:0; transform:translateY(46px)}
+@media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none} }
+</style>
