@@ -52,7 +52,7 @@ export function initMotion() {
 
   // 視差
   gsap.to('#wm', { y: -120, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('#pt', { y: 46, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('#pt img', { y: 46, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
 
   // 導覽列
   const nav = document.querySelector('nav')!;
