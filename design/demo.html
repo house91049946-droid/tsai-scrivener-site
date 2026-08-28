@@ -1,0 +1,313 @@
+<title>墨線・白幕 Demo</title>
+<style>
+  /* 白幕版：純白×墨黑×黃銅（單一視覺世界，所有顏色明確著色） */
+  *{box-sizing:border-box; margin:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:#FDFDFC; color:#15171C;
+    font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+    line-height:1.8; overflow-x:hidden;
+  }
+  a{color:inherit}
+
+  /* ===== 導覽 ===== */
+  nav{position:fixed; top:0; left:0; right:0; z-index:40; display:flex; align-items:center; gap:22px;
+    padding:18px 5vw; transition:background .3s, box-shadow .3s}
+  nav.scrolled{background:rgba(253,253,252,.9); backdrop-filter:blur(10px); box-shadow:0 1px 0 #ECEBE7}
+  .logo{font-weight:800; font-size:16.5px; letter-spacing:.1em}
+  .logo em{font-style:normal; color:#B08D57}
+  nav .links{display:flex; gap:24px; margin-left:auto; font-size:13.5px; font-weight:600}
+  nav .links a{text-decoration:none; position:relative; color:#3A3D45}
+  nav .links a::after{content:""; position:absolute; left:0; right:100%; bottom:-5px; height:2px; background:#B08D57; transition:right .3s}
+  nav .links a:hover::after{right:0}
+
+  /* ===== 首屏 ===== */
+  .hero{min-height:100svh; position:relative; display:grid; grid-template-columns:1.25fr .75fr;
+    align-items:center; padding:0 5vw; overflow:hidden}
+  .hero-txt{position:relative; z-index:2; padding-top:60px}
+  .eyebrow{font-size:12.5px; letter-spacing:.32em; color:#B08D57; font-weight:700; margin-bottom:22px;
+    opacity:0; animation:fade .7s ease .2s forwards}
+  h1{font-size:clamp(38px,6.2vw,76px); line-height:1.24; font-weight:900; letter-spacing:.01em; text-wrap:balance}
+  .line{overflow:hidden}
+  .line-inner{display:block; transform:translateY(112%); animation:rise 1s cubic-bezier(.19,1,.22,1) forwards}
+  .l1 .line-inner{animation-delay:.35s}
+  .l2 .line-inner{animation-delay:.5s}
+  .l2 mark{background:none; color:inherit; box-shadow:inset 0 -0.22em rgba(176,141,87,.38)}
+  @keyframes rise{to{transform:translateY(0)}}
+  @keyframes fade{to{opacity:1}}
+  .hero .sub{color:#5D616B; font-size:16px; max-width:29em; margin:26px 0 34px; opacity:0; animation:fade .8s ease 1.05s forwards}
+  .btns{display:flex; gap:14px; opacity:0; animation:fade .8s ease 1.25s forwards; flex-wrap:wrap}
+  .btn{display:inline-block; padding:15px 38px; font-size:14.5px; font-weight:700; letter-spacing:.1em;
+    text-decoration:none; transition:transform .25s cubic-bezier(.2,1.4,.4,1), box-shadow .25s}
+  .btn:hover{transform:translateY(-3px)}
+  .btn.dark{background:#15171C; color:#FDFDFC}
+  .btn.dark:hover{box-shadow:0 14px 30px rgba(21,23,28,.25)}
+  .btn.ghost{border:1.5px solid #C9C6BD; color:#15171C}
+  .btn.ghost:hover{border-color:#B08D57; color:#8A6F45}
+  .portrait{position:relative; z-index:2; align-self:end; opacity:0; transform:translateY(50px);
+    animation:rise-p 1.1s cubic-bezier(.19,1,.22,1) .7s forwards; will-change:transform}
+  @keyframes rise-p{to{opacity:1; transform:none}}
+  .portrait svg{display:block; width:100%; max-height:78svh}
+  .watermark{position:absolute; left:0; right:0; bottom:-4vw; z-index:1; font-weight:900;
+    font-size:clamp(90px,17vw,240px); letter-spacing:.02em; color:#F2F0EB; white-space:nowrap;
+    line-height:1; pointer-events:none; will-change:transform; text-align:center}
+
+  /* ===== 服務膠囊列 ===== */
+  .chips{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; padding:36px 5vw 0; position:relative; z-index:2}
+  .chip{border:1.5px solid #E2E0DA; border-radius:999px; padding:9px 26px; font-size:14px; font-weight:600;
+    color:#3A3D45; background:#FDFDFC; transition:all .3s}
+  .chip:hover{border-color:#B08D57; color:#8A6F45; transform:translateY(-2px)}
+
+  /* ===== 區塊共用 ===== */
+  section.block{padding:110px 5vw 0; max-width:1200px; margin:0 auto}
+  .sec-eyebrow{font-size:12px; letter-spacing:.3em; color:#B08D57; font-weight:700; margin-bottom:14px}
+  h2{font-size:clamp(26px,3.6vw,42px); font-weight:900; line-height:1.35; letter-spacing:.01em; margin-bottom:14px; text-wrap:balance}
+  .sec-sub{color:#5D616B; font-size:15px; max-width:36em; margin-bottom:44px}
+  .reveal{opacity:0; transform:translateY(46px); transition:opacity .8s ease, transform .9s cubic-bezier(.19,1,.22,1)}
+  .in .reveal{opacity:1; transform:none}
+  .in .reveal.d1{transition-delay:.08s}.in .reveal.d2{transition-delay:.18s}
+  .in .reveal.d3{transition-delay:.28s}.in .reveal.d4{transition-delay:.38s}
+
+  /* ===== 痛點/承諾 ===== */
+  .duo{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1.5px solid #E7E5DF; border-radius:16px; overflow:hidden}
+  .duo .side{padding:44px 40px}
+  .duo .pain{background:#F6F5F2}
+  .duo .vow{background:#15171C; color:#FDFDFC}
+  .duo h3{font-size:18px; font-weight:800; margin-bottom:22px; letter-spacing:.06em}
+  .duo .vow h3{color:#B08D57}
+  .duo ul{list-style:none; padding:0; display:grid; gap:16px}
+  .duo li{padding-left:30px; position:relative; font-size:14.5px; line-height:1.7}
+  .pain li{color:#5D616B}
+  .pain li::before{content:"✕"; position:absolute; left:0; color:#C0491F; font-weight:700}
+  .vow li{color:#D8D6CF}
+  .vow li::before{content:"○"; position:absolute; left:0; color:#B08D57; font-weight:700}
+  .vow li b{color:#FDFDFC}
+
+  /* ===== 流程三階段 ===== */
+  .stages{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+  .stage{border:1.5px solid #E7E5DF; border-radius:16px; padding:32px 28px; background:#FDFDFC;
+    transition:transform .35s cubic-bezier(.19,1,.22,1), box-shadow .35s, border-color .35s}
+  .stage:hover{transform:translateY(-6px); box-shadow:0 20px 44px rgba(21,23,28,.08); border-color:#B08D57}
+  .stage .ph{font-size:12px; letter-spacing:.26em; color:#B08D57; font-weight:700; margin-bottom:10px}
+  .stage h3{font-size:20px; font-weight:800; margin-bottom:18px}
+  .stage ul{list-style:none; padding:0; display:grid; gap:12px}
+  .stage li{font-size:13.5px; color:#5D616B; padding-left:22px; position:relative}
+  .stage li::before{content:""; position:absolute; left:0; top:.62em; width:10px; height:2px; background:#B08D57}
+  .stage li b{color:#15171C; display:block; font-size:14px}
+
+  /* ===== 數字牆 ===== */
+  .stats{background:#15171C; color:#FDFDFC; border-radius:20px; padding:64px 5vw; margin-top:110px;
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:40px; text-align:center}
+  .stat b{font-size:clamp(44px,6vw,72px); font-weight:900; font-variant-numeric:tabular-nums; line-height:1.1; display:block}
+  .stat b i{font-style:normal; color:#B08D57; font-size:.55em; vertical-align:8px; margin-left:2px}
+  .stat span{font-size:13px; letter-spacing:.2em; color:#9EA2AB}
+
+  /* ===== 專欄 ===== */
+  .rows{border-top:2px solid #15171C}
+  .row{display:flex; gap:24px; align-items:baseline; padding:26px 8px; border-bottom:1px solid #E7E5DF;
+    text-decoration:none; position:relative; transition:padding-left .35s cubic-bezier(.19,1,.22,1)}
+  .row:hover{padding-left:26px}
+  .row::before{content:"→"; position:absolute; left:-6px; opacity:0; color:#B08D57; font-weight:700; transition:opacity .3s, left .3s}
+  .row:hover::before{opacity:1; left:4px}
+  .row time{font-size:12.5px; color:#9A9C95; letter-spacing:.06em; font-variant-numeric:tabular-nums; min-width:88px}
+  .row h4{font-size:clamp(16px,2.2vw,21px); font-weight:800; flex:1}
+  .row .cat{font-size:11.5px; color:#8A6F45; border:1px solid #E2D9C8; padding:2px 12px; letter-spacing:.14em; border-radius:999px}
+
+  /* ===== 巨型結尾 ===== */
+  .contact{padding:150px 5vw 90px; text-align:left; max-width:1200px; margin:0 auto}
+  .contact h2{font-size:clamp(48px,9vw,120px); line-height:1.15; font-weight:900; margin-bottom:36px}
+  .contact h2 .gold{color:#B08D57}
+  .contact .btns{opacity:1; animation:none}
+  footer{padding:34px 5vw; display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap;
+    font-size:12.5px; color:#9A9C95; border-top:1px solid #ECEBE7; margin-top:70px}
+  .demo-chip{position:fixed; right:14px; bottom:14px; z-index:50; font-size:11px; letter-spacing:.14em;
+    background:rgba(21,23,28,.85); color:#B08D57; padding:5px 12px; border-radius:999px; backdrop-filter:blur(4px)}
+
+  @media (max-width:780px){
+    .hero{grid-template-columns:1fr; align-items:start; padding-top:80px}
+    .portrait{max-width:66%; margin:0 auto}
+    nav .links{display:none}
+    .duo{grid-template-columns:1fr}
+    .stages{grid-template-columns:1fr}
+    .row time{min-width:auto}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .eyebrow,.line-inner,.hero .sub,.btns,.portrait{animation:none; opacity:1; transform:none}
+    .reveal{opacity:1; transform:none; transition:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+
+<span class="demo-chip">動效 DEMO・照片為占位</span>
+
+<nav id="nav">
+  <div class="logo">蔡峻豪<em>・</em>地政士</div>
+  <div class="links"><a href="#svc">服務項目</a><a href="#flow">承辦流程</a><a href="#col">法律專欄</a><a href="#contact">聯絡</a></div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-txt">
+    <div class="eyebrow">不動產登記・繼承・贈與</div>
+    <h1>
+      <span class="line l1"><span class="line-inner">產權的事，</span></span>
+      <span class="line l2"><span class="line-inner"><mark>白紙黑字</mark>才算數。</span></span>
+    </h1>
+    <p class="sub">房子過戶、繼承、贈與——法律只認登記不認口頭。地政士×不動產經紀人×土地開發師，把複雜的手續講成人話，每一步替你把關。</p>
+    <div class="btns">
+      <a class="btn dark" href="#contact">預約諮詢</a>
+      <a class="btn ghost" href="#col">看法律專欄</a>
+    </div>
+  </div>
+  <div class="portrait" id="pt">
+    <svg viewBox="0 0 300 380" preserveAspectRatio="xMidYMax meet" role="img" aria-label="形象照占位">
+      <g fill="#E8E5DE">
+        <circle cx="150" cy="150" r="58"/>
+        <path d="M150 218c-68 0-104 46-110 162h220c-6-116-42-162-110-162z"/>
+      </g>
+      <text x="150" y="368" text-anchor="middle" fill="#B4B0A5" font-size="12" letter-spacing="3">去背半身形象照</text>
+    </svg>
+  </div>
+  <div class="watermark" id="wm">蔡峻豪代書</div>
+</header>
+
+<div class="chips" id="svc">
+  <span class="chip">買賣過戶</span><span class="chip">繼承登記</span><span class="chip">贈與規劃</span>
+  <span class="chip">抵押權設定</span><span class="chip">塗銷登記</span><span class="chip">稅務試算</span>
+</div>
+
+<section class="block" data-io>
+  <div class="sec-eyebrow reveal">WHY</div>
+  <h2 class="reveal d1">辦房子的事，<br>你是不是也遇過這些狀況？</h2>
+  <p class="sec-sub reveal d2">多數糾紛不是有人使壞，是關鍵手續沒人把關。左邊是常見的狀況，右邊是我的做法。</p>
+  <div class="duo reveal d3">
+    <div class="side pain">
+      <h3>常見狀況</h3>
+      <ul>
+        <li>付了錢才發現產權有問題，過戶卡住</li>
+        <li>繼承拖著沒辦登記，要賣的時候動彈不得</li>
+        <li>稅單來了才知道，贈與的時點選錯多繳幾十萬</li>
+        <li>流程進行到哪、卡在哪，完全問不到</li>
+      </ul>
+    </div>
+    <div class="side vow">
+      <h3>我的做法</h3>
+      <ul>
+        <li><b>簽約前先查產權</b>——謄本、限制登記、抵押狀況一次查清</li>
+        <li><b>時限盯到底</b>——繼承、報稅的每個期限進日曆管理</li>
+        <li><b>先試算再動手</b>——贈與稅、土增稅、房地合一稅先算給你看</li>
+        <li><b>每個階段主動回報</b>——進度不用你追</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="flow" data-io>
+  <div class="sec-eyebrow reveal">PROCESS</div>
+  <h2 class="reveal d1">承辦流程，透明到底</h2>
+  <p class="sec-sub reveal d2">從委託前到交付後，每一步做什麼、為什麼，都讓你看得見。</p>
+  <div class="stages">
+    <div class="stage reveal d1">
+      <div class="ph">委託前</div><h3>把狀況弄清楚</h3>
+      <ul>
+        <li><b>需求訪談</b>案情、時程與預算一次談清</li>
+        <li><b>產權調查</b>謄本與限制登記逐項核對</li>
+        <li><b>報價透明</b>規費、稅費、酬金分列明細</li>
+      </ul>
+    </div>
+    <div class="stage reveal d2">
+      <div class="ph">進行中</div><h3>手續替你把關</h3>
+      <ul>
+        <li><b>文件審閱</b>契約與對保文件逐條把關</li>
+        <li><b>稅務申報</b>試算、申報、繳納時點管理</li>
+        <li><b>進度回報</b>每個階段主動通知</li>
+      </ul>
+    </div>
+    <div class="stage reveal d3">
+      <div class="ph">完成後</div><h3>交付不是結束</h3>
+      <ul>
+        <li><b>權狀交付</b>正本點交、影本歸檔</li>
+        <li><b>文件保存</b>案卷完整保存備查</li>
+        <li><b>後續諮詢</b>相關問題隨時回頭問</li>
+      </ul>
+    </div>
+  </div>
+  <div class="stats" data-io>
+    <div class="stat reveal d1"><b data-count="3">0<i></i></b><span>重專業資格</span></div>
+    <div class="stat reveal d2"><b data-count="3600">0<i>+</i></b><span>社群追蹤</span></div>
+    <div class="stat reveal d3"><b data-count="100">0<i>%</i></b><span>文章附法條依據</span></div>
+  </div>
+</section>
+
+<section class="block" id="col" data-io>
+  <div class="sec-eyebrow reveal">COLUMN</div>
+  <h2 class="reveal d1">法律專欄</h2>
+  <p class="sec-sub reveal d2">每一篇都有法條依據，白紙黑字寫清楚。</p>
+  <div class="rows reveal d3">
+    <a class="row" href="#"><time>2026.08.20</time><h4>房子過戶少一道手續，付了錢也不算你的</h4><span class="cat">買賣過戶</span></a>
+    <a class="row" href="#"><time>2026.08.17</time><h4>繼承房產不辦登記，連賣都不能賣</h4><span class="cat">繼承實務</span></a>
+    <a class="row" href="#"><time>2026.08.13</time><h4>爸媽把房子先給你？贈與的三個時點差很大</h4><span class="cat">贈與節稅</span></a>
+    <a class="row" href="#"><time>2026.08.10</time><h4>口頭答應賣房算數嗎？沒有這張紙都免談</h4><span class="cat">買賣過戶</span></a>
+  </div>
+</section>
+
+<section class="contact" id="contact" data-io>
+  <h2 class="reveal">有房子的事？<br><span class="gold">找我聊聊。</span></h2>
+  <div class="btns reveal d2">
+    <a class="btn dark" href="#">LINE 諮詢</a>
+    <a class="btn ghost" href="#">電話預約</a>
+  </div>
+</section>
+
+<footer>
+  <span>蔡峻豪｜地政士・不動產經紀人</span>
+  <span>本站文章為一般性說明，非個案法律意見</span>
+</footer>
+
+<script>
+(function(){
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var nav = document.getElementById('nav');
+  addEventListener('scroll', function(){ nav.classList.toggle('scrolled', scrollY > 40); }, {passive:true});
+
+  var counted = false;
+  function runCounters(){
+    if(counted) return; counted = true;
+    document.querySelectorAll('[data-count]').forEach(function(el){
+      var end = +el.dataset.count, t0 = null, dur = 1500;
+      function step(t){
+        if(!t0) t0 = t;
+        var p = Math.min((t - t0)/dur, 1), eased = 1 - Math.pow(1-p, 3);
+        el.childNodes[0].textContent = Math.round(end * eased).toLocaleString();
+        if(p < 1) requestAnimationFrame(step);
+      }
+      if(reduced){ el.childNodes[0].textContent = end.toLocaleString(); }
+      else requestAnimationFrame(step);
+    });
+  }
+
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        if(e.target.classList.contains('stats')) runCounters();
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:.16});
+  document.querySelectorAll('[data-io]').forEach(function(el){ io.observe(el); });
+
+  if(!reduced){
+    var wm = document.getElementById('wm'), pt = document.getElementById('pt'), ticking = false;
+    addEventListener('scroll', function(){
+      if(ticking) return; ticking = true;
+      requestAnimationFrame(function(){
+        var y = scrollY;
+        wm.style.transform = 'translateY(' + y * -.12 + 'px)';
+        pt.style.transform = 'translateY(' + Math.min(y * .06, 46) + 'px)';
+        ticking = false;
+      });
+    }, {passive:true});
+  }
+})();
+</script>
