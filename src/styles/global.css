@@ -3,6 +3,7 @@
   --paper:#FDFDFC; --ink:#15171C; --gold:#B08D57;
   --warm:#F6F5F2; --hairline:#E7E5DF;
   --sub:#5D616B; --gold-dark:#8A6F45;
+  --gold-tint:rgba(176,141,87,.38);
 }
 *{box-sizing:border-box; margin:0}
 html{scroll-behavior:smooth}
