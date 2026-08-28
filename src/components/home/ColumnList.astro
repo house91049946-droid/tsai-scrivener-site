@@ -1,0 +1,47 @@
+---
+// src/components/home/ColumnList.astro
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.data.date).slice(0, 4);
+---
+<section class="block" id="col" data-io>
+  <div class="sec-eyebrow reveal">COLUMN</div>
+  <h2 class="reveal d1">法律專欄</h2>
+  <p class="sec-sub reveal d2">每一篇都有法條依據，白紙黑字寫清楚。</p>
+  <div class="rows reveal d3">
+    {posts.map((p) => (
+      <a class="row" href={`/posts/${p.id.replace(/\.md$/, '')}/`}>
+        <time>{p.data.date.toISOString().slice(0, 10).replace(/-/g, '.')}</time>
+        <h4>{p.data.title}</h4>
+        <span class="cat">{p.data.category}</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+section.block{padding:110px 5vw 0; max-width:1200px; margin:0 auto}
+.sec-eyebrow{font-size:12px; letter-spacing:.3em; color:var(--gold); font-weight:700; margin-bottom:14px}
+h2{font-size:clamp(26px,3.6vw,42px); font-weight:900; line-height:1.35; letter-spacing:.01em; margin-bottom:14px; text-wrap:balance}
+.sec-sub{color:var(--sub); font-size:15px; max-width:36em; margin-bottom:44px}
+.reveal{opacity:0; transform:translateY(46px); transition:opacity .8s ease, transform .9s cubic-bezier(.19,1,.22,1)}
+.in .reveal{opacity:1; transform:none}
+.in .reveal.d1{transition-delay:.08s}.in .reveal.d2{transition-delay:.18s}
+.in .reveal.d3{transition-delay:.28s}.in .reveal.d4{transition-delay:.38s}
+
+.rows{border-top:2px solid var(--ink)}
+.row{display:flex; gap:24px; align-items:baseline; padding:26px 8px; border-bottom:1px solid var(--hairline);
+  text-decoration:none; position:relative; transition:padding-left .35s cubic-bezier(.19,1,.22,1)}
+.row:hover{padding-left:26px}
+.row::before{content:"→"; position:absolute; left:-6px; opacity:0; color:var(--gold); font-weight:700; transition:opacity .3s, left .3s}
+.row:hover::before{opacity:1; left:4px}
+.row time{font-size:12.5px; color:#9A9C95; letter-spacing:.06em; font-variant-numeric:tabular-nums; min-width:88px}
+.row h4{font-size:clamp(16px,2.2vw,21px); font-weight:800; flex:1}
+.row .cat{font-size:11.5px; color:var(--gold-dark); border:1px solid #E2D9C8; padding:2px 12px; letter-spacing:.14em; border-radius:999px}
+
+@media (max-width:780px){
+  .row time{min-width:auto}
+}
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1; transform:none; transition:none}
+}
+</style>

@@ -1,0 +1,60 @@
+---
+// src/components/home/PainVow.astro
+---
+<section class="block" data-io>
+  <div class="sec-eyebrow reveal">WHY</div>
+  <h2 class="reveal d1">辦房子的事，<br>你是不是也遇過這些狀況？</h2>
+  <p class="sec-sub reveal d2">多數糾紛不是有人使壞，是關鍵手續沒人把關。左邊是常見的狀況，右邊是我的做法。</p>
+  <div class="duo reveal d3">
+    <div class="side pain">
+      <h3>常見狀況</h3>
+      <ul>
+        <li>付了錢才發現產權有問題，過戶卡住</li>
+        <li>繼承拖著沒辦登記，要賣的時候動彈不得</li>
+        <li>稅單來了才知道，贈與的時點選錯多繳幾十萬</li>
+        <li>流程進行到哪、卡在哪，完全問不到</li>
+      </ul>
+    </div>
+    <div class="side vow">
+      <h3>我的做法</h3>
+      <ul>
+        <li><b>簽約前先查產權</b>——謄本、限制登記、抵押狀況一次查清</li>
+        <li><b>時限盯到底</b>——繼承、報稅的每個期限進日曆管理</li>
+        <li><b>先試算再動手</b>——贈與稅、土增稅、房地合一稅先算給你看</li>
+        <li><b>每個階段主動回報</b>——進度不用你追</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+section.block{padding:110px 5vw 0; max-width:1200px; margin:0 auto}
+.sec-eyebrow{font-size:12px; letter-spacing:.3em; color:var(--gold); font-weight:700; margin-bottom:14px}
+h2{font-size:clamp(26px,3.6vw,42px); font-weight:900; line-height:1.35; letter-spacing:.01em; margin-bottom:14px; text-wrap:balance}
+.sec-sub{color:var(--sub); font-size:15px; max-width:36em; margin-bottom:44px}
+.reveal{opacity:0; transform:translateY(46px); transition:opacity .8s ease, transform .9s cubic-bezier(.19,1,.22,1)}
+.in .reveal{opacity:1; transform:none}
+.in .reveal.d1{transition-delay:.08s}.in .reveal.d2{transition-delay:.18s}
+.in .reveal.d3{transition-delay:.28s}.in .reveal.d4{transition-delay:.38s}
+
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1.5px solid var(--hairline); border-radius:16px; overflow:hidden}
+.duo .side{padding:44px 40px}
+.duo .pain{background:var(--warm)}
+.duo .vow{background:var(--ink); color:var(--paper)}
+.duo h3{font-size:18px; font-weight:800; margin-bottom:22px; letter-spacing:.06em}
+.duo .vow h3{color:var(--gold)}
+.duo ul{list-style:none; padding:0; display:grid; gap:16px}
+.duo li{padding-left:30px; position:relative; font-size:14.5px; line-height:1.7}
+.pain li{color:var(--sub)}
+.pain li::before{content:"✕"; position:absolute; left:0; color:#C0491F; font-weight:700}
+.vow li{color:#D8D6CF}
+.vow li::before{content:"○"; position:absolute; left:0; color:var(--gold); font-weight:700}
+.vow li b{color:var(--paper)}
+
+@media (max-width:780px){
+  .duo{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1; transform:none; transition:none}
+}
+</style>

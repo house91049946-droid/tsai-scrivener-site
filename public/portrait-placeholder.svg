@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 380" preserveAspectRatio="xMidYMax meet" role="img" aria-label="形象照占位">
+  <g fill="#E8E5DE">
+    <circle cx="150" cy="150" r="58"/>
+    <path d="M150 218c-68 0-104 46-110 162h220c-6-116-42-162-110-162z"/>
+  </g>
+  <text x="150" y="368" text-anchor="middle" fill="#B4B0A5" font-size="12" letter-spacing="3">去背半身形象照</text>
+</svg>

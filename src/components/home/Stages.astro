@@ -1,0 +1,65 @@
+---
+// src/components/home/Stages.astro
+import Stats from './Stats.astro';
+---
+<section class="block" id="flow" data-io>
+  <div class="sec-eyebrow reveal">PROCESS</div>
+  <h2 class="reveal d1">承辦流程，透明到底</h2>
+  <p class="sec-sub reveal d2">從委託前到交付後，每一步做什麼、為什麼，都讓你看得見。</p>
+  <div class="stages">
+    <div class="stage reveal d1">
+      <div class="ph">委託前</div><h3>把狀況弄清楚</h3>
+      <ul>
+        <li><b>需求訪談</b>案情、時程與預算一次談清</li>
+        <li><b>產權調查</b>謄本與限制登記逐項核對</li>
+        <li><b>報價透明</b>規費、稅費、酬金分列明細</li>
+      </ul>
+    </div>
+    <div class="stage reveal d2">
+      <div class="ph">進行中</div><h3>手續替你把關</h3>
+      <ul>
+        <li><b>文件審閱</b>契約與對保文件逐條把關</li>
+        <li><b>稅務申報</b>試算、申報、繳納時點管理</li>
+        <li><b>進度回報</b>每個階段主動通知</li>
+      </ul>
+    </div>
+    <div class="stage reveal d3">
+      <div class="ph">完成後</div><h3>交付不是結束</h3>
+      <ul>
+        <li><b>權狀交付</b>正本點交、影本歸檔</li>
+        <li><b>文件保存</b>案卷完整保存備查</li>
+        <li><b>後續諮詢</b>相關問題隨時回頭問</li>
+      </ul>
+    </div>
+  </div>
+  <Stats />
+</section>
+
+<style>
+section.block{padding:110px 5vw 0; max-width:1200px; margin:0 auto}
+.sec-eyebrow{font-size:12px; letter-spacing:.3em; color:var(--gold); font-weight:700; margin-bottom:14px}
+h2{font-size:clamp(26px,3.6vw,42px); font-weight:900; line-height:1.35; letter-spacing:.01em; margin-bottom:14px; text-wrap:balance}
+.sec-sub{color:var(--sub); font-size:15px; max-width:36em; margin-bottom:44px}
+.reveal{opacity:0; transform:translateY(46px); transition:opacity .8s ease, transform .9s cubic-bezier(.19,1,.22,1)}
+.in .reveal{opacity:1; transform:none}
+.in .reveal.d1{transition-delay:.08s}.in .reveal.d2{transition-delay:.18s}
+.in .reveal.d3{transition-delay:.28s}.in .reveal.d4{transition-delay:.38s}
+
+.stages{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+.stage{border:1.5px solid var(--hairline); border-radius:16px; padding:32px 28px; background:var(--paper);
+  transition:transform .35s cubic-bezier(.19,1,.22,1), box-shadow .35s, border-color .35s}
+.stage:hover{transform:translateY(-6px); box-shadow:0 20px 44px rgba(21,23,28,.08); border-color:var(--gold)}
+.stage .ph{font-size:12px; letter-spacing:.26em; color:var(--gold); font-weight:700; margin-bottom:10px}
+.stage h3{font-size:20px; font-weight:800; margin-bottom:18px}
+.stage ul{list-style:none; padding:0; display:grid; gap:12px}
+.stage li{font-size:13.5px; color:var(--sub); padding-left:22px; position:relative}
+.stage li::before{content:""; position:absolute; left:0; top:.62em; width:10px; height:2px; background:var(--gold)}
+.stage li b{color:var(--ink); display:block; font-size:14px}
+
+@media (max-width:780px){
+  .stages{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1; transform:none; transition:none}
+}
+</style>

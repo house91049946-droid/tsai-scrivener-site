@@ -1,0 +1,33 @@
+---
+// src/components/home/ContactCta.astro
+---
+<section class="contact" id="contact" data-io>
+  <h2 class="reveal">有房子的事？<br><span class="gold">找我聊聊。</span></h2>
+  <div class="btns reveal d2">
+    <a class="btn dark" href="#">LINE 諮詢</a>
+    <a class="btn ghost" href="#">電話預約</a>
+  </div>
+</section>
+
+<style>
+.contact{padding:150px 5vw 90px; text-align:left; max-width:1200px; margin:0 auto}
+.contact h2{font-size:clamp(48px,9vw,120px); line-height:1.15; font-weight:900; margin-bottom:36px}
+.contact h2 .gold{color:var(--gold)}
+.contact .btns{opacity:1; animation:none; display:flex; gap:14px; flex-wrap:wrap}
+.btn{display:inline-block; padding:15px 38px; font-size:14.5px; font-weight:700; letter-spacing:.1em;
+  text-decoration:none; transition:transform .25s cubic-bezier(.2,1.4,.4,1), box-shadow .25s}
+.btn:hover{transform:translateY(-3px)}
+.btn.dark{background:var(--ink); color:var(--paper)}
+.btn.dark:hover{box-shadow:0 14px 30px rgba(21,23,28,.25)}
+.btn.ghost{border:1.5px solid #C9C6BD; color:var(--ink)}
+.btn.ghost:hover{border-color:var(--gold); color:var(--gold-dark)}
+
+.reveal{opacity:0; transform:translateY(46px); transition:opacity .8s ease, transform .9s cubic-bezier(.19,1,.22,1)}
+.in .reveal{opacity:1; transform:none}
+.in .reveal.d1{transition-delay:.08s}.in .reveal.d2{transition-delay:.18s}
+.in .reveal.d3{transition-delay:.28s}.in .reveal.d4{transition-delay:.38s}
+
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1; transform:none; transition:none}
+}
+</style>
