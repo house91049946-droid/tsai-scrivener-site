@@ -1,0 +1,184 @@
+# 主筆題庫。狀態欄 open＝待寫，done＝已發布。
+# 新增題目時 keyword 要對應真實搜尋字，intent 說明讀者想解決什麼。
+# 主軸：稅務、遺產、財產傳承規劃（2026-08-29 業主定調）。
+topics:
+  - slug: estate-tax-cannot-pay-cash
+    title_hint: 遺產稅繳不出現金，房子又不能賣，怎麼辦
+    category: 稅務
+    keyword: 遺產稅 繳不出來
+    intent: 繼承人手上沒現金但要繳遺產稅，想知道分期與實物抵繳怎麼申請
+    status: open
+  - slug: gift-vs-inheritance
+    title_hint: 生前贈與還是等繼承？兩條路的稅金差距算給你看
+    category: 贈與節稅
+    keyword: 生前贈與 繼承 哪個省稅
+    intent: 長輩想先把房子給子女，不確定現在給還是以後繼承比較划算
+    status: open
+  - slug: inheritance-deadline-6months
+    title_hint: 繼承登記拖過 6 個月，會發生什麼事
+    category: 繼承實務
+    keyword: 繼承登記 期限 逾期
+    intent: 家人過世一段時間了，還沒辦登記，擔心有罰則
+    status: open
+  - slug: estate-tax-deductions-checklist
+    title_hint: 遺產稅扣除額有哪些？漏報一項就多繳幾十萬
+    category: 稅務
+    keyword: 遺產稅 扣除額
+    intent: 要申報遺產稅，想確認能扣的項目有沒有漏掉
+    status: open
+  - slug: yearly-gift-244
+    title_hint: 每年免稅額怎麼用才不會被國稅局盯上
+    category: 贈與節稅
+    keyword: 贈與稅 244萬
+    intent: 想分年把錢移轉給子女，怕做法錯誤被補稅
+    status: open
+  - slug: siblings-cannot-agree
+    title_hint: 兄弟姊妹對遺產分割談不攏，房子就要卡一輩子嗎
+    category: 繼承實務
+    keyword: 遺產 分割 談不攏
+    intent: 繼承人意見不合，想知道有沒有辦法先處理
+    status: open
+  - slug: property-tax-holding-period
+    title_hint: 繼承來的房子要賣，房地合一稅怎麼算持有期間
+    category: 稅務
+    keyword: 繼承 房地合一稅 持有期間
+    intent: 繼承後想賣房，擔心被課重稅
+    status: open
+  - slug: gift-property-three-taxes
+    title_hint: 把房子送給小孩，其實要繳三種稅
+    category: 贈與節稅
+    keyword: 房子 贈與 子女 稅
+    intent: 以為贈與只有贈與稅，不知道還有土增稅與契稅
+    status: open
+  - slug: spouse-deduction
+    title_hint: 配偶扣除額用錯順序，等於白用
+    category: 稅務
+    keyword: 遺產稅 配偶 扣除額
+    intent: 一方過世，想知道配偶身分能省多少稅
+    status: open
+  - slug: minor-children-extra-deduction
+    title_hint: 有未成年子女，遺產稅可以多扣一筆
+    category: 稅務
+    keyword: 遺產稅 未成年子女 扣除額
+    intent: 家中有未成年子女，想知道扣除額怎麼加計
+    status: open
+  - slug: two-degree-relative-sale
+    title_hint: 賣給自己兒子？二親等買賣會被當成贈與
+    category: 贈與節稅
+    keyword: 二親等 買賣 視同贈與
+    intent: 想用買賣方式移轉給子女，不知道要舉證資金流向
+    status: open
+  - slug: undivided-co-ownership
+    title_hint: 公同共有登記是什麼？先辦這個可以保住期限
+    category: 繼承實務
+    keyword: 公同共有 繼承登記
+    intent: 繼承人談不攏但期限快到，想知道有沒有折衷做法
+    status: open
+  - slug: insurance-not-in-estate
+    title_hint: 保險金一定不用課遺產稅嗎？沒那麼簡單
+    category: 稅務
+    keyword: 保險金 遺產稅
+    intent: 聽說買保險可以節稅，想確認條件
+    status: open
+  - slug: farmland-inheritance
+    title_hint: 繼承農地免稅，但有五年這個坑
+    category: 稅務
+    keyword: 農地 繼承 免稅
+    intent: 家中有農地要繼承，想知道免稅條件與限制
+    status: open
+  - slug: debt-in-estate
+    title_hint: 遺產有債務怎麼辦？限定繼承與拋棄繼承的差別
+    category: 繼承實務
+    keyword: 拋棄繼承 限定繼承
+    intent: 長輩留下債務，怕繼承後要背債
+    status: open
+  - slug: land-value-increment-tax-self-use
+    title_hint: 土地增值稅自用住宅優惠，一生只能用一次嗎
+    category: 稅務
+    keyword: 土地增值稅 自用住宅
+    intent: 要移轉土地，想用優惠稅率但不確定資格
+    status: open
+  - slug: succession-order
+    title_hint: 誰有資格繼承？順位與應繼分一次搞懂
+    category: 繼承實務
+    keyword: 繼承順位 應繼分
+    intent: 家庭關係複雜，想確認誰能分、分多少
+    status: open
+  - slug: reserved-portion
+    title_hint: 遺囑寫「全部給老大」，其他子女真的分不到嗎
+    category: 繼承實務
+    keyword: 特留分 遺囑
+    intent: 家人立了偏心的遺囑，想知道有沒有保障
+    status: open
+  - slug: gift-within-two-years
+    title_hint: 過世前兩年內的贈與，會被抓回來算遺產
+    category: 稅務
+    keyword: 死亡前二年 贈與 併計
+    intent: 長輩健康惡化才急著移轉財產，想知道有沒有用
+    status: open
+  - slug: estate-tax-installment
+    title_hint: 遺產稅可以分期嗎？條件與利息一次說清楚
+    category: 稅務
+    keyword: 遺產稅 分期繳納
+    intent: 稅額太大一次繳不出來
+    status: open
+  - slug: real-estate-in-kind-payment
+    title_hint: 用土地抵遺產稅，國稅局會收嗎
+    category: 稅務
+    keyword: 遺產稅 實物抵繳
+    intent: 遺產都是不動產沒有現金
+    status: open
+  - slug: transfer-registration-basics
+    title_hint: 房子過戶少一道手續，付了錢也不算你的
+    category: 買賣過戶
+    keyword: 過戶 登記 生效
+    intent: 首購族想知道過戶流程風險
+    status: done
+  - slug: mortgage-cancellation
+    title_hint: 房貸繳完不塗銷抵押權，房子還是動不了
+    category: 抵押設定
+    keyword: 抵押權 塗銷
+    intent: 貸款還清了，不知道還要辦手續
+    status: open
+  - slug: estate-inventory
+    title_hint: 長輩過世後，第一步該去查什麼財產
+    category: 繼承實務
+    keyword: 查詢 遺產 財產清單
+    intent: 不知道長輩名下有哪些財產
+    status: open
+  - slug: trust-for-succession
+    title_hint: 信託傳承真的比較好嗎？地政士的實務觀察
+    category: 稅務
+    keyword: 信託 財產傳承
+    intent: 被推薦做信託，想知道值不值得
+    status: open
+  - slug: house-for-child-then-divorce
+    title_hint: 房子過戶給兒子後，媳婦離婚會分走嗎
+    category: 贈與節稅
+    keyword: 贈與 房子 婚後財產
+    intent: 想給子女又擔心變成夫妻財產被分走
+    status: open
+  - slug: repurchase-tax-refund
+    title_hint: 賣屋換屋可以退稅？重購退稅的條件與時限
+    category: 稅務
+    keyword: 重購退稅 條件
+    intent: 換屋想省稅但不知道規則
+    status: open
+  - slug: elderly-transfer-capacity
+    title_hint: 長輩失智了還能辦過戶嗎？意思能力這一關
+    category: 繼承實務
+    keyword: 失智 過戶 意思能力
+    intent: 長輩認知退化，想趁還可以時處理財產
+    status: open
+  - slug: multiple-heirs-abroad
+    title_hint: 繼承人在國外，文件怎麼辦
+    category: 繼承實務
+    keyword: 繼承人 國外 授權書
+    intent: 家人旅居海外無法回台辦手續
+    status: open
+  - slug: estate-tax-filing-steps
+    title_hint: 遺產稅申報全流程：從死亡證明到核定通知
+    category: 稅務
+    keyword: 遺產稅 申報 流程
+    intent: 第一次辦，想知道整條路怎麼走
+    status: open
