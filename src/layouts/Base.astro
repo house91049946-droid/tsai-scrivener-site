@@ -1,7 +1,6 @@
 ---
 // src/layouts/Base.astro
 import '@fontsource/noto-sans-tc/400.css';
-import '@fontsource/noto-sans-tc/500.css';
 import '@fontsource/noto-sans-tc/700.css';
 import '@fontsource/noto-sans-tc/900.css';
 import '../styles/global.css';
@@ -23,9 +22,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content={article ? 'article' : 'website'} />
+  <meta property="og:url" content={canonical} />
   {article && (
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',

@@ -1,0 +1,4 @@
+# 網域換綁時，Sitemap 這行要跟 astro.config.mjs 的 site 一起改
+User-agent: *
+Allow: /
+Sitemap: https://tsai-scrivener-site.pages.dev/sitemap-index.xml

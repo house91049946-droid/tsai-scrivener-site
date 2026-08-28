@@ -1,0 +1,27 @@
+---
+// src/pages/404.astro
+import Base from '../layouts/Base.astro';
+---
+<Base title="找不到這一頁｜蔡峻豪地政士" description="您要找的頁面不存在，或已經搬移。">
+  <main class="notfound">
+    <h1>找不到這一頁</h1>
+    <p>您要找的頁面不存在，或連結已經失效。</p>
+    <div class="btns">
+      <a class="btn dark" href="/">回首頁</a>
+      <a class="btn ghost" href="/posts/">看法律專欄</a>
+    </div>
+  </main>
+</Base>
+<style>
+.notfound{max-width:42em; margin:0 auto; padding:180px 5vw 120px; text-align:center}
+.notfound h1{font-size:clamp(28px,4.4vw,42px); margin-bottom:14px}
+.notfound p{color:var(--sub); margin-bottom:34px}
+.btns{display:flex; gap:14px; justify-content:center; flex-wrap:wrap}
+.btn{display:inline-block; padding:15px 38px; font-size:14.5px; font-weight:700; letter-spacing:.1em;
+  text-decoration:none; transition:transform .25s cubic-bezier(.2,1.4,.4,1), box-shadow .25s}
+.btn:hover{transform:translateY(-3px)}
+.btn.dark{background:var(--ink); color:var(--paper)}
+.btn.dark:hover{box-shadow:0 14px 30px rgba(21,23,28,.25)}
+.btn.ghost{border:1.5px solid #C9C6BD; color:var(--ink)}
+.btn.ghost:hover{border-color:var(--gold); color:var(--gold-dark)}
+</style>
