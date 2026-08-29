@@ -10,30 +10,142 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const d = post.data.date.toISOString().slice(0, 10);
+
+// 分類決定題圖的幾何主題與代表字，讓文章有視覺識別而不需要照片素材
+const banner: Record<string, { glyph: string; sub: string }> = {
+  稅務: { glyph: '稅', sub: 'TAX' },
+  繼承實務: { glyph: '繼', sub: 'INHERITANCE' },
+  贈與節稅: { glyph: '贈', sub: 'GIFT' },
+  買賣過戶: { glyph: '移', sub: 'TRANSFER' },
+  抵押設定: { glyph: '抵', sub: 'MORTGAGE' },
+};
+const b = banner[post.data.category] ?? { glyph: '法', sub: 'LAW' };
 ---
 <Base title={post.data.title} description={post.data.description}
   article={{ publishedTime: d, category: post.data.category }}>
   <main class="article">
     <p class="meta"><span class="cat">{post.data.category}</span><time>{d}</time></p>
     <h1>{post.data.title}</h1>
+
+    <figure class="banner" aria-hidden="true">
+      <svg viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" role="presentation">
+        <rect width="1200" height="300" fill="var(--ink)" />
+        <g opacity="0.09" fill="none" stroke="var(--paper)" stroke-width="1.5">
+          <path d="M0 220 H1200 M0 150 H1200 M0 80 H1200" />
+          <path d="M200 0 V300 M400 0 V300 M600 0 V300 M800 0 V300 M1000 0 V300" />
+        </g>
+        <g opacity="0.16">
+          <circle cx="1010" cy="150" r="118" fill="none" stroke="var(--gold)" stroke-width="2" />
+          <circle cx="1010" cy="150" r="82" fill="none" stroke="var(--gold)" stroke-width="1" />
+        </g>
+        <rect x="60" y="92" width="116" height="116" rx="10" fill="none" stroke="var(--seal)" stroke-width="5"
+          transform="rotate(-3 118 150)" />
+        <text x="118" y="150" text-anchor="middle" dominant-baseline="central"
+          fill="var(--seal)" font-size="62" font-weight="900"
+          transform="rotate(-3 118 150)">{b.glyph}</text>
+        <text x="222" y="136" fill="var(--paper)" font-size="30" font-weight="900" letter-spacing="4">{post.data.category}</text>
+        <text x="224" y="176" fill="var(--gold)" font-size="14" font-weight="700" letter-spacing="8">{b.sub}</text>
+        <text x="224" y="212" fill="#9EA2AB" font-size="13" letter-spacing="3">中友地政士事務所．法律專欄</text>
+      </svg>
+    </figure>
+
     <Content />
+
     <p class="disclaimer">本文為一般性說明，非個案法律意見。發文日期：{d}。</p>
     <aside class="lawrefs">
       <h2>本文引用法條</h2>
       <ul>{post.data.lawRefs.map((r) => <li><a href={r.url} rel="noopener">{r.name}</a></li>)}</ul>
     </aside>
+    <aside class="next">
+      <a class="tool-cta" href="/tools/estate-tax/">遺產稅試算</a>
+      <a class="tool-cta" href="/tools/gift-tax/">贈與稅試算</a>
+      <a class="tool-cta primary" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 諮詢</a>
+    </aside>
   </main>
 </Base>
 <style>
 .article{max-width:42em; margin:0 auto; padding:130px 5vw 0; font-size:16.5px}
-.article h1{font-size:clamp(28px,4.4vw,42px); margin:14px 0 34px}
-.article :global(h2){font-size:22px; margin:44px 0 14px}
-.article :global(p){margin:0 0 1.2em; color:#3A3D45}
-.article :global(strong){box-shadow:inset 0 -0.22em var(--gold-tint)}
+.article h1{font-size:clamp(28px,4.4vw,42px); margin:14px 0 24px}
 .meta{display:flex; gap:14px; align-items:center; font-size:13px; color:var(--sub)}
-.disclaimer{font-size:13px; color:var(--sub); margin-top:40px}
 .cat{color:var(--gold-dark); border:1px solid #E2D9C8; padding:2px 12px; border-radius:999px}
-.lawrefs{margin-top:56px; border-top:2px solid var(--ink); padding-top:20px}
+
+/* 題圖 */
+.banner{margin:0 0 36px; border-radius:14px; overflow:hidden; line-height:0}
+.banner svg{width:100%; height:auto; aspect-ratio:4/1; display:block}
+
+/* ===== 內文排版 ===== */
+.article :global(h2){font-size:23px; margin:52px 0 14px; padding-left:14px; border-left:4px solid var(--seal)}
+.article :global(h3){font-size:18px; margin:32px 0 10px}
+.article :global(p){margin:0 0 1.2em; color:#3A3D45; line-height:1.95}
+.article :global(strong){box-shadow:inset 0 -0.22em var(--gold-tint)}
+.article :global(ul),.article :global(ol){margin:0 0 1.4em; padding-left:1.3em; color:#3A3D45; line-height:1.9}
+.article :global(li){margin-bottom:.5em}
+.article :global(a){color:var(--gold-dark)}
+
+/* 表格：資料型內容的主力視覺 */
+.article :global(table){width:100%; border-collapse:collapse; font-size:14.5px; margin:0 0 1.6em;
+  font-variant-numeric:tabular-nums}
+.article :global(thead th){background:var(--ink); color:var(--paper); text-align:left;
+  padding:11px 14px; font-size:13px; letter-spacing:.08em; font-weight:700}
+.article :global(tbody td){padding:11px 14px; border-bottom:1px solid var(--hairline); color:#3A3D45}
+.article :global(tbody tr:nth-child(even) td){background:var(--warm)}
+
+/* 引言／重點框 */
+.article :global(blockquote){margin:0 0 1.6em; padding:20px 24px; background:var(--warm);
+  border-left:4px solid var(--gold); border-radius:0 10px 10px 0; color:#3A3D45}
+.article :global(blockquote p:last-child){margin-bottom:0}
+
+/* ===== 圖表積木（主筆在內文用 raw HTML 放入）===== */
+/* 對照卡：兩條路的比較 */
+.article :global(.cmp){display:grid; grid-template-columns:1fr 1fr; gap:0; margin:0 0 1.8em;
+  border:1.5px solid var(--hairline); border-radius:14px; overflow:hidden}
+.article :global(.cmp > div){padding:22px 22px 24px}
+.article :global(.cmp > div + div){border-left:1.5px solid var(--hairline)}
+.article :global(.cmp h4){margin:0 0 4px; font-size:16px; font-weight:900}
+.article :global(.cmp .tag){display:inline-block; font-size:11px; letter-spacing:.16em; font-weight:900;
+  padding:2px 9px; border-radius:3px; margin-bottom:10px}
+.article :global(.cmp .a .tag){color:var(--seal); border:1.5px solid var(--seal)}
+.article :global(.cmp .b .tag){color:var(--gold-dark); border:1.5px solid #E2D9C8}
+.article :global(.cmp ul){margin:10px 0 0; padding-left:1.1em; font-size:14px}
+.article :global(.cmp .num){font-size:26px; font-weight:900; font-variant-numeric:tabular-nums; display:block; margin:6px 0}
+
+/* 時程軸：期限類內容 */
+.article :global(.timeline){list-style:none; margin:0 0 1.8em; padding:0 0 0 26px; position:relative}
+.article :global(.timeline::before){content:""; position:absolute; left:6px; top:8px; bottom:8px;
+  width:2px; background:var(--hairline)}
+.article :global(.timeline li){position:relative; padding:0 0 20px 0; margin:0; font-size:14.5px}
+.article :global(.timeline li::before){content:""; position:absolute; left:-26px; top:7px; width:14px; height:14px;
+  border-radius:50%; background:var(--paper); border:3px solid var(--gold)}
+.article :global(.timeline li.now::before){border-color:var(--seal); background:var(--seal)}
+.article :global(.timeline b){display:block; font-size:15.5px; color:var(--ink)}
+
+/* 數字卡列：關鍵金額 */
+.article :global(.figures){display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px;
+  margin:0 0 1.8em}
+.article :global(.figures div){background:var(--warm); border-radius:12px; padding:18px 16px; text-align:center}
+.article :global(.figures b){display:block; font-size:clamp(22px,3.4vw,30px); font-weight:900;
+  font-variant-numeric:tabular-nums; line-height:1.2}
+.article :global(.figures span){display:block; font-size:12.5px; color:var(--sub); margin-top:4px; letter-spacing:.06em}
+
+/* 重點提醒框 */
+.article :global(.note){margin:0 0 1.8em; padding:20px 22px; border:1.5px solid var(--seal);
+  border-radius:12px; background:var(--paper); position:relative}
+.article :global(.note b:first-child){display:block; color:var(--seal); font-size:14px;
+  letter-spacing:.12em; margin-bottom:8px}
+.article :global(.note p:last-child){margin-bottom:0}
+
+.disclaimer{font-size:13px; color:var(--sub); margin-top:44px}
+.lawrefs{margin-top:44px; border-top:2px solid var(--ink); padding-top:20px}
 .lawrefs h2{font-size:15px; letter-spacing:.14em}
 .lawrefs a{color:var(--gold-dark)}
+.next{display:flex; gap:12px; flex-wrap:wrap; margin-top:36px}
+.tool-cta{padding:12px 24px; border:1.5px solid #C9C6BD; border-radius:999px; text-decoration:none;
+  font-size:14px; font-weight:700; color:var(--ink); transition:all .25s}
+.tool-cta:hover{border-color:var(--gold); color:var(--gold-dark); transform:translateY(-2px)}
+.tool-cta.primary{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+
+@media (max-width:640px){
+  .article :global(.cmp){grid-template-columns:1fr}
+  .article :global(.cmp > div + div){border-left:0; border-top:1.5px solid var(--hairline)}
+}
 </style>
