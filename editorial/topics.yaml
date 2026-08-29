@@ -115,7 +115,7 @@ topics:
     category: 稅務
     keyword: 死亡前二年 贈與 併計
     intent: 長輩健康惡化才急著移轉財產，想知道有沒有用
-    status: open
+    status: done
   - slug: estate-tax-installment
     title_hint: 遺產稅可以分期嗎？條件與利息一次說清楚
     category: 稅務
