@@ -13,7 +13,7 @@ topics:
     category: 贈與節稅
     keyword: 生前贈與 繼承 哪個省稅
     intent: 長輩想先把房子給子女，不確定現在給還是以後繼承比較划算
-    status: open
+    status: done
   - slug: inheritance-deadline-6months
     title_hint: 繼承登記拖過 6 個月，會發生什麼事
     category: 繼承實務
@@ -25,7 +25,7 @@ topics:
     category: 稅務
     keyword: 遺產稅 扣除額
     intent: 要申報遺產稅，想確認能扣的項目有沒有漏掉
-    status: open
+    status: done
   - slug: yearly-gift-244
     title_hint: 每年免稅額怎麼用才不會被國稅局盯上
     category: 贈與節稅
