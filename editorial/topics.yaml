@@ -31,7 +31,7 @@ topics:
     category: 贈與節稅
     keyword: 贈與稅 244萬
     intent: 想分年把錢移轉給子女，怕做法錯誤被補稅
-    status: open
+    status: done
   - slug: siblings-cannot-agree
     title_hint: 兄弟姊妹對遺產分割談不攏，房子就要卡一輩子嗎
     category: 繼承實務
