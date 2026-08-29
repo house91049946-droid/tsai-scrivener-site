@@ -37,7 +37,7 @@ topics:
     category: 繼承實務
     keyword: 遺產 分割 談不攏
     intent: 繼承人意見不合，想知道有沒有辦法先處理
-    status: open
+    status: done
   - slug: property-tax-holding-period
     title_hint: 繼承來的房子要賣，房地合一稅怎麼算持有期間
     category: 稅務
