@@ -7,7 +7,7 @@ topics:
     category: 稅務
     keyword: 遺產稅 繳不出來
     intent: 繼承人手上沒現金但要繳遺產稅，想知道分期與實物抵繳怎麼申請
-    status: open
+    status: done
   - slug: gift-vs-inheritance
     title_hint: 生前贈與還是等繼承？兩條路的稅金差距算給你看
     category: 贈與節稅
