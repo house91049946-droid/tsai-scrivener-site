@@ -1,0 +1,35 @@
+# 待觀察修法清單 —— 法規巡檢 agent 每月檢查這些項目是否已公布施行。
+# 一旦生效，就要回頭改所有受影響的文章與試算工具。
+# status: pending=三讀通過待公布 / effective=已施行（處理完就刪除本筆）/ watching=草案階段僅觀察
+watch:
+  - id: 2026-estate-gift-tax-amendment
+    passed_date: 2026-08-21
+    title: 遺產及贈與稅法部分條文修正（大老婆條款等）
+    status: pending
+    what_changed: |
+      1. 刪除遺贈稅分期繳納「應納稅額須達 30 萬元以上」的門檻（§30）。
+      2. 「大老婆條款」：死亡前 2 年內贈與配偶及特定親屬之財產，
+         應依受贈財產占總遺產比重，由受贈人負擔遺產稅。
+      3. 增訂繼承人得以多數決方式，用遺產中的存款繳稅。
+    affects:
+      - src/content/posts/2026-08-29-estate-tax-cannot-pay-cash.md
+      - src/pages/tools/estate-tax.astro
+      - src/pages/services.astro
+    check: 立法院三讀通過後須經總統公布始生效；每月查證是否已公布施行及施行日期。
+    source: https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0340072
+
+  - id: annual-exemption-adjustment
+    passed_date: null
+    title: 遺產稅／贈與稅免稅額、扣除額、課稅級距的年度調整
+    status: watching
+    what_changed: |
+      依遺贈稅法規定，免稅額、扣除額與課稅級距在消費者物價指數較上次調整年度
+      累計上漲達 10% 以上時調升。財政部通常在前一年 11–12 月公告次年度適用金額。
+      115 年度（2026）維持：遺產稅免稅額 1,333 萬、贈與稅免稅額 244 萬。
+    affects:
+      - src/pages/tools/estate-tax.astro
+      - src/pages/tools/gift-tax.astro
+      - src/pages/services.astro
+      - src/pages/index.astro
+    check: 每年 11 月起加強查證財政部公告的次年度金額；跨年時全站數字要同步更新。
+    source: https://www.dot.gov.tw/
