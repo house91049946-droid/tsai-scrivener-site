@@ -13,7 +13,7 @@ topics:
     category: 贈與節稅
     keyword: 生前贈與 繼承 哪個省稅
     intent: 長輩想先把房子給子女，不確定現在給還是以後繼承比較划算
-    status: open
+    status: done
   - slug: inheritance-deadline-6months
     title_hint: 繼承登記拖過 6 個月，會發生什麼事
     category: 繼承實務
