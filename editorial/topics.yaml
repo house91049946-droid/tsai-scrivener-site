@@ -79,7 +79,7 @@ topics:
     category: 稅務
     keyword: 保險金 遺產稅
     intent: 聽說買保險可以節稅，想確認條件
-    status: open
+    status: done
   - slug: farmland-inheritance
     title_hint: 繼承農地免稅，但有五年這個坑
     category: 稅務
