@@ -19,7 +19,7 @@ topics:
     category: 繼承實務
     keyword: 繼承登記 期限 逾期
     intent: 家人過世一段時間了，還沒辦登記，擔心有罰則
-    status: open
+    status: done
   - slug: estate-tax-deductions-checklist
     title_hint: 遺產稅扣除額有哪些？漏報一項就多繳幾十萬
     category: 稅務
