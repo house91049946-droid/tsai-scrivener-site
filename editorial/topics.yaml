@@ -55,7 +55,7 @@ topics:
     category: 稅務
     keyword: 遺產稅 配偶 扣除額
     intent: 一方過世，想知道配偶身分能省多少稅
-    status: open
+    status: done
   - slug: minor-children-extra-deduction
     title_hint: 有未成年子女，遺產稅可以多扣一筆
     category: 稅務
