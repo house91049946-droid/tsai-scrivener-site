@@ -49,7 +49,7 @@ topics:
     category: 贈與節稅
     keyword: 房子 贈與 子女 稅
     intent: 以為贈與只有贈與稅，不知道還有土增稅與契稅
-    status: open
+    status: done
   - slug: spouse-deduction
     title_hint: 配偶扣除額用錯順序，等於白用
     category: 稅務
