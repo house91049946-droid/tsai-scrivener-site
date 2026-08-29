@@ -13,25 +13,25 @@ topics:
     category: 贈與節稅
     keyword: 生前贈與 繼承 哪個省稅
     intent: 長輩想先把房子給子女，不確定現在給還是以後繼承比較划算
-    status: open
+    status: done
   - slug: inheritance-deadline-6months
     title_hint: 繼承登記拖過 6 個月，會發生什麼事
     category: 繼承實務
     keyword: 繼承登記 期限 逾期
     intent: 家人過世一段時間了，還沒辦登記，擔心有罰則
-    status: open
+    status: done
   - slug: estate-tax-deductions-checklist
     title_hint: 遺產稅扣除額有哪些？漏報一項就多繳幾十萬
     category: 稅務
     keyword: 遺產稅 扣除額
     intent: 要申報遺產稅，想確認能扣的項目有沒有漏掉
-    status: open
+    status: done
   - slug: yearly-gift-244
     title_hint: 每年免稅額怎麼用才不會被國稅局盯上
     category: 贈與節稅
     keyword: 贈與稅 244萬
     intent: 想分年把錢移轉給子女，怕做法錯誤被補稅
-    status: open
+    status: done
   - slug: siblings-cannot-agree
     title_hint: 兄弟姊妹對遺產分割談不攏，房子就要卡一輩子嗎
     category: 繼承實務
@@ -49,13 +49,13 @@ topics:
     category: 贈與節稅
     keyword: 房子 贈與 子女 稅
     intent: 以為贈與只有贈與稅，不知道還有土增稅與契稅
-    status: open
+    status: done
   - slug: spouse-deduction
     title_hint: 配偶扣除額用錯順序，等於白用
     category: 稅務
     keyword: 遺產稅 配偶 扣除額
     intent: 一方過世，想知道配偶身分能省多少稅
-    status: open
+    status: done
   - slug: minor-children-extra-deduction
     title_hint: 有未成年子女，遺產稅可以多扣一筆
     category: 稅務
@@ -79,7 +79,7 @@ topics:
     category: 稅務
     keyword: 保險金 遺產稅
     intent: 聽說買保險可以節稅，想確認條件
-    status: open
+    status: done
   - slug: farmland-inheritance
     title_hint: 繼承農地免稅，但有五年這個坑
     category: 稅務
@@ -115,7 +115,7 @@ topics:
     category: 稅務
     keyword: 死亡前二年 贈與 併計
     intent: 長輩健康惡化才急著移轉財產，想知道有沒有用
-    status: open
+    status: done
   - slug: estate-tax-installment
     title_hint: 遺產稅可以分期嗎？條件與利息一次說清楚
     category: 稅務
@@ -181,4 +181,4 @@ topics:
     category: 稅務
     keyword: 遺產稅 申報 流程
     intent: 第一次辦，想知道整條路怎麼走
-    status: open
+    status: done
