@@ -61,7 +61,7 @@ topics:
     category: 稅務
     keyword: 遺產稅 未成年子女 扣除額
     intent: 家中有未成年子女，想知道扣除額怎麼加計
-    status: open
+    status: done
   - slug: two-degree-relative-sale
     title_hint: 賣給自己兒子？二親等買賣會被當成贈與
     category: 贈與節稅
