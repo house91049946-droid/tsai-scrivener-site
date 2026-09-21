@@ -67,7 +67,7 @@ topics:
     category: 贈與節稅
     keyword: 二親等 買賣 視同贈與
     intent: 想用買賣方式移轉給子女，不知道要舉證資金流向
-    status: open
+    status: done
   - slug: undivided-co-ownership
     title_hint: 公同共有登記是什麼？先辦這個可以保住期限
     category: 繼承實務
