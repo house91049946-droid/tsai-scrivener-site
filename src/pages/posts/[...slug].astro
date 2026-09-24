@@ -2,6 +2,8 @@
 // src/pages/posts/[...slug].astro
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import PageBanner from '../../components/PageBanner.astro';
+import Sidebar from '../../components/Sidebar.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -23,13 +25,17 @@ const b = banner[post.data.category] ?? { glyph: '法', sub: 'LAW' };
 ---
 <Base title={post.data.title} description={post.data.description}
   article={{ publishedTime: d, category: post.data.category }}>
+  <PageBanner title="專欄文章" sub="ARTICLE" />
+  <div class="wrap layout">
+  <Sidebar />
   <main class="article">
+    <p class="crumb"><a href="/">首頁</a> / <a href="/posts/">專欄文章</a> / {post.data.category}</p>
     <p class="meta"><span class="cat">{post.data.category}</span><time>{d}</time></p>
     <h1>{post.data.title}</h1>
 
     <figure class="banner" aria-hidden="true">
       <svg viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" role="presentation">
-        <rect width="1200" height="300" fill="var(--ink)" />
+        <rect width="1200" height="300" fill="var(--blue-d)" />
         <g opacity="0.09" fill="none" stroke="var(--paper)" stroke-width="1.5">
           <path d="M0 220 H1200 M0 150 H1200 M0 80 H1200" />
           <path d="M200 0 V300 M400 0 V300 M600 0 V300 M800 0 V300 M1000 0 V300" />
@@ -61,11 +67,16 @@ const b = banner[post.data.category] ?? { glyph: '法', sub: 'LAW' };
       <a class="tool-cta" href="/tools/gift-tax/">贈與稅試算</a>
       <a class="tool-cta primary" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 諮詢</a>
     </aside>
+    <p class="tags">#{post.data.category} #台中代書 #台中代書推薦 #中友地政士事務所</p>
   </main>
+  </div>
 </Base>
 <style>
-.article{max-width:42em; margin:0 auto; padding:130px 5vw 0; font-size:16.5px}
-.article h1{font-size:clamp(28px,4.4vw,42px); margin:14px 0 24px}
+.layout{display:grid; grid-template-columns:260px 1fr; gap:clamp(24px,4vw,48px); align-items:start}
+.article{max-width:46em; min-width:0; padding:0; font-size:16.5px}
+.tags{margin-top:30px; font-size:13px; color:var(--blue)}
+@media (max-width:860px){ .layout{grid-template-columns:1fr} .layout > aside{order:2} }
+.article h1{font-size:clamp(24px,3vw,32px); margin:10px 0 22px}
 .meta{display:flex; gap:14px; align-items:center; font-size:13px; color:var(--sub)}
 .cat{color:var(--gold-dark); border:1px solid #E2D9C8; padding:2px 12px; border-radius:999px}
 
@@ -85,7 +96,7 @@ const b = banner[post.data.category] ?? { glyph: '法', sub: 'LAW' };
 /* 表格：資料型內容的主力視覺 */
 .article :global(table){width:100%; border-collapse:collapse; font-size:14.5px; margin:0 0 1.6em;
   font-variant-numeric:tabular-nums}
-.article :global(thead th){background:var(--ink); color:var(--paper); text-align:left;
+.article :global(thead th){background:var(--blue); color:#fff; text-align:left;
   padding:11px 14px; font-size:13px; letter-spacing:.08em; font-weight:700}
 .article :global(tbody td){padding:11px 14px; border-bottom:1px solid var(--hairline); color:#3A3D45}
 .article :global(tbody tr:nth-child(even) td){background:var(--warm)}
@@ -142,7 +153,7 @@ const b = banner[post.data.category] ?? { glyph: '法', sub: 'LAW' };
 .tool-cta{padding:12px 24px; border:1.5px solid #C9C6BD; border-radius:999px; text-decoration:none;
   font-size:14px; font-weight:700; color:var(--ink); transition:all .25s}
 .tool-cta:hover{border-color:var(--gold); color:var(--gold-dark); transform:translateY(-2px)}
-.tool-cta.primary{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+.tool-cta.primary{background:var(--blue); color:#fff; border-color:var(--blue)}
 
 @media (max-width:640px){
   .article :global(.cmp){grid-template-columns:1fr}

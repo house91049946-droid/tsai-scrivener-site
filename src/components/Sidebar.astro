@@ -1,0 +1,42 @@
+---
+// src/components/Sidebar.astro — 專欄側欄：文章分類＋試算＋聯絡
+import { getCollection } from 'astro:content';
+const posts = await getCollection('posts');
+const order = ['稅務', '繼承實務', '贈與節稅', '買賣過戶', '抵押設定'];
+const counts = Object.fromEntries(order.map((c) => [c, posts.filter((p) => p.data.category === c).length]));
+const latest = posts.sort((a, b) => +b.data.date - +a.data.date).slice(0, 5);
+---
+<aside class="side">
+  <h3>文章分類<small>ARTICLE</small></h3>
+  <ul class="cats">
+    <li><a href="/posts/" data-cat="all">全部文章<span>{posts.length}</span></a></li>
+    {order.map((c) => <li><a href={`/posts/?cat=${encodeURIComponent(c)}`} data-cat={c}>{c}<span>{counts[c]}</span></a></li>)}
+  </ul>
+  <h3>最新文章<small>LATEST</small></h3>
+  <ul class="latest">
+    {latest.map((p) => <li><a href={`/posts/${p.id.replace(/\.md$/, '')}/`}>{p.data.title}</a><time>{p.data.date.toISOString().slice(0, 10)}</time></li>)}
+  </ul>
+  <div class="cta">
+    <b>稅費線上試算</b>
+    <p>遺產稅、贈與稅先自己算，數字不對勁再找我們。</p>
+    <a class="btn" href="/tools/">開始試算</a>
+    <a class="btn line" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 諮詢</a>
+  </div>
+</aside>
+<style>
+.side h3{font-size:17px; letter-spacing:.14em; padding:10px 14px; background:var(--blue); color:#fff; margin:0 0 0; display:flex; align-items:baseline; gap:10px}
+.side h3 small{font-size:10px; letter-spacing:.3em; color:rgba(255,255,255,.7); font-weight:500}
+.cats,.latest{list-style:none; padding:0; margin:0 0 26px; border:1px solid var(--line); border-top:0}
+.cats a{display:flex; justify-content:space-between; padding:11px 14px; text-decoration:none; color:var(--text); border-bottom:1px solid var(--line); font-size:14.5px; transition:background .2s,color .2s}
+.cats li:last-child a{border-bottom:0}
+.cats a:hover, .cats a.on{background:var(--blue-tint); color:var(--blue); font-weight:700}
+.cats a span{color:var(--sub); font-size:12px}
+.latest li{padding:11px 14px; border-bottom:1px solid var(--line)}
+.latest li:last-child{border-bottom:0}
+.latest a{display:block; text-decoration:none; color:var(--text); font-size:14px; line-height:1.55}
+.latest a:hover{color:var(--blue)}
+.latest time{display:block; font-size:12px; color:var(--sub); margin-top:4px}
+.cta{background:var(--grey); padding:20px; border-radius:var(--radius); display:grid; gap:10px}
+.cta b{color:var(--ink); font-size:16px}
+.cta p{font-size:13.5px; color:var(--sub); margin:0 0 4px}
+</style>

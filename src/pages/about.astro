@@ -1,10 +1,13 @@
 ---
 // src/pages/about.astro
 import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
 ---
 <Base title="關於中友地政士事務所｜台中代書世家・三位地政士" description="中友地政士事務所位於台中市東區，三位地政士的代書世家：蔡峻豪、蔡崇欽、丁玉梅。專辦遺產稅、贈與稅、繼承登記與財產傳承規劃。">
+  <PageBanner title="關於本所" sub="ABOUT" />
   <main class="about">
-    <h1>關於中友——代書世家</h1>
+    <p class="crumb"><a href="/">首頁</a> / 關於本所</p>
+    <h1 class="page-title">關於中友——代書世家</h1>
 
     <section class="story">
       <p>中友地政士事務所是一個名副其實的代書世家：事務所裡有三位地政士——蔡峻豪、蔡崇欽、丁玉梅。在這裡，房子的事從來不是一個人的判斷，每一件案子背後，是一家人三張執照的把關。</p>
@@ -20,7 +23,7 @@ import Base from '../layouts/Base.astro';
     </section>
 
     <h2 class="byline-head">主筆的話｜蔡峻豪</h2>
-    <img class="portrait" src="/portrait-placeholder.svg" alt="蔡峻豪地政士" width="160" height="160" />
+    <img class="portrait" src="/img/p-jh.jpg" alt="蔡峻豪地政士" width="160" height="160" />
 
     <section class="story">
       <p>我是蔡峻豪，Ted，逢甲大學畢業。最早的工作經驗是在高雄醫學大學附設中和紀念醫院，每天面對的是病患與家屬最無助的時刻。後來轉進不動產業，說實話一開始也沒想這麼多，但做了之後才發現，房子這件事帶給一個家庭的衝擊，其實不亞於一場病——差別在於，很多時候是可以事先避免的。</p>
@@ -41,8 +44,8 @@ import Base from '../layouts/Base.astro';
   </main>
 </Base>
 <style>
-.about{max-width:42em; margin:0 auto; padding:130px 5vw 80px; font-size:16.5px}
-.about h1{font-size:clamp(28px,4.4vw,42px); margin:14px 0 34px}
+.about{max-width:42em; margin:0 auto; padding:0 5vw 40px; font-size:16.5px}
+.about h1{margin-bottom:30px}
 .portrait{display:block; width:160px; height:160px; border-radius:50%; object-fit:cover; margin:0 0 40px; border:1px solid var(--hairline)}
 .story p{margin:0 0 1.2em; color:#3A3D45}
 .about h2{font-size:22px; margin:44px 0 14px}

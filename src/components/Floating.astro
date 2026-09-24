@@ -1,0 +1,31 @@
+---
+// src/components/Floating.astro — 右側浮動聯絡鈕
+---
+<div class="float" aria-label="快速聯絡">
+  <a class="f line" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener" aria-label="LINE 諮詢">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.2 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.2 1c0 .3-.2 1.1 1 .6 1.2-.5 6.4-3.8 8.7-6.5 1.6-1.7 2.4-3.5 2.4-5.5C22 6.6 17.5 3 12 3zM8.1 13.4H6.2c-.3 0-.5-.2-.5-.5V9.3c0-.3.2-.5.5-.5s.5.2.5.5v3.1h1.4c.3 0 .5.2.5.5s-.2.5-.5.5zm1.8-.5c0 .3-.2.5-.5.5s-.5-.2-.5-.5V9.3c0-.3.2-.5.5-.5s.5.2.5.5v3.6zm4.3 0c0 .2-.1.4-.3.5h-.2c-.2 0-.3-.1-.4-.2l-1.8-2.5v2.2c0 .3-.2.5-.5.5s-.5-.2-.5-.5V9.3c0-.2.1-.4.3-.5h.2c.2 0 .3.1.4.2l1.8 2.5V9.3c0-.3.2-.5.5-.5s.5.2.5.5v3.6zm2.9-2.3c.3 0 .5.2.5.5s-.2.5-.5.5h-1.4v.9h1.4c.3 0 .5.2.5.5s-.2.5-.5.5h-1.9c-.3 0-.5-.2-.5-.5V9.3c0-.3.2-.5.5-.5h1.9c.3 0 .5.2.5.5s-.2.5-.5.5h-1.4v.8h1.4z"/></svg>
+    <span>LINE</span>
+  </a>
+  <a class="f fb" href="https://www.facebook.com/chunhao.tsai1" target="_blank" rel="noopener" aria-label="Facebook">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.2c0-.9.3-1.5 1.5-1.5h1.4V5.1c-.3 0-1.1-.1-2.1-.1-2.1 0-3.6 1.3-3.6 3.7V11H8.3v3h2.4v7h2.8z"/></svg>
+    <span>FB</span>
+  </a>
+  <a class="f tel" href="tel:+886955377283" aria-label="撥打電話">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+    <span>電話</span>
+  </a>
+</div>
+<style>
+.float{position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:45; display:flex; flex-direction:column; gap:6px}
+.f{display:flex; flex-direction:column; align-items:center; gap:2px; width:56px; padding:9px 0 7px; color:#fff; text-decoration:none;
+  font-size:11px; letter-spacing:.08em; border-radius:8px 0 0 8px; box-shadow:0 4px 12px rgba(0,0,0,.15); transition:width .2s}
+.f svg{width:24px; height:24px}
+.f.line{background:#06C755}.f.fb{background:#1877F2}.f.tel{background:var(--blue)}
+.f:hover{width:62px}
+@media (max-width:640px){
+  .float{top:auto; bottom:0; left:0; right:0; transform:none; flex-direction:row; gap:0}
+  .f{flex:1; flex-direction:row; justify-content:center; gap:8px; width:auto; border-radius:0; padding:12px 0; font-size:13px}
+  .f:hover{width:auto}
+  body{padding-bottom:52px}
+}
+</style>

@@ -1,0 +1,20 @@
+---
+// src/components/PageBanner.astro — 內頁橫幅：藍色底＋圓形標題
+interface Props { title: string; sub?: string }
+const { title, sub } = Astro.props;
+---
+<div class="banner">
+  <div class="circle"><span>{title}</span>{sub && <small>{sub}</small>}</div>
+</div>
+<style>
+.banner{height:200px; display:grid; place-items:center; position:relative; overflow:hidden;
+  background:linear-gradient(115deg,#1B437F 0%,#1F4E9C 55%,#3A6CC0 100%)}
+.banner::before{content:""; position:absolute; inset:0; opacity:.14;
+  background-image:linear-gradient(rgba(255,255,255,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.6) 1px,transparent 1px);
+  background-size:56px 56px}
+.circle{position:relative; width:150px; height:150px; border-radius:50%; background:rgba(255,255,255,.96); display:grid; place-content:center; text-align:center;
+  color:var(--blue); box-shadow:0 8px 30px rgba(0,0,0,.18)}
+.circle span{font-size:22px; font-weight:700; letter-spacing:.14em}
+.circle small{font-size:11px; letter-spacing:.28em; color:var(--sub); margin-top:4px}
+@media (max-width:640px){ .banner{height:160px} .circle{width:120px; height:120px} .circle span{font-size:18px} }
+</style>

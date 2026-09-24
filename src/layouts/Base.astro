@@ -6,6 +6,7 @@ import '@fontsource/noto-sans-tc/900.css';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Floating from '../components/Floating.astro';
 interface Props {
   title: string;
   description: string;
@@ -87,21 +88,14 @@ const extra = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       articleSection: article.category,
     })} />
   )}
-  <noscript>
-    <style>
-      .reveal, .line-inner, .eyebrow, .hero .sub, .names, .btns, .portrait {
-        opacity: 1 !important;
-        transform: none !important;
-      }
-    </style>
-  </noscript>
 </head>
 <body>
   <Nav />
   <slot />
   <Footer />
+  <Floating />
   <script>
-    import '../scripts/motion.ts';
+    import '../scripts/ui.ts';
   </script>
 </body>
 </html>

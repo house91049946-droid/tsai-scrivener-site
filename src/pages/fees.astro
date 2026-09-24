@@ -1,0 +1,65 @@
+---
+// src/pages/fees.astro — 收費標準
+// 代書服務費金額待業主提供；政府規費部分依現行規定（土地登記規費 1‰、書狀費每張 80 元、印花稅 1‰）。
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+
+const fees = [
+  { g: '買賣過戶', rows: [['買賣移轉登記（含契稅、土增稅申報）', '電洽'], ['抵押權設定登記', '電洽'], ['抵押權塗銷登記', '電洽'], ['履約保證專戶申辦', '電洽']] },
+  { g: '繼承', rows: [['遺產稅申報', '電洽'], ['繼承登記（含繼承系統表、謄本調閱）', '電洽'], ['遺產分割協議書撰擬', '電洽'], ['公同共有登記', '電洽']] },
+  { g: '贈與', rows: [['贈與稅申報', '電洽'], ['贈與移轉登記（含契稅、土增稅申報）', '電洽'], ['分年贈與規劃諮詢', '電洽']] },
+  { g: '稅務與規劃', rows: [['房地合一稅申報', '電洽'], ['家族財產傳承規劃（整體評估）', '電洽'], ['到府／到院辦理', '電洽']] },
+];
+---
+<Base title="收費標準｜台中中友地政士事務所" description="中友地政士事務所代書費收費標準：買賣過戶、繼承登記、遺產稅申報、贈與稅申報與政府規費說明。透明報價，委任前先講清楚。">
+  <PageBanner title="收費標準" sub="PRICE" />
+  <main class="wrap fees">
+    <p class="crumb"><a href="/">首頁</a> / 收費標準</p>
+    <h1 class="page-title">代書服務費</h1>
+    <p class="lead">每件案子的難度不同，以下是常見項目。委任前我們會先報價，白紙黑字寫在委任書上，沒有事後加價。實際費用請電洽 <a href="tel:+886955377283">0955-377-283</a> 或 LINE 詢問。</p>
+
+    {fees.map((f) => (
+      <section class="grp">
+        <h2>{f.g}</h2>
+        <table>
+          <tbody>{f.rows.map(([n, v]) => <tr><td>{n}</td><td class="v">{v}</td></tr>)}</tbody>
+        </table>
+      </section>
+    ))}
+
+    <section class="grp">
+      <h2>政府規費（另計，非代書費）</h2>
+      <table>
+        <tbody>
+          <tr><td>土地、建物登記費</td><td class="v">按申報地價或權利價值 千分之一</td></tr>
+          <tr><td>書狀費（權狀）</td><td class="v">每張 80 元</td></tr>
+          <tr><td>契約印花稅</td><td class="v">契約金額 千分之一</td></tr>
+          <tr><td>謄本、戶籍謄本等調閱規費</td><td class="v">依各機關規定實報</td></tr>
+        </tbody>
+      </table>
+      <p class="note">契稅、土地增值稅、贈與稅、遺產稅、房地合一稅等稅款依國稅局與地方稅務局核定金額繳納，可先用<a href="/tools/">線上試算</a>估算。</p>
+    </section>
+
+    <div class="cta">
+      <b>想知道你的案子大概多少錢？</b>
+      <p>把情況講一下，我們先算稅費、再報代書費，不收諮詢費。</p>
+      <div class="btns"><a class="btn line" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 詢問</a><a class="btn outline" href="tel:+886955377283">撥打 0955-377-283</a></div>
+    </div>
+  </main>
+</Base>
+<style>
+.fees{max-width:860px; padding-bottom:20px}
+.lead{color:var(--sub); margin-bottom:34px}
+.lead a{color:var(--blue); font-weight:700}
+.grp{margin-bottom:36px}
+.grp h2{font-size:18px; color:var(--blue); letter-spacing:.1em; margin-bottom:10px; padding-bottom:8px; border-bottom:2px solid var(--blue)}
+table{width:100%; border-collapse:collapse; font-size:15px}
+td{padding:12px 10px; border-bottom:1px solid var(--line)}
+td.v{text-align:right; white-space:nowrap; color:var(--ink); font-weight:700; width:1%}
+.note{font-size:13.5px; color:var(--sub); margin-top:12px}
+.note a{color:var(--blue)}
+.cta{background:var(--grey); border-radius:var(--radius); padding:28px; text-align:center}
+.cta b{font-size:18px; color:var(--ink)}
+.cta p{color:var(--sub); margin:6px 0 16px}
+.btns{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+</style>

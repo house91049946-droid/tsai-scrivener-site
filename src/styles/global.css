@@ -1,18 +1,54 @@
-/* src/styles/global.css */
+/* src/styles/global.css — 2026-09 改版：白底＋事務所藍，傳統專業事務所版型 */
 :root{
-  --paper:#FDFDFC; --ink:#15171C; --gold:#B08D57;
-  --warm:#F6F5F2; --hairline:#E7E5DF;
-  --sub:#5D616B; --gold-dark:#8A6F45;
-  --gold-tint:rgba(176,141,87,.38); --seal:#9E2B25;
+  --blue:#1F4E9C; --blue-d:#163B78; --blue-l:#E8EEF8; --blue-tint:#F3F6FB;
+  --paper:#FFFFFF; --ink:#222831; --text:#3A3F47; --sub:#6B7280; --line:#E3E6EB; --grey:#F5F6F8;
+  --accent:#C8A24A;
+  /* 舊頁面仍引用的變數，映射到新配色 */
+  --gold:var(--blue); --gold-dark:var(--blue-d); --gold-tint:rgba(31,78,156,.18);
+  --seal:var(--blue); --warm:var(--grey); --hairline:var(--line);
+  --radius:6px; --shadow:0 6px 24px rgba(20,40,80,.08);
+  --nav-h:72px;
 }
 *{box-sizing:border-box; margin:0}
+html{scroll-behavior:smooth}
 body{
-  background:var(--paper); color:var(--ink);
+  background:var(--paper); color:var(--text);
   font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
-  line-height:1.8; overflow-x:hidden;
+  font-size:16px; line-height:1.85; overflow-x:hidden;
 }
-h1,h2,h3{font-weight:900; letter-spacing:.01em; line-height:1.3; text-wrap:balance}
+h1,h2,h3,h4{color:var(--ink); font-weight:700; letter-spacing:.02em; line-height:1.35; text-wrap:balance}
 time,.num{font-variant-numeric:tabular-nums}
 a{color:inherit}
-#people,#svc,#flow,#col,#contact{scroll-margin-top:80px}
-main section[id]{scroll-margin-top:90px}
+img{max-width:100%; display:block}
+main section[id]{scroll-margin-top:calc(var(--nav-h) + 10px)}
+
+/* 版面 */
+.wrap{max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)}
+.section{padding-block:clamp(56px,7vw,90px)}
+.section.grey{background:var(--grey)}
+.sec-title{text-align:center; margin-bottom:clamp(30px,4vw,48px)}
+.sec-title h2{font-size:clamp(24px,3vw,32px); letter-spacing:.12em; color:var(--ink)}
+.sec-title small{display:block; margin-top:6px; font-size:12.5px; letter-spacing:.32em; color:var(--blue); font-weight:700}
+.sec-title::after{content:""; display:block; width:44px; height:3px; background:var(--blue); margin:16px auto 0}
+.sec-title p{margin-top:16px; color:var(--sub); font-size:15px}
+
+/* 按鈕 */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:12px 26px;
+  background:var(--blue); color:#fff; text-decoration:none; font-weight:700; font-size:15px; letter-spacing:.08em;
+  border-radius:var(--radius); border:1.5px solid var(--blue); transition:background .25s,transform .25s}
+.btn:hover{background:var(--blue-d); border-color:var(--blue-d); transform:translateY(-1px)}
+.btn.line{background:#06C755; border-color:#06C755}
+.btn.line:hover{background:#05a847; border-color:#05a847}
+.btn.outline{background:#fff; color:var(--blue)}
+.btn.outline:hover{background:var(--blue-l)}
+
+/* 內頁共用 */
+.crumb{font-size:13px; color:var(--sub); margin:18px 0 22px}
+.crumb a{color:var(--sub); text-decoration:none}
+.crumb a:hover{color:var(--blue)}
+.page-title{font-size:clamp(24px,3vw,30px); padding-left:14px; border-left:5px solid var(--blue); margin-bottom:22px}
+
+/* 進場（IntersectionObserver 在 ui.ts 處理） */
+.reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s cubic-bezier(.19,1,.22,1)}
+.reveal.in{opacity:1; transform:none}
+@media (prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none; transition:none} }

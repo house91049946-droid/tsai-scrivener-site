@@ -1,70 +1,67 @@
 ---
-// src/components/Nav.astro
+// src/components/Nav.astro — 白底置頂導覽，右側藍色試算按鈕
+const cats = ['稅務', '繼承實務', '贈與節稅', '買賣過戶', '抵押設定'];
 ---
-<nav id="nav">
-  <div class="seal">中友</div>
-  <div class="logo">中友地政士事務所<small>代書世家</small></div>
-  <div class="links">
-    <a href="/#people">三位地政士</a>
-    <a href="/services/">服務項目</a>
-    <a href="/#flow">承辦流程</a>
-    <a href="/posts/">法律專欄</a>
-    <a href="/tools/">試算工具</a>
-    <a href="/about/">關於</a>
-    <a href="/#contact">聯絡</a>
+<header id="nav">
+  <div class="wrap bar">
+    <a class="brand" href="/">
+      <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><text x="20" y="27" text-anchor="middle" font-size="20" font-weight="700" fill="currentColor">友</text></svg>
+      <span>中友地政士事務所</span>
+    </a>
+    <nav class="links" aria-label="主選單">
+      <a href="/about/">關於本所</a>
+      <div class="has-sub">
+        <a href="/posts/">專欄文章</a>
+        <div class="sub">
+          {cats.map((c) => <a href={`/posts/?cat=${encodeURIComponent(c)}`}>{c}</a>)}
+          <a href="/posts/">全部文章</a>
+        </div>
+      </div>
+      <a href="/services/">服務項目</a>
+      <a href="/fees/">收費標準</a>
+      <a href="/faq/">常見問題</a>
+      <a href="/contact/">聯絡我們</a>
+      <a class="btn" href="/tools/">稅費線上試算</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="選單" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
-  <button class="burger" id="burger" aria-label="選單" aria-expanded="false"><span></span><span></span><span></span></button>
   <div class="mobile-menu" id="mobile-menu">
-    <a href="/#people">三位地政士</a>
+    <a href="/about/">關於本所</a>
+    <a href="/posts/">專欄文章</a>
     <a href="/services/">服務項目</a>
-    <a href="/#flow">承辦流程</a>
-    <a href="/posts/">法律專欄</a>
-    <a href="/tools/">試算工具</a>
-    <a href="/about/">關於</a>
-    <a href="/#contact">聯絡</a>
+    <a href="/fees/">收費標準</a>
+    <a href="/faq/">常見問題</a>
+    <a href="/contact/">聯絡我們</a>
+    <a href="/tools/">稅費線上試算</a>
+    <a href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 諮詢 @0955377283</a>
+    <a href="tel:+886955377283">電話 0955-377-283</a>
   </div>
-</nav>
+</header>
 
 <style>
-nav{position:fixed; top:0; left:0; right:0; z-index:40; display:flex; align-items:center; gap:12px;
-  padding:14px 5vw; transition:background .3s, box-shadow .3s}
-nav.scrolled{background:color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter:blur(10px); box-shadow:0 1px 0 var(--hairline)}
-.seal{width:38px; height:38px; border:2.5px solid var(--seal); color:var(--seal); border-radius:6px;
-  display:grid; place-items:center; font-size:14px; font-weight:900; line-height:1;
-  transform:rotate(-3deg); flex:none}
-.logo{font-weight:900; font-size:16px; letter-spacing:.1em; line-height:1.25}
-.logo small{display:block; font-size:10.5px; letter-spacing:.34em; color:var(--gold); font-weight:700}
-nav .links{display:flex; gap:24px; margin-left:auto; font-size:13.5px; font-weight:700}
-nav .links a{text-decoration:none; position:relative; color:var(--ink)}
-nav .links a::after{content:""; position:absolute; left:0; right:100%; bottom:-5px; height:2px; background:var(--gold); transition:right .3s}
-nav .links a:hover::after{right:0}
+#nav{position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid var(--line); transition:box-shadow .3s}
+#nav.scrolled{box-shadow:0 2px 14px rgba(20,40,80,.08)}
+.bar{display:flex; align-items:center; height:var(--nav-h); gap:20px}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--blue); font-weight:700; font-size:19px; letter-spacing:.12em; white-space:nowrap}
+.mark{width:34px; height:34px}
+.links{display:flex; align-items:center; gap:4px; margin-left:auto; font-size:15px; font-weight:500}
+.links > a, .has-sub > a{padding:8px 13px; text-decoration:none; color:var(--ink); border-radius:4px; transition:color .2s,background .2s; white-space:nowrap}
+.links > a:hover, .has-sub:hover > a{color:var(--blue); background:var(--blue-tint)}
+.links > a.btn{color:#fff; background:var(--blue); margin-left:10px; padding:10px 20px; font-size:14px}
+.links > a.btn:hover{background:var(--blue-d)}
+.has-sub{position:relative; display:flex; align-items:center}
+.has-sub > a::after{content:""; display:inline-block; width:6px; height:6px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(45deg); margin:0 0 4px 7px}
+.sub{position:absolute; top:100%; left:0; min-width:160px; background:#fff; border:1px solid var(--line); border-top:3px solid var(--blue);
+  box-shadow:var(--shadow); padding:6px 0; display:none; flex-direction:column}
+.has-sub:hover .sub, .has-sub:focus-within .sub{display:flex}
+.sub a{padding:9px 18px; text-decoration:none; color:var(--text); font-size:14px}
+.sub a:hover{background:var(--blue-tint); color:var(--blue)}
 
-.burger{display:none; margin-left:auto; width:30px; height:24px; border:0; background:none; padding:0;
-  cursor:pointer; flex-direction:column; justify-content:space-between}
-.burger span{display:block; height:2px; width:100%; background:var(--ink); border-radius:2px}
-.mobile-menu{display:none; position:fixed; top:0; left:0; right:0; z-index:39; background:var(--paper);
-  flex-direction:column; padding:90px 6vw 30px; gap:4px; box-shadow:0 1px 0 var(--hairline)}
-.mobile-menu a{display:block; padding:16px 0; border-bottom:1px solid var(--hairline);
-  text-decoration:none; color:var(--ink); font-size:16px; font-weight:700}
+.burger{display:none; margin-left:auto; width:30px; height:22px; border:0; background:none; padding:0; cursor:pointer; flex-direction:column; justify-content:space-between}
+.burger span{display:block; height:2px; width:100%; background:var(--blue); border-radius:2px}
+.mobile-menu{display:none; position:fixed; top:var(--nav-h); left:0; right:0; bottom:0; z-index:49; background:#fff;
+  flex-direction:column; padding:10px clamp(16px,4vw,40px) 30px; overflow:auto}
+.mobile-menu a{display:block; padding:15px 0; border-bottom:1px solid var(--line); text-decoration:none; color:var(--ink); font-size:16px; font-weight:500}
 .mobile-menu.open{display:flex}
-
-@media (max-width:780px){
-  nav .links{display:none}
-  .burger{display:flex}
-}
+@media (max-width:960px){ .links{display:none} .burger{display:flex} }
 </style>
-
-<script>
-  const burger = document.getElementById('burger')!;
-  const menu = document.getElementById('mobile-menu')!;
-  burger.addEventListener('click', () => {
-    const open = menu.classList.toggle('open');
-    burger.setAttribute('aria-expanded', String(open));
-  });
-  menu.querySelectorAll('a').forEach((a) => {
-    a.addEventListener('click', () => {
-      menu.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
-    });
-  });
-</script>
