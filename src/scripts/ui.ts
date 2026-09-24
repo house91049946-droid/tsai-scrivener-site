@@ -87,6 +87,12 @@ if (word && !reduced) {
   addEventListener('scroll', upd, { passive: true });
 }
 
+// 首屏下滑提示：平順捲到三位地政士
+document.querySelector<HTMLAnchorElement>('.scroll-cue')?.addEventListener('click', (e) => {
+  const t = document.getElementById('people'); if (!t) return; e.preventDefault();
+  if (lenis) lenis.scrollTo(t, { offset: -10, duration: 1.4 }); else t.scrollIntoView({ behavior: 'smooth' });
+});
+
 // 回頂
 const top = document.getElementById('to-top');
 const onTop = () => top?.classList.toggle('show', window.scrollY > 700);

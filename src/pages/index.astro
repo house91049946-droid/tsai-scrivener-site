@@ -71,6 +71,7 @@ const faq = {
         </div>
       ))}
       <a class="news" href={slug(latest)}><time class="en">{latest.data.date.toISOString().slice(0, 10).replaceAll('-', '.')}</time><span>{latest.data.title}</span></a>
+      <a class="scroll-cue" href="#people" aria-label="往下看三位地政士"><span>往下看　三位地政士</span><i aria-hidden="true"></i></a>
       <div class="pager en">{slides.map((_, i) => <button class={i === 0 ? 'on' : ''} data-go={i} aria-label={`第 ${i + 1} 張`}>{String(i + 1).padStart(2, '0')}</button>)}</div>
     </section>
 
@@ -223,6 +224,15 @@ const faq = {
 .pager button{background:none; border:0; color:rgba(255,255,255,.55); font-size:12px; cursor:pointer; padding:4px 0; border-bottom:1px solid transparent; font-family:var(--en)}
 .pager button.on{color:#fff; border-color:#fff}
 @media (max-width:760px){ .news{display:none} .cap{right:22px; bottom:80px} .pager{bottom:30px; left:22px; right:auto} }
+
+/* 長輩友善：首屏下滑提示，點擊捲到三位地政士 */
+.scroll-cue{position:absolute; left:50%; bottom:clamp(18px,3vh,34px); transform:translateX(-50%); z-index:4; display:flex; flex-direction:column; align-items:center; gap:8px;
+  padding:12px 26px 14px; border-radius:999px; background:rgba(255,255,255,.92); color:#222; text-decoration:none; box-shadow:0 8px 26px rgba(0,0,0,.22); transition:background .3s, transform .3s}
+.scroll-cue:hover{background:#fff; transform:translateX(-50%) translateY(-2px)}
+.scroll-cue span{font-size:15px; font-weight:500; letter-spacing:.16em; white-space:nowrap}
+.scroll-cue i{display:block; width:14px; height:14px; border-right:2.5px solid #0B5CFF; border-bottom:2.5px solid #0B5CFF; transform:rotate(45deg); margin-top:-4px}
+@media (prefers-reduced-motion:no-preference){ .scroll-cue i{animation:cue 1.6s ease-in-out infinite} @keyframes cue{0%,100%{transform:translateY(0) rotate(45deg)} 50%{transform:translateY(6px) rotate(45deg)}} }
+@media (max-width:760px){ .scroll-cue{bottom:18px; padding:10px 20px 12px} .scroll-cue span{font-size:14px} .cap{bottom:120px} .pager{bottom:auto; top:80px; left:22px} }
 
 /* Concept */
 .concept{position:relative; overflow:hidden}
