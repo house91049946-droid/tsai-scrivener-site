@@ -17,7 +17,7 @@ const d = post.data.date.toISOString().slice(0, 10);
 
 // 分類決定題圖的幾何主題與代表字，讓文章有視覺識別而不需要照片素材
 ---
-<Base title={post.data.title} description={post.data.description}
+<Base title={post.data.title} description={post.data.description} ogImage={coverFor(post.id, post.data.category, allPosts).replace('/photo/', '/og/').replace('.webp', '.jpg')}
   article={{ publishedTime: d, category: post.data.category }}>
   <PageBanner title="專欄文章" sub="COLUMN" />
   <div class="wrap layout">
