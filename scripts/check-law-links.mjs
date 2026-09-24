@@ -23,7 +23,8 @@ const bodyCache = new Map(); // url -> { res, body }
 for (const ref of refs) {
   // 3. frontmatter name（如「民法第 758 條」）抽出的條號，須與 URL 的 flno 一致
   const flno = new URL(ref.url).searchParams.get('flno');
-  const nameNo = ref.name.match(/第\s*(\d+)\s*條/)?.[1];
+  const nm = ref.name.match(/第\s*(\d+)\s*條(?:之\s*(\d+))?/);
+  const nameNo = nm ? (nm[2] ? `${nm[1]}-${nm[2]}` : nm[1]) : undefined;
   if (!flno || !nameNo || flno !== nameNo) {
     console.error(`${ref.file}: lawRefs name「${ref.name}」條號與 URL flno=${flno ?? '(無)'} 不一致`);
     fail = 1;
@@ -32,9 +33,19 @@ for (const ref of refs) {
 
   let cached = bodyCache.get(ref.url);
   if (!cached) {
-    const res = await fetch(ref.url, { method: 'GET' }).catch(() => null);
-    if (!res || !res.ok) {
-      console.error(`連結失效（${res?.status ?? '網路錯誤'}）: ${ref.url}`);
+    let res = null;
+    for (let i = 0; i < 3 && !(res && res.ok); i++) {
+      if (i) await new Promise((r) => setTimeout(r, 3000 * i));
+      res = await fetch(ref.url, { method: 'GET' }).catch(() => null);
+    }
+    if (!res) {
+      // law.moj.gov.tw 常擋境外（GitHub Actions）連線：連不上只警告，真正的查驗在台灣的 mini 上跑（LAW_CHECK_STRICT=1）
+      console.warn(`連不上（網路錯誤，未查驗）: ${ref.url}`);
+      if (process.env.LAW_CHECK_STRICT === '1') fail = 1;
+      continue;
+    }
+    if (!res.ok) {
+      console.error(`連結失效（${res.status}）: ${ref.url}`);
       fail = 1;
       continue;
     }
