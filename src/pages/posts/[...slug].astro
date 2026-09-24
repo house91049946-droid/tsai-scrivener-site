@@ -4,28 +4,22 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import PageBanner from '../../components/PageBanner.astro';
 import Sidebar from '../../components/Sidebar.astro';
+import { coverFor } from '../../lib/cover';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
   return posts.map((post) => ({ params: { slug: post.id.replace(/\.md$/, '') }, props: { post } }));
 }
 const { post } = Astro.props;
+const allPosts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.data.date);
 const { Content } = await render(post);
 const d = post.data.date.toISOString().slice(0, 10);
 
 // 分類決定題圖的幾何主題與代表字，讓文章有視覺識別而不需要照片素材
-const banner: Record<string, { glyph: string; sub: string }> = {
-  稅務: { glyph: '稅', sub: 'TAX' },
-  繼承實務: { glyph: '繼', sub: 'INHERITANCE' },
-  贈與節稅: { glyph: '贈', sub: 'GIFT' },
-  買賣過戶: { glyph: '移', sub: 'TRANSFER' },
-  抵押設定: { glyph: '抵', sub: 'MORTGAGE' },
-};
-const coverOf: Record<string, string> = { 稅務: 'tax', 繼承實務: 'inherit', 贈與節稅: 'gift', 買賣過戶: 'transfer', 抵押設定: 'mortgage' };
 ---
 <Base title={post.data.title} description={post.data.description}
   article={{ publishedTime: d, category: post.data.category }}>
-  <PageBanner title="專欄文章" sub="ARTICLE" />
+  <PageBanner title="專欄文章" sub="COLUMN" />
   <div class="wrap layout">
   <Sidebar />
   <main class="article">
@@ -33,7 +27,7 @@ const coverOf: Record<string, string> = { 稅務: 'tax', 繼承實務: 'inherit'
     <p class="meta"><span class="cat">{post.data.category}</span><time>{d}</time></p>
     <h1>{post.data.title}</h1>
 
-    <figure class="banner" aria-hidden="true"><img src={`/photo/cover-${coverOf[post.data.category] ?? 'tax'}.webp`} alt="" width="800" height="400" /></figure>
+    <figure class="banner" aria-hidden="true"><img src={coverFor(post.id, post.data.category, allPosts)} alt="" width="800" height="400" /></figure>
 
     <Content />
 

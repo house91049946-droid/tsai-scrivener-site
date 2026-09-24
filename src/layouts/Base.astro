@@ -1,12 +1,13 @@
 ---
 // src/layouts/Base.astro
 import '@fontsource/noto-sans-tc/400.css';
+import '@fontsource/noto-sans-tc/500.css';
 import '@fontsource/noto-sans-tc/700.css';
 import '@fontsource/noto-sans-tc/900.css';
+import 'lenis/dist/lenis.css';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import Floating from '../components/Floating.astro';
 interface Props {
   title: string;
   description: string;
@@ -64,6 +65,9 @@ const extra = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" />
   <meta property="og:site_name" content="中友地政士事務所" />
   <meta property="og:locale" content="zh_TW" />
   <meta property="og:title" content={title} />
@@ -93,7 +97,6 @@ const extra = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   <Nav />
   <slot />
   <Footer />
-  <Floating />
   <script>
     import '../scripts/ui.ts';
   </script>

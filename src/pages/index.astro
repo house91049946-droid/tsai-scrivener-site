@@ -1,29 +1,46 @@
 ---
-// src/pages/index.astro — 首頁（2026-09 改版：事務所藍白版型）
+// src/pages/index.astro — 首頁（2026-09 改版：參考 ateliercu.jp）
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import fs from 'node:fs';
+import { coverFor } from '../lib/cover';
 
-const posts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.data.date).slice(0, 4);
-// 事務所實景照到位後放 public/img/hero-office.jpg，沒有就用主筆人像
-const hasOffice = fs.existsSync('public/img/hero-office.jpg');
+const all = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.data.date);
+const posts = all.slice(0, 6);
+const latest = all[0];
+const slug = (p: typeof all[number]) => `/posts/${p.id.replace(/\.md$/, '')}/`;
 
-const flow = [
-  { n: '01', i: 'phone', t: '來電諮詢', d: '電話或 LINE 說明情況，先告訴你會遇到哪些稅、大概流程。' },
-  { n: '02', i: 'calc', t: '稅費試算', d: '遺產稅、贈與稅、土增稅、契稅先算清楚，再決定做不做。' },
-  { n: '03', i: 'sign', t: '委任簽約', d: '確認委任範圍與費用，白紙黑字，沒有隱藏收費。' },
-  { n: '04', i: 'folder', t: '代書流程', d: '申報、完稅、送件、領狀，進度主動回報。' },
-  { n: '05', i: 'done', t: '圓滿結案', d: '交付權狀與完稅證明，後續傳承規劃持續諮詢。' },
+const slides = [
+  { img: 'hero-street', label: 'Tax', h: '遺產稅・贈與稅規劃', t: '先把稅算清楚，再決定怎麼傳。', en: 'Calculate first, then pass it on.', href: '/services/#estate-tax' },
+  { img: 'svc-inherit', label: 'Inheritance', h: '繼承登記與遺產分割', t: '六個月的期限，一家人替你把關。', en: 'Six months. One family. Every document in order.', href: '/services/#inheritance' },
+  { img: 'svc-plan', label: 'Planning', h: '家族財產傳承規劃', t: '生前贈與還是身後繼承，兩條路算給你看。', en: 'Two paths, one clear answer.', href: '/services/#succession' },
+  { img: 'svc-transfer', label: 'Transfer', h: '不動產買賣過戶', t: '印章蓋下去之前，產權先查清楚。', en: 'Check the title before the seal.', href: '/services/#transfer' },
 ];
-const cover: Record<string, string> = { 稅務: 'tax', 繼承實務: 'inherit', 贈與節稅: 'gift', 買賣過戶: 'transfer', 抵押設定: 'mortgage' };
-const services = [
-  { h: '遺產稅申報與規劃', d: '免稅額 1,333 萬、扣除額逐項核對，分期與實物抵繳評估。', href: '/services/#estate-tax', img: 'estate' },
-  { h: '贈與稅與分年贈與', d: '每人每年 244 萬免稅額怎麼用、婚嫁 100 萬、視同贈與怎麼避。', href: '/services/#gift-tax', img: 'gift' },
-  { h: '繼承登記與遺產分割', d: '繼承系統表、分割協議書、公同共有登記，6 個月期限守住。', href: '/services/#inheritance', img: 'inherit' },
-  { h: '家族財產傳承規劃', d: '生前贈與或身後繼承，兩條路的稅負算給你看。', href: '/services/#succession', img: 'plan' },
-  { h: '房地合一稅與土增稅', d: '持有期間、自用住宅優惠、重購退稅，賣房前先算。', href: '/services/#property-tax', img: 'ptax' },
-  { h: '買賣過戶與抵押設定', d: '產權調查、履約保證、完稅送件到領狀全程辦理。', href: '/services/#transfer', img: 'transfer' },
+
+// 服務圓環：六等分扇形
+const svcs = [
+  { zh: '遺產稅', en: 'Estate Tax', id: 'estate-tax' },
+  { zh: '贈與稅', en: 'Gift Tax', id: 'gift-tax' },
+  { zh: '繼承登記', en: 'Inheritance', id: 'inheritance' },
+  { zh: '傳承規劃', en: 'Succession', id: 'succession' },
+  { zh: '房地合一稅', en: 'Property Tax', id: 'property-tax' },
+  { zh: '買賣過戶', en: 'Transfer', id: 'transfer' },
 ];
+const R = 200, r = 82, cx = 210, cy = 210, gap = 1.4;
+const rad = (d: number) => (d - 90) * Math.PI / 180;
+const xy = (a: number, rr: number) => [cx + rr * Math.cos(rad(a)), cy + rr * Math.sin(rad(a))];
+const pt = (a: number, rr: number) => xy(a, rr).map((n) => n.toFixed(2)).join(' ');
+const wedges = svcs.map((s, i) => {
+  const a0 = i * 60 + gap, a1 = (i + 1) * 60 - gap, am = i * 60 + 30;
+  const d = `M${pt(a0, r)} L${pt(a0, R)} A${R} ${R} 0 0 1 ${pt(a1, R)} L${pt(a1, r)} A${r} ${r} 0 0 0 ${pt(a0, r)} Z`;
+  const [lx, ly] = xy(am, (R + r) / 2);
+  return { ...s, d, lx: lx.toFixed(1), ly: ly.toFixed(1) };
+});
+const svcList = [
+  ['遺產稅申報與規劃', 'estate-tax'], ['贈與稅與分年贈與', 'gift-tax'], ['繼承登記與遺產分割', 'inheritance'],
+  ['家族財產傳承規劃', 'succession'], ['房地合一稅與土增稅', 'property-tax'], ['買賣過戶與抵押設定', 'transfer'],
+];
+const tags = ['#遺產稅免稅額1,333萬', '#每人每年贈與免稅244萬', '#配偶扣除額553萬', '#繼承登記六個月內', '#公同共有先保期限', '#房地合一稅持有年限', '#自用住宅土增稅10%', '#分年贈與', '#二親等買賣視同贈與', '#遺產稅實物抵繳', '#子女婚嫁贈與100萬', '#死亡前兩年贈與併計'];
+
 const faq = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -40,194 +57,269 @@ const faq = {
   schema={faq}
 >
   <main>
-    <!-- 首屏 -->
-    <section class={`hero ${hasOffice ? 'office' : 'portrait'}`}>
-      <img class="bg" src={hasOffice ? '/img/hero-office.jpg' : '/photo/hero-street.webp'} alt="台中中友地政士事務所" width="1600" height="640" fetchpriority="high" />
-      <div class="wrap hero-in">
-        <div class="box">
-          <h1>台中代書推薦｜中友地政士事務所</h1>
-          <b>先把稅算清楚，<br>再決定怎麼傳。</b>
-          <span>遺產稅・贈與稅・繼承登記・財產傳承規劃</span>
-          <div class="hero-btns"><a class="btn" href="/tools/">免費試算稅費</a><a class="btn line" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 諮詢</a></div>
+    <!-- 首屏輪播 -->
+    <section class="hero" id="hero" aria-roledescription="carousel">
+      {slides.map((s, i) => (
+        <div class={`slide${i === 0 ? ' on' : ''}`} data-i={i}>
+          <img src={`/photo/${s.img}.webp`} alt="" width="1600" height="900" fetchpriority={i === 0 ? 'high' : 'low'} loading={i === 0 ? 'eager' : 'lazy'} />
+          <div class="cap">
+            <p class="lab en">— {s.label}</p>
+            {i === 0 ? <h1>{s.h}<span class="sr">｜台中代書推薦・中友地政士事務所</span></h1> : <p class="h">{s.h}</p>}
+            <p class="t">{s.t}<a class="pill" href={s.href} aria-label={`${s.h} 詳細說明`}>→</a></p>
+            <p class="e en">{s.en}</p>
+          </div>
         </div>
-      </div>
+      ))}
+      <a class="news" href={slug(latest)}><time class="en">{latest.data.date.toISOString().slice(0, 10).replaceAll('-', '.')}</time><span>{latest.data.title}</span></a>
+      <div class="pager en">{slides.map((_, i) => <button class={i === 0 ? 'on' : ''} data-go={i} aria-label={`第 ${i + 1} 張`}>{String(i + 1).padStart(2, '0')}</button>)}</div>
     </section>
 
-    <!-- 服務流程 -->
-    <section class="section" id="flow">
-      <div class="wrap">
-        <div class="sec-title"><h2>服務流程</h2><small>PROCESS</small></div>
-        <ol class="flow">
-          {flow.map((f) => <li class="reveal"><span class="n"><img src={`/photo/flow-${f.i}.webp`} alt="" width="240" height="240" loading="lazy" /><i>{f.n}</i></span><b>{f.t}</b><p>{f.d}</p></li>)}
-        </ol>
-      </div>
-    </section>
-
-    <!-- 關於＋三位地政士 -->
-    <section class="section grey" id="about">
-      <div class="wrap brand">
-        <div class="txt reveal">
-          <div class="sec-title left"><h2>代書世家・一家人把關</h2><small>ABOUT US</small></div>
+    <!-- Concept -->
+    <section class="section concept" id="concept">
+      <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2 36 11v18L20 38 4 29V11z" fill="none" stroke="currentColor" stroke-width="3.2"/></svg>
+      <div class="wrap c-grid">
+        <div class="reveal">
+          <h2 class="en c-h">Concept</h2>
+          <p class="c-lead">把稅算清楚，是傳承的第一步<br>「Tax First, Family Always」</p>
+          <p class="c-en en">Understand the numbers.<br>Protect the family.<br>Pass it on with clarity.</p>
+        </div>
+        <div class="c-body reveal">
+          <p>我們不只是辦登記的代書，而是把每一筆不動產，當作一個家庭的「資產」來看待。</p>
+          <p>遺產稅、贈與稅、房地合一稅、土地增值稅——在傳承這件事上，登記只是最後一步，決定你多繳還是少繳的，是前面那些沒人跟你算清楚的數字。</p>
           <p>中友地政士事務所是一個代書世家，三位地政士在同一個事務所執業。每一件案子，不是一個人的判斷，是一家人三張執照一起看。</p>
-          <p>我們把重心放在稅：遺產稅、贈與稅、房地合一稅、土地增值稅。在傳承這件事上，登記只是最後一步，決定你多繳還是少繳的，是前面那些沒人跟你算清楚的數字。</p>
-          <p>透明報價、主動回報進度、把法條翻成人話。先講你的情況，我們告訴你會遇到什麼、下一步是什麼。</p>
-          <div class="btns"><a class="btn" href="/about/">認識中友</a><a class="btn outline" href="/contact/">預約諮詢</a></div>
-        </div>
-        <div class="team reveal" id="people">
-          <figure><img src="/img/p-jh.jpg" alt="蔡峻豪 地政士" width="840" height="1120" loading="lazy" /><figcaption><b>蔡峻豪</b><small>地政士・主筆</small></figcaption></figure>
-          <figure><img src="/img/p-cq.jpg" alt="蔡崇欽 地政士" width="840" height="1120" loading="lazy" /><figcaption><b>蔡崇欽</b><small>地政士</small></figcaption></figure>
-          <figure><img src="/img/p-dg.jpg" alt="丁玉梅 地政士" width="840" height="1120" loading="lazy" /><figcaption><b>丁玉梅</b><small>地政士</small></figcaption></figure>
+          <p>我們習慣把生硬的法條翻成人話，透明報價、主動回報進度。先講你的情況，我們告訴你會遇到什麼、下一步是什麼。</p>
         </div>
       </div>
     </section>
 
-    <!-- 服務項目 -->
-    <section class="section" id="svc">
-      <div class="wrap">
-        <div class="sec-title"><h2>服務項目</h2><small>SERVICE</small></div>
-        <div class="svc">
-          {services.map((s) => <a class="card reveal" href={s.href}><img src={`/photo/svc-${s.img}.webp`} alt="" width="800" height="450" loading="lazy" /><div class="cb"><h3>{s.h}</h3><p>{s.d}</p><span>詳細說明 ›</span></div></a>)}
-        </div>
+    <!-- 照片拼貼＋大字 -->
+    <section class="collage" aria-hidden="true">
+      <div class="row">
+        <img class="c1" src="/photo/flow-done.webp" alt="" width="300" height="300" loading="lazy" />
+        <img class="c2" src="/photo/svc-estate.webp" alt="" width="900" height="505" loading="lazy" />
+        <img class="c3" src="/photo/flow-sign.webp" alt="" width="300" height="300" loading="lazy" />
+        <img class="c4" src="/photo/svc-gift.webp" alt="" width="900" height="505" loading="lazy" />
       </div>
+      <p class="word en" id="word">ZHONGYOU.</p>
     </section>
 
-    <!-- 據點 -->
-    <section class="section grey" id="loc">
+    <!-- What We Do -->
+    <section class="section wwd" id="service">
       <div class="wrap">
-        <div class="sec-title"><h2>服務據點</h2><small>LOCATION</small></div>
-        <div class="loc">
-          <div class="place reveal">
-            <iframe title="中友地政士事務所地圖" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=台中市東區東英七街55號&output=embed"></iframe>
-            <div class="info"><b>中友地政士事務所</b><p>台中市東區東英七街 55 號</p><a href="https://www.google.com/maps/search/?api=1&query=台中市東區東英七街55號" target="_blank" rel="noopener">Google 地圖導航 ›</a></div>
+        <div class="sec-title reveal"><h2>What We Do<small>服務內容</small></h2></div>
+        <div class="w-grid">
+          <svg class="ring reveal" viewBox="0 0 420 420" role="img" aria-label="六項服務">
+            {wedges.map((w) => (
+              <a href={`/services/#${w.id}`}>
+                <path d={w.d} class="wedge" />
+                <text x={w.lx} y={Number(w.ly) - 3} text-anchor="middle" class="wz">{w.zh}</text>
+                <text x={w.lx} y={Number(w.ly) + 15} text-anchor="middle" class="we">{w.en}</text>
+              </a>
+            ))}
+            <text x="210" y="208" text-anchor="middle" class="core">中友</text>
+            <text x="210" y="226" text-anchor="middle" class="core-en">Land Scrivener</text>
+          </svg>
+          <div class="w-txt reveal">
+            <p class="w-h">稅務・傳承・登記<br>每一步，都先算清楚</p>
+            <p>不動產移轉，是一家人好幾代的事。遺產、贈與、買賣、繼承登記，每一種移轉背後都是幾十萬到幾百萬的稅。</p>
+            <p>從盤點財產、試算稅額、申報、完稅，到地政事務所送件領狀，我們陪你走完整條路。</p>
           </div>
-          <div class="place reveal">
-            <iframe title="有巢氏太平中山富盛店地圖" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=台中市太平區中山路四段122號&output=embed"></iframe>
-            <div class="info"><b>有巢氏房屋 太平中山富盛店</b><p>台中市太平區中山路四段 122 號</p><a href="https://www.google.com/maps/search/?api=1&query=台中市太平區中山路四段122號" target="_blank" rel="noopener">Google 地圖導航 ›</a></div>
-          </div>
+        </div>
+        <div class="s-list">
+          {svcList.map(([n, id]) => <a class="reveal" href={`/services/#${id}`}><span>{n}</span><i class="pill">→</i></a>)}
+        </div>
+      </div>
+      <div class="marquee" aria-hidden="true">
+        {[0, 1].map((row) => (
+          <div class={`track${row ? ' rev' : ''}`}>{[...tags, ...tags].map((t) => <span class="tag">{t}</span>)}</div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Members -->
+    <section class="section members" id="people">
+      <div class="wrap">
+        <div class="sec-title reveal"><h2>Members<small>三位地政士</small></h2><p>代書世家，一家人三張執照一起把關。</p></div>
+        <div class="m-grid">
+          <figure class="reveal"><img src="/img/p-jh.jpg" alt="蔡峻豪 地政士" width="840" height="1120" loading="lazy" /><figcaption><b>蔡峻豪</b><span class="en">Tsai Chun-Hao</span><small>地政士・主筆　不動產經紀人、土地開發師</small></figcaption></figure>
+          <figure class="reveal"><img src="/img/p-cq.jpg" alt="蔡崇欽 地政士" width="840" height="1120" loading="lazy" /><figcaption><b>蔡崇欽</b><span class="en">Tsai Chung-Chin</span><small>地政士</small></figcaption></figure>
+          <figure class="reveal"><img src="/img/p-dg.jpg" alt="丁玉梅 地政士" width="840" height="1120" loading="lazy" /><figcaption><b>丁玉梅</b><span class="en">Ting Yu-Mei</span><small>地政士</small></figcaption></figure>
         </div>
       </div>
     </section>
 
-    <!-- 最新文章 -->
-    <section class="section" id="news">
+    <!-- Column -->
+    <section class="section column" id="column">
       <div class="wrap">
-        <div class="sec-title"><h2>最新文章</h2><small>ARTICLE</small></div>
-        <div class="news">
+        <div class="sec-title reveal"><h2>Column<small>專欄文章</small></h2></div>
+        <div class="p-grid">
           {posts.map((p) => (
-            <a class="post reveal" href={`/posts/${p.id.replace(/\.md$/, '')}/`}>
-              <img src={`/photo/cover-${cover[p.data.category] ?? 'tax'}.webp`} alt="" width="800" height="400" loading="lazy" />
-              <div class="pb">
-              <span class="cat">{p.data.category}</span>
-              <h3>{p.data.title}</h3>
-              <p>{p.data.description}</p>
-              <time>發佈：{p.data.date.toISOString().slice(0, 10).replaceAll('-', '/')}</time>
-              </div>
+            <a class="post reveal" href={slug(p)}>
+              <span class="ph"><img src={coverFor(p.id, p.data.category, all)} alt="" width="1000" height="500" loading="lazy" /></span>
+              <span class="pt"><b>{p.data.title}</b><i class="pill">→</i></span>
+              <span class="tags"><span class="tag">#{p.data.category}</span><time class="en">{p.data.date.toISOString().slice(0, 10).replaceAll('-', '.')}</time></span>
             </a>
           ))}
         </div>
-        <div class="more"><a class="btn outline" href="/posts/">看全部文章</a></div>
+        <a class="all en reveal" href="/posts/">View all columns <i></i></a>
       </div>
     </section>
 
-    <!-- 聯絡 -->
-    <section class="section contact-band" id="contact">
-      <div class="wrap">
-        <h2>免費初步諮詢，先講你的情況。</h2>
-        <p>電話 <a href="tel:+886955377283">0955-377-283</a>｜LINE <a href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">@0955377283</a></p>
-        <div class="btns"><a class="btn line" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 諮詢</a><a class="btn outline" href="/contact/">聯絡我們</a></div>
+    <!-- Questions / Company / Price / Simulator -->
+    <section class="section links" id="more">
+      <div class="wrap l-grid">
+        <div class="rows">
+          <a class="lrow reveal" href="/faq/"><h3 class="en">Questions<small>常見問題</small></h3><p>遺產稅免稅額、贈與 244 萬怎麼用、繼承登記期限，來之前先看這幾題。</p><span class="more en">View more <i class="pill">→</i></span></a>
+          <a class="lrow reveal" href="/about/"><h3 class="en">Company<small>關於本所</small></h3><p>我們是怎樣的代書世家、用什麼態度做事，也歡迎認識我們。</p><span class="more en">View more <i class="pill">→</i></span></a>
+          <a class="lrow reveal" href="/fees/"><h3 class="en">Price<small>收費標準</small></h3><p>委任前先報價，白紙黑字寫在委任書上，沒有事後加價。</p><span class="more en">View more <i class="pill">→</i></span></a>
+        </div>
+        <a class="sim reveal" href="/tools/">
+          <img src="/photo/svc-estate.webp" alt="" width="900" height="505" loading="lazy" />
+          <span class="sim-in"><b class="en">Simulator</b><span>遺產稅、贈與稅線上試算。115 年度數字，輸入金額馬上看稅額與級距。</span><i class="pill">→</i></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+      <img src="/photo/hero-street.webp" alt="" width="1600" height="900" loading="lazy" />
+      <div class="wrap ct-in">
+        <div>
+          <h2 class="en">Contact</h2>
+          <p>先講你的情況，我們告訴你會遇到什麼、下一步是什麼。<br>遺產稅、贈與稅、繼承登記，任何不確定的地方都可以先問，初步討論不收費。</p>
+          <p class="tel">TEL <a href="tel:+886955377283" class="en">0955-377-283</a>　LINE <span class="en">@0955377283</span></p>
+        </div>
+        <a class="btn light big" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">諮詢・預約請由此 LINE 聯絡</a>
       </div>
     </section>
   </main>
 </Base>
 
 <style>
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}
+
 /* 首屏 */
-.hero{position:relative; height:clamp(460px,40vw,620px); overflow:hidden; background:#EEF3FA}
-.hero .bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 60%}
-.hero-in{position:relative; height:100%; display:flex; align-items:flex-start; padding-top:clamp(28px,4vw,56px)}
-.hero .box{background:rgba(255,255,255,.94); border-left:6px solid var(--blue); padding:22px 28px 24px; border-radius:var(--radius);
-  box-shadow:0 10px 30px rgba(20,40,80,.12); display:grid; gap:8px; max-width:470px}
-.hero h1{font-size:14px; letter-spacing:.14em; color:var(--blue); font-weight:700}
-.hero .box b{font-size:clamp(26px,2.6vw,36px); letter-spacing:.08em; line-height:1.4; color:var(--ink)}
-.hero .box span{font-size:14px; letter-spacing:.1em; color:var(--sub)}
-.hero-btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
-@media (max-width:760px){
-  .hero{height:auto; display:flex; flex-direction:column-reverse}
-  .hero .bg{position:static; height:auto; aspect-ratio:4/3; object-position:62% center}
-  .hero-in{padding-block:22px 18px; background:#fff}
-  .hero .box{box-shadow:none; padding:4px 0 4px 16px; max-width:none}
-}
+.hero{position:relative; height:100svh; min-height:560px; overflow:hidden; background:#555; color:#fff}
+.slide{position:absolute; inset:0; opacity:0; transition:opacity 1.4s ease; pointer-events:none}
+.slide.on{opacity:1; pointer-events:auto}
+.slide img{width:100%; height:100%; object-fit:cover; transform:scale(1.08); transition:transform 7s linear}
+.slide.on img{transform:scale(1)}
+.slide::after{content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.12) 55%,rgba(0,0,0,.28) 100%)}
+.cap{position:absolute; left:clamp(22px,5vw,70px); bottom:clamp(60px,9vh,110px); z-index:2; max-width:640px}
+.cap > *{opacity:0; transform:translateY(16px); transition:opacity .9s ease .5s, transform .9s cubic-bezier(.19,1,.22,1) .5s}
+.slide.on .cap > *{opacity:1; transform:none}
+.slide.on .cap > *:nth-child(2){transition-delay:.62s}
+.slide.on .cap > *:nth-child(3){transition-delay:.74s}
+.slide.on .cap > *:nth-child(4){transition-delay:.86s}
+.lab{font-size:13px; letter-spacing:.1em; margin-bottom:10px}
+.cap h1, .cap .h{color:#fff; font-weight:500; font-size:clamp(26px,3vw,40px); letter-spacing:.1em; line-height:1.4; margin-bottom:8px}
+.t{display:flex; align-items:center; gap:14px; font-size:clamp(14px,1.2vw,16px); letter-spacing:.12em}
+.t .pill{color:#fff; text-decoration:none}
+.e{font-size:12.5px; opacity:.85; margin-top:14px; letter-spacing:.06em}
+.news{position:absolute; right:clamp(22px,4vw,56px); top:clamp(22px,3vw,36px); z-index:3; color:#fff; text-decoration:none; font-size:12px; display:flex; gap:16px; align-items:center; max-width:46%}
+.news span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.news time::after{content:""; display:inline-block; width:1px; height:10px; background:rgba(255,255,255,.6); margin-left:16px}
+.pager{position:absolute; right:clamp(22px,4vw,56px); bottom:clamp(60px,9vh,110px); z-index:3; display:flex; gap:12px}
+.pager button{background:none; border:0; color:rgba(255,255,255,.55); font-size:12px; cursor:pointer; padding:4px 0; border-bottom:1px solid transparent; font-family:var(--en)}
+.pager button.on{color:#fff; border-color:#fff}
+@media (max-width:760px){ .news{display:none} .cap{right:22px; bottom:80px} .pager{bottom:30px; left:22px; right:auto} }
 
-/* 流程 */
-.flow{list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(5,1fr); gap:18px; counter-reset:f}
-.flow li{text-align:center; position:relative; padding:0 6px}
-.flow li:not(:last-child)::after{content:""; position:absolute; right:-14px; top:38px; width:12px; height:12px; border-right:2px solid var(--line); border-bottom:2px solid var(--line); transform:rotate(-45deg)}
-.flow .n{position:relative; display:grid; place-items:center; width:120px; height:120px; margin:0 auto 14px; border-radius:50%; border:4px solid #fff; box-shadow:var(--shadow); background:#fff}
-.flow .n{overflow:visible}
-.flow .n img{width:100%; height:100%; object-fit:cover; border-radius:50%}
-.flow .n i{position:absolute; right:-4px; top:-4px; width:30px; height:30px; border-radius:50%; background:var(--blue); color:#fff; font-style:normal; font-size:12px; font-weight:700; display:grid; place-items:center}
-.flow b{display:block; color:var(--ink); font-size:17px; letter-spacing:.1em; margin-bottom:6px}
-.flow p{font-size:13.5px; color:var(--sub); margin:0}
-@media (max-width:900px){ .flow{grid-template-columns:repeat(2,1fr)} .flow li::after{display:none} .flow li:last-child{grid-column:1/-1} }
+/* Concept */
+.concept{position:relative; overflow:hidden}
+.mark{position:absolute; left:-80px; bottom:-120px; width:520px; height:520px; color:#fff; opacity:.9; pointer-events:none}
+.c-grid{position:relative; display:grid; grid-template-columns:1fr 1.15fr; gap:clamp(30px,6vw,90px)}
+.c-h{font-size:clamp(26px,2.6vw,34px); margin-bottom:26px}
+.c-lead{font-size:clamp(17px,1.5vw,20px); color:var(--ink); line-height:1.9; margin-bottom:22px; font-weight:500}
+.c-en{font-size:12px; color:var(--sub); line-height:2.2}
+.c-body p{line-height:2.6; margin-bottom:1.4em; font-size:14.5px}
+@media (max-width:860px){ .c-grid{grid-template-columns:1fr} }
 
-/* 關於＋團隊 */
-.brand{display:grid; grid-template-columns:1.05fr 1fr; gap:clamp(28px,5vw,64px); align-items:center}
-.sec-title.left{text-align:left; margin-bottom:22px}
-.sec-title.left::after{margin:14px 0 0}
-.brand p{margin:0 0 14px}
-.btns{display:flex; gap:12px; flex-wrap:wrap; margin-top:22px}
-.team{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
-.team figure{margin:0; text-align:center}
-.team img{width:100%; height:auto; aspect-ratio:1; object-fit:cover; object-position:50% 22%; border-radius:50%; border:5px solid #fff; box-shadow:var(--shadow); background:#F3EEE6}
-.team figcaption{margin-top:12px; display:grid; gap:2px}
-.team b{font-size:18px; color:var(--ink); letter-spacing:.12em}
-.team small{font-size:12.5px; color:var(--blue); letter-spacing:.14em; font-weight:700}
-@media (max-width:860px){ .brand{grid-template-columns:1fr} .team{max-width:460px} }
+/* 拼貼 */
+.collage{position:relative; padding-bottom:40px; overflow:hidden}
+.collage .row{display:grid; grid-template-columns:.8fr 1.6fr 1fr 1.3fr; gap:16px; align-items:end}
+.collage img{width:100%; height:auto; object-fit:cover}
+.c1{aspect-ratio:3/4} .c2{aspect-ratio:4/5} .c3{aspect-ratio:3/4} .c4{aspect-ratio:1/1}
+.word{position:absolute; right:clamp(10px,3vw,40px); bottom:0; font-size:clamp(56px,11vw,170px); color:#fff; line-height:1; letter-spacing:.02em; text-shadow:0 2px 30px rgba(0,0,0,.08); will-change:transform}
+@media (max-width:760px){ .collage .row{grid-template-columns:1fr 1fr} .c3, .c4{display:none} }
 
-/* 服務 */
-.svc{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
-.card{background:#fff; border:1px solid var(--line); text-decoration:none; color:var(--text); overflow:hidden;
-  border-radius:var(--radius); transition:transform .3s,box-shadow .3s; display:grid; grid-template-rows:auto 1fr}
-.card img{width:100%; height:auto; aspect-ratio:16/9; object-fit:cover}
-.card .cb{padding:20px 22px 22px; display:grid; gap:8px}
-.card:hover{transform:translateY(-4px); box-shadow:var(--shadow)}
-.card h3{font-size:18px}
-.card p{font-size:14px; color:var(--sub); margin:0}
-.card span{color:var(--blue); font-size:13.5px; font-weight:700}
-@media (max-width:900px){ .svc{grid-template-columns:1fr 1fr} }
-@media (max-width:600px){ .svc{grid-template-columns:1fr} }
+/* What We Do */
+.w-grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,6vw,90px); align-items:center}
+.ring{width:100%; max-width:440px}
+.wedge{fill:#DCDCDC; transition:fill .35s}
+.ring a:hover .wedge{fill:#C9C9C9}
+.wz{font-size:15px; fill:#444; letter-spacing:.06em; font-family:"Noto Sans TC",sans-serif}
+.we{font-size:9.5px; fill:#888; font-family:var(--en); letter-spacing:.04em}
+.core{font-size:16px; fill:#444; letter-spacing:.2em; font-family:"Noto Sans TC",sans-serif}
+.core-en{font-size:10px; fill:#777; font-family:var(--en)}
+.w-h{font-size:clamp(18px,1.7vw,22px); color:var(--ink); line-height:1.8; margin-bottom:26px; font-weight:500}
+.w-txt p{line-height:2.4; margin-bottom:1.2em; font-size:14.5px}
+.s-list{display:grid; grid-template-columns:repeat(3,1fr); gap:0 28px; margin-top:clamp(50px,6vw,80px); border-top:1px solid var(--line)}
+.s-list a{display:flex; justify-content:space-between; align-items:center; padding:22px 8px; border-bottom:1px solid var(--line); text-decoration:none; font-size:14.5px; transition:padding-left .35s}
+.s-list a:hover{padding-left:16px}
+.marquee{margin-top:clamp(60px,7vw,100px); display:grid; gap:14px; overflow:hidden}
+.track{display:flex; gap:12px; width:max-content; animation:mq 60s linear infinite}
+.track.rev{animation-direction:reverse; animation-duration:70s}
+.track .tag{background:#fff; border-color:#fff; color:#444; font-size:12.5px; padding:6px 16px; white-space:nowrap}
+@keyframes mq{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){ .track{animation:none} }
+@media (max-width:860px){ .w-grid{grid-template-columns:1fr} .ring{margin:0 auto} .s-list{grid-template-columns:1fr} }
 
-/* 據點 */
-.loc{display:grid; grid-template-columns:1fr 1fr; gap:24px}
-.place{background:#fff; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
-.place iframe{width:100%; height:240px; border:0; display:block}
-.place .info{padding:18px 20px}
-.place b{display:block; color:var(--ink); font-size:17px; margin-bottom:4px}
-.place p{margin:0 0 8px; color:var(--sub); font-size:14.5px}
-.place a{color:var(--blue); text-decoration:none; font-weight:700; font-size:14px}
-@media (max-width:760px){ .loc{grid-template-columns:1fr} }
+/* Members */
+.members{background:var(--bg-2)}
+.m-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,40px)}
+.m-grid figure{margin:0}
+.m-grid img{width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; object-position:50% 25%; background:#DDD}
+.m-grid figcaption{display:grid; margin-top:16px}
+.m-grid b{font-weight:500; font-size:18px; letter-spacing:.2em; color:var(--ink)}
+.m-grid .en{font-size:12.5px; color:var(--sub)}
+.m-grid small{font-size:12px; color:var(--sub); margin-top:6px}
+@media (max-width:760px){ .m-grid{grid-template-columns:1fr 1fr} .m-grid figure:first-child{grid-column:1/-1} }
 
-/* 文章 */
-.news{display:grid; grid-template-columns:repeat(2,1fr); gap:18px}
-.post{display:grid; grid-template-columns:220px 1fr; border:1px solid var(--line); border-radius:var(--radius); text-decoration:none; color:var(--text); background:#fff; overflow:hidden; transition:box-shadow .3s,border-color .3s}
-.post img{width:100%; height:100%; object-fit:cover; border-right:1px solid var(--line)}
-.post .pb{display:grid; gap:6px; padding:18px 20px; align-content:start}
-.post:hover{box-shadow:var(--shadow); border-color:var(--blue)}
-.post .cat{font-size:12px; color:var(--blue); font-weight:700; letter-spacing:.14em}
-.post h3{font-size:17px; line-height:1.5}
-.post p{font-size:13.5px; color:var(--sub); margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
-.post time{font-size:12.5px; color:var(--sub)}
-.more{display:flex; justify-content:center; margin-top:30px}
-@media (max-width:1000px){ .news{grid-template-columns:1fr} }
-@media (max-width:520px){ .post{grid-template-columns:1fr} .post img{aspect-ratio:2/1; border-right:0; border-bottom:1px solid var(--line)} }
+/* Column */
+.p-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,44px) clamp(18px,2.4vw,36px)}
+.post{display:grid; gap:14px; text-decoration:none; align-content:start}
+.post .ph{overflow:hidden; aspect-ratio:1/1}
+.post img{width:100%; height:100%; object-fit:cover; transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+.post:hover img{transform:scale(1.05)}
+.pt{display:flex; justify-content:space-between; gap:14px; align-items:flex-start}
+.pt b{font-weight:500; font-size:15px; line-height:1.8; letter-spacing:.06em}
+.pt .pill{margin-top:6px}
+.post .tags{display:flex; gap:10px; align-items:center; font-size:12px; color:var(--sub)}
+.all{display:flex; align-items:center; justify-content:center; gap:22px; margin-top:clamp(60px,7vw,110px); font-size:clamp(22px,2.4vw,32px); text-decoration:none; color:var(--ink)}
+.all i{display:block; width:40px; height:1px; background:var(--ink); position:relative; transition:width .4s}
+.all i::after{content:""; position:absolute; right:0; top:-4px; width:9px; height:9px; border-top:1px solid var(--ink); border-right:1px solid var(--ink); transform:rotate(45deg)}
+.all:hover i{width:60px}
+@media (max-width:900px){ .p-grid{grid-template-columns:1fr 1fr} }
+@media (max-width:560px){ .p-grid{grid-template-columns:1fr} .post .ph{aspect-ratio:16/10} }
 
+/* 連結區 */
+.l-grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,56px)}
+.lrow{display:block; padding:34px 0; border-top:1px solid var(--line); text-decoration:none}
+.lrow:last-child{border-bottom:1px solid var(--line)}
+.lrow h3{font-weight:400; font-size:24px; display:flex; align-items:center; gap:14px; margin-bottom:14px}
+.lrow h3 small{font-family:"Noto Sans TC",sans-serif; font-size:12px; color:var(--sub); display:inline-flex; gap:10px; align-items:center}
+.lrow h3 small::before{content:""; width:12px; height:1px; background:var(--sub)}
+.lrow p{font-size:14px; line-height:2.2}
+.more{display:flex; justify-content:flex-end; align-items:center; gap:10px; font-size:13px; margin-top:6px}
+.sim{position:relative; display:block; overflow:hidden; min-height:420px; color:#fff; text-decoration:none}
+.sim img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+.sim:hover img{transform:scale(1.05)}
+.sim::after{content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(0,0,0,.6),rgba(0,0,0,.1))}
+.sim-in{position:absolute; left:36px; right:36px; bottom:36px; z-index:1; display:grid; gap:12px}
+.sim-in b{font-weight:400; font-size:clamp(28px,3vw,40px)}
+.sim-in span{font-size:14px; line-height:2}
+.sim-in .pill{color:#fff}
+@media (max-width:860px){ .l-grid{grid-template-columns:1fr} .sim{min-height:320px} }
 
-/* 聯絡帶 */
-.contact-band{background:var(--blue); color:#fff; text-align:center}
-.contact-band h2{color:#fff; font-size:clamp(22px,3vw,30px); letter-spacing:.1em; margin-bottom:12px}
-.contact-band p{font-size:17px; margin-bottom:6px}
-.contact-band a{color:#fff}
-.contact-band .btns{justify-content:center}
-.contact-band .btn.outline{background:transparent; color:#fff; border-color:#fff}
-.contact-band .btn.outline:hover{background:rgba(255,255,255,.12)}
+/* Contact */
+.contact{position:relative; color:#fff; overflow:hidden}
+.contact > img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.contact::before{content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(35,35,35,.82) 0%,rgba(35,35,35,.62) 60%,rgba(35,35,35,.5) 100%); z-index:1}
+.ct-in{position:relative; z-index:2; display:grid; grid-template-columns:1.2fr 1fr; gap:40px; align-items:center; padding-block:clamp(100px,12vw,170px)}
+.contact h2{color:#fff; font-weight:400; font-size:clamp(30px,3.2vw,42px); margin-bottom:26px}
+.contact p{font-size:14px; line-height:2.4}
+.contact a{color:#fff}
+.tel{margin-top:14px}
+.btn.big{padding:26px 44px; justify-self:end}
+@media (max-width:860px){ .ct-in{grid-template-columns:1fr} .btn.big{justify-self:start; padding:20px 26px} }
 </style>

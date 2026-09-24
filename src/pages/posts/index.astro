@@ -4,11 +4,11 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import PageBanner from '../../components/PageBanner.astro';
 import Sidebar from '../../components/Sidebar.astro';
+import { coverFor } from '../../lib/cover';
 const posts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.data.date);
-const cover: Record<string, string> = { 稅務: 'tax', 繼承實務: 'inherit', 贈與節稅: 'gift', 買賣過戶: 'transfer', 抵押設定: 'mortgage' };
 ---
 <Base title="專欄文章｜遺產稅・贈與稅・繼承實務｜台中中友地政士事務所" description="遺產稅、贈與稅、繼承登記與財產傳承的實務文章。主筆蔡峻豪地政士，每一篇都附法條依據。台中代書推薦。">
-  <PageBanner title="專欄文章" sub="ARTICLE" />
+  <PageBanner title="專欄文章" sub="COLUMN" />
   <main class="wrap layout">
     <Sidebar />
     <section class="list">
@@ -17,7 +17,7 @@ const cover: Record<string, string> = { 稅務: 'tax', 繼承實務: 'inherit', 
       <div class="rows" id="rows">
         {posts.map((p) => (
           <a class="row" data-cat={p.data.category} href={`/posts/${p.id.replace(/\.md$/, '')}/`}>
-            <img class="thumb" src={`/photo/cover-${cover[p.data.category] ?? 'tax'}.webp`} alt="" width="800" height="400" loading="lazy" />
+            <img class="thumb" src={coverFor(p.id, p.data.category, posts)} alt="" width="800" height="400" loading="lazy" />
             <span class="body">
               <span class="meta"><span class="cat">{p.data.category}</span><time>發佈：{p.data.date.toISOString().slice(0, 10).replaceAll('-', '/')}</time></span>
               <h2>{p.data.title}</h2>

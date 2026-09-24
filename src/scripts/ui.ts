@@ -1,51 +1,91 @@
-// src/scripts/ui.ts — 全站互動：置頂導覽、手機選單、進場、回頂
-const nav = document.getElementById('nav');
-const burger = document.getElementById('burger');
-const menu = document.getElementById('mobile-menu');
+// src/scripts/ui.ts — 全站互動：選單、logo 深淺、首屏輪播、進場、大字視差、回頂
+import Lenis from 'lenis';
 
-const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 10);
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const body = document.body;
+
+// 平滑捲動
+let lenis: Lenis | null = null;
+if (!reduced) {
+  lenis = new Lenis({ lerp: 0.1 });
+  const raf = (t: number) => { lenis!.raf(t); requestAnimationFrame(raf); };
+  requestAnimationFrame(raf);
+}
+
+// 選單
+const menu = document.getElementById('menu');
+const openBtn = document.getElementById('menu-open');
+const closeBtn = document.getElementById('menu-close');
+const setMenu = (open: boolean) => {
+  menu?.classList.toggle('open', open);
+  menu?.setAttribute('aria-hidden', String(!open));
+  openBtn?.setAttribute('aria-expanded', String(open));
+  if (open) lenis?.stop(); else lenis?.start();
+};
+menu?.querySelectorAll<HTMLElement>('.o-nav a').forEach((a, i) => a.style.setProperty('--i', String(i)));
+openBtn?.addEventListener('click', () => setMenu(true));
+closeBtn?.addEventListener('click', () => setMenu(false));
+menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+// logo 深淺：首頁首屏上是白字
+const hero = document.getElementById('hero');
+if (hero) body.classList.add('on-dark');
+const onScroll = () => {
+  const past = hero ? window.scrollY > hero.offsetHeight - 80 : window.scrollY > 10;
+  body.classList.toggle('scrolled', past);
+};
 onScroll();
 addEventListener('scroll', onScroll, { passive: true });
 
-burger?.addEventListener('click', () => {
-  const open = menu?.classList.toggle('open');
-  burger.setAttribute('aria-expanded', String(!!open));
-  document.body.style.overflow = open ? 'hidden' : '';
-});
-menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
-  menu.classList.remove('open');
-  burger?.setAttribute('aria-expanded', 'false');
-  document.body.style.overflow = '';
-}));
+// 首屏輪播
+if (hero) {
+  const slides = [...hero.querySelectorAll<HTMLElement>('.slide')];
+  const dots = [...hero.querySelectorAll<HTMLButtonElement>('.pager button')];
+  let cur = 0;
+  let timer = 0;
+  const go = (n: number) => {
+    cur = (n + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle('on', i === cur));
+    dots.forEach((d, i) => d.classList.toggle('on', i === cur));
+    // 預先載入下一張
+    const next = slides[(cur + 1) % slides.length]?.querySelector('img');
+    if (next && next.loading === 'lazy') next.loading = 'eager';
+  };
+  const start = () => { clearInterval(timer); if (!reduced) timer = window.setInterval(() => go(cur + 1), 6500); };
+  dots.forEach((d) => d.addEventListener('click', () => { go(Number(d.dataset.go)); start(); }));
+  start();
+}
 
-// 下拉選單（桌機 hover、手機點擊）
-document.querySelectorAll<HTMLElement>('.has-sub > button').forEach((b) => {
-  b.addEventListener('click', () => b.parentElement?.classList.toggle('open'));
-});
-
-// 進場：舊頁面的 .reveal 也一併處理
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// 進場
 const els = document.querySelectorAll<HTMLElement>('.reveal');
+const show = (el: HTMLElement) => { el.classList.add('in'); el.style.opacity = '1'; el.style.transform = 'none'; };
 if (reduced || !('IntersectionObserver' in window)) {
-  els.forEach((el) => { el.classList.add('in'); el.style.opacity = '1'; el.style.transform = 'none'; });
+  els.forEach(show);
 } else {
   const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      const el = e.target as HTMLElement;
-      el.classList.add('in'); el.style.opacity = '1'; el.style.transform = 'none';
-      io.unobserve(el);
-    });
-  }, { rootMargin: '0px 0px -8% 0px' });
+    entries.forEach((e) => { if (e.isIntersecting) { show(e.target as HTMLElement); io.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -10% 0px' });
   els.forEach((el) => io.observe(el));
+  // 保險：背景分頁或觀察器沒觸發時，2 秒後一律顯示已在畫面上方的元素
+  setTimeout(() => els.forEach((el) => { if (el.getBoundingClientRect().top < innerHeight) show(el); }), 2000);
+}
+
+// 大字視差
+const word = document.getElementById('word');
+if (word && !reduced) {
+  const upd = () => {
+    const r = word.parentElement!.getBoundingClientRect();
+    const p = (innerHeight - r.top) / (innerHeight + r.height);
+    word.style.transform = `translateX(${(0.5 - p) * 120}px)`;
+  };
+  upd();
+  addEventListener('scroll', upd, { passive: true });
 }
 
 // 回頂
 const top = document.getElementById('to-top');
-const onTop = () => top?.classList.toggle('show', window.scrollY > 600);
+const onTop = () => top?.classList.toggle('show', window.scrollY > 700);
 onTop();
 addEventListener('scroll', onTop, { passive: true });
-top?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-// 保險：分頁在背景或觀察器沒觸發時，1.5 秒後一律顯示
-setTimeout(() => els.forEach((el) => { el.classList.add('in'); el.style.opacity = '1'; el.style.transform = 'none'; }), 1500);
+top?.addEventListener('click', () => (lenis ? lenis.scrollTo(0) : window.scrollTo({ top: 0, behavior: 'smooth' })));
