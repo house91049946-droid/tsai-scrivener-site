@@ -46,3 +46,6 @@ const onTop = () => top?.classList.toggle('show', window.scrollY > 600);
 onTop();
 addEventListener('scroll', onTop, { passive: true });
 top?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// 保險：分頁在背景或觀察器沒觸發時，1.5 秒後一律顯示
+setTimeout(() => els.forEach((el) => { el.classList.add('in'); el.style.opacity = '1'; el.style.transform = 'none'; }), 1500);
