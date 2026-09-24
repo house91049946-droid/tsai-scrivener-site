@@ -162,9 +162,12 @@ const serviceSchema = {
 
     {services.map((s) => (
       <section class="item" id={s.id} data-io>
+        <img class="item-img reveal" src={`/illus/svc-${({'estate-tax':'estate','gift-tax':'gift','inheritance':'inherit','succession':'plan','property-tax':'ptax','transfer':'transfer'} as Record<string,string>)[s.id]}.svg`} alt="" width="400" height="220" loading="lazy" />
+        <div>
         <h2 class="reveal">{s.name}</h2>
         <p class="item-lead reveal d1">{s.lead}</p>
         <ul class="reveal d2">{s.points.map((pt) => <li>{pt}</li>)}</ul>
+        </div>
       </section>
     ))}
 
@@ -203,7 +206,9 @@ const serviceSchema = {
 .lead{color:#3A3D45; margin-bottom:1.1em; line-height:1.9}
 .lead strong{box-shadow:inset 0 -0.22em var(--gold-tint)}
 .lead a{color:var(--gold-dark); font-weight:700}
-.item{margin-top:64px; scroll-margin-top:90px}
+.item{margin-top:64px; scroll-margin-top:90px; display:grid; grid-template-columns:260px 1fr; gap:28px; align-items:start}
+.item-img{width:100%; height:auto; border:1px solid var(--line); border-radius:6px}
+@media (max-width:700px){ .item{grid-template-columns:1fr} .item-img{max-width:360px} }
 .item h2{font-size:clamp(21px,2.8vw,28px); font-weight:900; margin-bottom:10px;
   padding-left:16px; border-left:4px solid var(--seal)}
 .item-lead{color:var(--sub); font-size:15px; margin-bottom:18px}

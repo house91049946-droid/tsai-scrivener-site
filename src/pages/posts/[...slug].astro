@@ -21,7 +21,7 @@ const banner: Record<string, { glyph: string; sub: string }> = {
   買賣過戶: { glyph: '移', sub: 'TRANSFER' },
   抵押設定: { glyph: '抵', sub: 'MORTGAGE' },
 };
-const b = banner[post.data.category] ?? { glyph: '法', sub: 'LAW' };
+const coverOf: Record<string, string> = { 稅務: 'tax', 繼承實務: 'inherit', 贈與節稅: 'gift', 買賣過戶: 'transfer', 抵押設定: 'mortgage' };
 ---
 <Base title={post.data.title} description={post.data.description}
   article={{ publishedTime: d, category: post.data.category }}>
@@ -33,27 +33,7 @@ const b = banner[post.data.category] ?? { glyph: '法', sub: 'LAW' };
     <p class="meta"><span class="cat">{post.data.category}</span><time>{d}</time></p>
     <h1>{post.data.title}</h1>
 
-    <figure class="banner" aria-hidden="true">
-      <svg viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" role="presentation">
-        <rect width="1200" height="300" fill="var(--blue-d)" />
-        <g opacity="0.09" fill="none" stroke="var(--paper)" stroke-width="1.5">
-          <path d="M0 220 H1200 M0 150 H1200 M0 80 H1200" />
-          <path d="M200 0 V300 M400 0 V300 M600 0 V300 M800 0 V300 M1000 0 V300" />
-        </g>
-        <g opacity="0.16">
-          <circle cx="1010" cy="150" r="118" fill="none" stroke="var(--gold)" stroke-width="2" />
-          <circle cx="1010" cy="150" r="82" fill="none" stroke="var(--gold)" stroke-width="1" />
-        </g>
-        <rect x="60" y="92" width="116" height="116" rx="10" fill="none" stroke="var(--seal)" stroke-width="5"
-          transform="rotate(-3 118 150)" />
-        <text x="118" y="150" text-anchor="middle" dominant-baseline="central"
-          fill="var(--seal)" font-size="62" font-weight="900"
-          transform="rotate(-3 118 150)">{b.glyph}</text>
-        <text x="222" y="136" fill="var(--paper)" font-size="30" font-weight="900" letter-spacing="4">{post.data.category}</text>
-        <text x="224" y="176" fill="var(--gold)" font-size="14" font-weight="700" letter-spacing="8">{b.sub}</text>
-        <text x="224" y="212" fill="#9EA2AB" font-size="13" letter-spacing="3">中友地政士事務所．法律專欄</text>
-      </svg>
-    </figure>
+    <figure class="banner" aria-hidden="true"><img src={`/illus/cover-${coverOf[post.data.category] ?? 'tax'}.svg`} alt="" width="800" height="400" /></figure>
 
     <Content />
 
@@ -82,7 +62,7 @@ const b = banner[post.data.category] ?? { glyph: '法', sub: 'LAW' };
 
 /* 題圖 */
 .banner{margin:0 0 36px; border-radius:14px; overflow:hidden; line-height:0}
-.banner svg{width:100%; height:auto; aspect-ratio:4/1; display:block}
+.banner img{width:100%; height:auto; aspect-ratio:2/1; object-fit:cover; display:block; border:1px solid var(--line)}
 
 /* ===== 內文排版 ===== */
 .article :global(h2){font-size:23px; margin:52px 0 14px; padding-left:14px; border-left:4px solid var(--seal)}

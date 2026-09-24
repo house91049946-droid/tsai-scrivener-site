@@ -9,19 +9,20 @@ const posts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.da
 const hasOffice = fs.existsSync('public/img/hero-office.jpg');
 
 const flow = [
-  { n: '01', t: '來電諮詢', d: '電話或 LINE 說明情況，先告訴你會遇到哪些稅、大概流程。' },
-  { n: '02', t: '稅費試算', d: '遺產稅、贈與稅、土增稅、契稅先算清楚，再決定做不做。' },
-  { n: '03', t: '委任簽約', d: '確認委任範圍與費用，白紙黑字，沒有隱藏收費。' },
-  { n: '04', t: '代書流程', d: '申報、完稅、送件、領狀，進度主動回報。' },
-  { n: '05', t: '圓滿結案', d: '交付權狀與完稅證明，後續傳承規劃持續諮詢。' },
+  { n: '01', i: 'phone', t: '來電諮詢', d: '電話或 LINE 說明情況，先告訴你會遇到哪些稅、大概流程。' },
+  { n: '02', i: 'calc', t: '稅費試算', d: '遺產稅、贈與稅、土增稅、契稅先算清楚，再決定做不做。' },
+  { n: '03', i: 'sign', t: '委任簽約', d: '確認委任範圍與費用，白紙黑字，沒有隱藏收費。' },
+  { n: '04', i: 'folder', t: '代書流程', d: '申報、完稅、送件、領狀，進度主動回報。' },
+  { n: '05', i: 'done', t: '圓滿結案', d: '交付權狀與完稅證明，後續傳承規劃持續諮詢。' },
 ];
+const cover: Record<string, string> = { 稅務: 'tax', 繼承實務: 'inherit', 贈與節稅: 'gift', 買賣過戶: 'transfer', 抵押設定: 'mortgage' };
 const services = [
-  { h: '遺產稅申報與規劃', d: '免稅額 1,333 萬、扣除額逐項核對，分期與實物抵繳評估。', href: '/services/#estate-tax' },
-  { h: '贈與稅與分年贈與', d: '每人每年 244 萬免稅額怎麼用、婚嫁 100 萬、視同贈與怎麼避。', href: '/services/#gift-tax' },
-  { h: '繼承登記與遺產分割', d: '繼承系統表、分割協議書、公同共有登記，6 個月期限守住。', href: '/services/#inheritance' },
-  { h: '家族財產傳承規劃', d: '生前贈與或身後繼承，兩條路的稅負算給你看。', href: '/services/#succession' },
-  { h: '房地合一稅與土增稅', d: '持有期間、自用住宅優惠、重購退稅，賣房前先算。', href: '/services/#property-tax' },
-  { h: '買賣過戶與抵押設定', d: '產權調查、履約保證、完稅送件到領狀全程辦理。', href: '/services/#transfer' },
+  { h: '遺產稅申報與規劃', d: '免稅額 1,333 萬、扣除額逐項核對，分期與實物抵繳評估。', href: '/services/#estate-tax', img: 'estate' },
+  { h: '贈與稅與分年贈與', d: '每人每年 244 萬免稅額怎麼用、婚嫁 100 萬、視同贈與怎麼避。', href: '/services/#gift-tax', img: 'gift' },
+  { h: '繼承登記與遺產分割', d: '繼承系統表、分割協議書、公同共有登記，6 個月期限守住。', href: '/services/#inheritance', img: 'inherit' },
+  { h: '家族財產傳承規劃', d: '生前贈與或身後繼承，兩條路的稅負算給你看。', href: '/services/#succession', img: 'plan' },
+  { h: '房地合一稅與土增稅', d: '持有期間、自用住宅優惠、重購退稅，賣房前先算。', href: '/services/#property-tax', img: 'ptax' },
+  { h: '買賣過戶與抵押設定', d: '產權調查、履約保證、完稅送件到領狀全程辦理。', href: '/services/#transfer', img: 'transfer' },
 ];
 const faq = {
   '@context': 'https://schema.org',
@@ -41,9 +42,7 @@ const faq = {
   <main>
     <!-- 首屏 -->
     <section class={`hero ${hasOffice ? 'office' : 'portrait'}`}>
-      {hasOffice
-        ? <img class="bg" src="/img/hero-office.jpg" alt="中友地政士事務所" width="1920" height="1080" fetchpriority="high" />
-        : <img class="person" src="/img/hero-jh.webp" alt="蔡峻豪地政士" width="709" height="1700" fetchpriority="high" />}
+      <img class="bg" src={hasOffice ? '/img/hero-office.jpg' : '/illus/hero.svg'} alt="台中中友地政士事務所" width="1600" height="640" fetchpriority="high" />
       <div class="wrap hero-in">
         <h1>台中代書推薦｜中友地政士事務所</h1>
         <div class="box">
@@ -59,7 +58,7 @@ const faq = {
       <div class="wrap">
         <div class="sec-title"><h2>服務流程</h2><small>PROCESS</small></div>
         <ol class="flow">
-          {flow.map((f) => <li class="reveal"><span class="n">{f.n}</span><b>{f.t}</b><p>{f.d}</p></li>)}
+          {flow.map((f) => <li class="reveal"><span class="n"><img src={`/illus/flow-${f.i}.svg`} alt="" width="120" height="120" loading="lazy" /><i>{f.n}</i></span><b>{f.t}</b><p>{f.d}</p></li>)}
         </ol>
       </div>
     </section>
@@ -78,12 +77,24 @@ const faq = {
       </div>
     </section>
 
+    <!-- 三位地政士 -->
+    <section class="section" id="people">
+      <div class="wrap">
+        <div class="sec-title"><h2>三位地政士</h2><small>OUR TEAM</small><p>代書世家，一家人三張執照一起把關。</p></div>
+        <div class="team">
+          <figure class="reveal"><img src="/img/p-jh.jpg" alt="蔡峻豪 地政士" width="840" height="1120" loading="lazy" /><figcaption><b>蔡峻豪</b><small>地政士・主筆</small><p>地政士、不動產經紀人、土地開發師。本站文章的執筆與審定人。</p></figcaption></figure>
+          <figure class="reveal"><img src="/img/p-cq.jpg" alt="蔡崇欽 地政士" width="840" height="1120" loading="lazy" /><figcaption><b>蔡崇欽</b><small>地政士</small><p class="pend">［待補：專長與經歷］</p></figcaption></figure>
+          <figure class="reveal"><img src="/img/p-dg.jpg" alt="丁玉梅 地政士" width="840" height="1120" loading="lazy" /><figcaption><b>丁玉梅</b><small>地政士</small><p class="pend">［待補：專長與經歷］</p></figcaption></figure>
+        </div>
+      </div>
+    </section>
+
     <!-- 服務項目 -->
     <section class="section" id="svc">
       <div class="wrap">
         <div class="sec-title"><h2>服務項目</h2><small>SERVICE</small></div>
         <div class="svc">
-          {services.map((s) => <a class="card reveal" href={s.href}><h3>{s.h}</h3><p>{s.d}</p><span>詳細說明 ›</span></a>)}
+          {services.map((s) => <a class="card reveal" href={s.href}><img src={`/illus/svc-${s.img}.svg`} alt="" width="400" height="220" loading="lazy" /><div class="cb"><h3>{s.h}</h3><p>{s.d}</p><span>詳細說明 ›</span></div></a>)}
         </div>
       </div>
     </section>
@@ -112,10 +123,13 @@ const faq = {
         <div class="news">
           {posts.map((p) => (
             <a class="post reveal" href={`/posts/${p.id.replace(/\.md$/, '')}/`}>
+              <img src={`/illus/cover-${cover[p.data.category] ?? 'tax'}.svg`} alt="" width="800" height="400" loading="lazy" />
+              <div class="pb">
               <span class="cat">{p.data.category}</span>
               <h3>{p.data.title}</h3>
               <p>{p.data.description}</p>
               <time>發佈：{p.data.date.toISOString().slice(0, 10).replaceAll('-', '/')}</time>
+              </div>
             </a>
           ))}
         </div>
@@ -136,9 +150,8 @@ const faq = {
 
 <style>
 /* 首屏 */
-.hero{position:relative; min-height:clamp(420px,56vw,640px); overflow:hidden; background:linear-gradient(110deg,#EEF2F8 0%,#DCE5F3 60%,#C9D8EE 100%)}
-.hero .bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
-.hero .person{position:absolute; right:clamp(0px,8vw,160px); bottom:0; height:96%; width:auto; filter:drop-shadow(0 20px 40px rgba(20,40,80,.25))}
+.hero{position:relative; min-height:clamp(380px,40vw,640px); overflow:hidden; background:#EEF3FA}
+.hero .bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom}
 .hero-in{position:relative; height:100%; min-height:inherit}
 .hero h1{position:absolute; left:clamp(16px,4vw,40px); top:clamp(40px,6vw,80px); font-size:clamp(20px,2.6vw,32px); color:var(--blue-d); letter-spacing:.1em}
 .hero .box{position:absolute; left:clamp(16px,4vw,40px); bottom:clamp(40px,7vw,90px); background:var(--blue); color:#fff; padding:22px 30px; border-radius:var(--radius);
@@ -147,8 +160,7 @@ const faq = {
 .hero .box span{font-size:13.5px; letter-spacing:.12em; color:rgba(255,255,255,.85)}
 .kwline{font-size:12px; color:var(--sub); letter-spacing:.08em; padding-block:10px; border-bottom:1px solid var(--line)}
 @media (max-width:760px){
-  .hero{min-height:0; aspect-ratio:4/5}
-  .hero .person{right:-10%; height:80%}
+  .hero{min-height:0; aspect-ratio:1/1}
   .hero h1{font-size:18px}
   .hero .box{left:16px; right:16px; bottom:22px; padding:16px 18px}
 }
@@ -157,7 +169,9 @@ const faq = {
 .flow{list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(5,1fr); gap:18px; counter-reset:f}
 .flow li{text-align:center; position:relative; padding:0 6px}
 .flow li:not(:last-child)::after{content:""; position:absolute; right:-14px; top:38px; width:12px; height:12px; border-right:2px solid var(--line); border-bottom:2px solid var(--line); transform:rotate(-45deg)}
-.flow .n{display:grid; place-items:center; width:84px; height:84px; margin:0 auto 14px; border-radius:50%; border:2px solid var(--blue); color:var(--blue); font-size:22px; font-weight:700; background:#fff}
+.flow .n{position:relative; display:grid; place-items:center; width:104px; height:104px; margin:0 auto 14px; border-radius:50%; border:2px solid var(--blue-l); background:#fff}
+.flow .n img{width:64px; height:64px}
+.flow .n i{position:absolute; right:-4px; top:-4px; width:30px; height:30px; border-radius:50%; background:var(--blue); color:#fff; font-style:normal; font-size:12px; font-weight:700; display:grid; place-items:center}
 .flow b{display:block; color:var(--ink); font-size:17px; letter-spacing:.1em; margin-bottom:6px}
 .flow p{font-size:13.5px; color:var(--sub); margin:0}
 @media (max-width:900px){ .flow{grid-template-columns:repeat(2,1fr)} .flow li::after{display:none} .flow li:last-child{grid-column:1/-1} }
@@ -172,8 +186,10 @@ const faq = {
 
 /* 服務 */
 .svc{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
-.card{background:#fff; border:1px solid var(--line); border-top:4px solid var(--blue); padding:26px 24px; text-decoration:none; color:var(--text);
-  border-radius:var(--radius); transition:transform .3s,box-shadow .3s; display:grid; gap:10px}
+.card{background:#fff; border:1px solid var(--line); text-decoration:none; color:var(--text); overflow:hidden;
+  border-radius:var(--radius); transition:transform .3s,box-shadow .3s; display:grid; grid-template-rows:auto 1fr}
+.card img{width:100%; height:auto; aspect-ratio:400/220; object-fit:cover; border-bottom:1px solid var(--line)}
+.card .cb{padding:20px 22px 22px; display:grid; gap:8px}
 .card:hover{transform:translateY(-4px); box-shadow:var(--shadow)}
 .card h3{font-size:18px}
 .card p{font-size:14px; color:var(--sub); margin:0}
@@ -193,14 +209,28 @@ const faq = {
 
 /* 文章 */
 .news{display:grid; grid-template-columns:repeat(2,1fr); gap:18px}
-.post{display:grid; gap:8px; padding:22px 24px; border:1px solid var(--line); border-radius:var(--radius); text-decoration:none; color:var(--text); background:#fff; transition:box-shadow .3s,border-color .3s}
+.post{display:grid; grid-template-columns:220px 1fr; border:1px solid var(--line); border-radius:var(--radius); text-decoration:none; color:var(--text); background:#fff; overflow:hidden; transition:box-shadow .3s,border-color .3s}
+.post img{width:100%; height:100%; object-fit:cover; border-right:1px solid var(--line)}
+.post .pb{display:grid; gap:6px; padding:18px 20px; align-content:start}
 .post:hover{box-shadow:var(--shadow); border-color:var(--blue)}
 .post .cat{font-size:12px; color:var(--blue); font-weight:700; letter-spacing:.14em}
 .post h3{font-size:17px; line-height:1.5}
 .post p{font-size:13.5px; color:var(--sub); margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
 .post time{font-size:12.5px; color:var(--sub)}
 .more{display:flex; justify-content:center; margin-top:30px}
-@media (max-width:700px){ .news{grid-template-columns:1fr} }
+@media (max-width:1000px){ .news{grid-template-columns:1fr} }
+@media (max-width:520px){ .post{grid-template-columns:1fr} .post img{aspect-ratio:2/1; border-right:0; border-bottom:1px solid var(--line)} }
+
+/* 團隊 */
+.team{display:grid; grid-template-columns:repeat(3,1fr); gap:24px}
+.team figure{margin:0; background:#fff; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
+.team img{width:100%; aspect-ratio:3/4; object-fit:cover}
+.team figcaption{padding:16px 18px 20px}
+.team b{font-size:19px; color:var(--ink); margin-right:8px}
+.team small{font-size:12.5px; color:var(--blue); letter-spacing:.14em; font-weight:700}
+.team p{margin:8px 0 0; font-size:14px; color:var(--sub)}
+.team .pend{color:var(--accent); border:1px dashed var(--accent); padding:4px 8px; display:inline-block; font-size:12.5px}
+@media (max-width:820px){ .team{grid-template-columns:1fr; max-width:420px; margin:0 auto} }
 
 /* 聯絡帶 */
 .contact-band{background:var(--blue); color:#fff; text-align:center}
