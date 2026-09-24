@@ -73,7 +73,7 @@ topics:
     category: 繼承實務
     keyword: 公同共有 繼承登記
     intent: 繼承人談不攏但期限快到，想知道有沒有折衷做法
-    status: open
+    status: done
   - slug: insurance-not-in-estate
     title_hint: 保險金一定不用課遺產稅嗎？沒那麼簡單
     category: 稅務
