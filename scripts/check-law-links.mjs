@@ -38,8 +38,14 @@ for (const ref of refs) {
       if (i) await new Promise((r) => setTimeout(r, 3000 * i));
       res = await fetch(ref.url, { method: 'GET' }).catch(() => null);
     }
-    if (!res || !res.ok) {
-      console.error(`連結失效（${res?.status ?? '網路錯誤'}）: ${ref.url}`);
+    if (!res) {
+      // law.moj.gov.tw 常擋境外（GitHub Actions）連線：連不上只警告，真正的查驗在台灣的 mini 上跑（LAW_CHECK_STRICT=1）
+      console.warn(`連不上（網路錯誤，未查驗）: ${ref.url}`);
+      if (process.env.LAW_CHECK_STRICT === '1') fail = 1;
+      continue;
+    }
+    if (!res.ok) {
+      console.error(`連結失效（${res.status}）: ${ref.url}`);
       fail = 1;
       continue;
     }
