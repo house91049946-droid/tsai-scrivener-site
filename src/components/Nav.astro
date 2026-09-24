@@ -11,7 +11,7 @@ const links = [
   <span><b>中友地政士事務所</b><small class="en">Zhongyou Land Scrivener Office</small></span>
 </a>
 
-<button class="burger" id="menu-btn" aria-label="開啟選單" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+<button class="burger" id="menu-btn" aria-label="開啟選單" aria-expanded="false" aria-controls="menu"><i class="lines"><span></span><span></span><span></span></i><b class="lbl">選單</b></button>
 
 <aside class="rail" aria-label="側欄">
   <button class="r-menu" id="menu-open" aria-expanded="false" aria-controls="menu"><span class="bars"><i></i><i></i></span><span class="en">Menu</span></button>
@@ -43,19 +43,23 @@ const links = [
 :global(body.scrolled) .logo{color:var(--ink); background:rgba(237,237,237,.92); box-shadow:0 2px 14px rgba(0,0,0,.06)}
 :global(body.scrolled) .logo small{display:none}
 
-/* 右上角漢堡鈕 */
-.burger{position:fixed; top:clamp(14px,1.8vw,24px); right:calc(var(--rail) + clamp(16px,2vw,28px)); z-index:95; width:52px; height:52px; border-radius:50%;
-  border:1px solid currentColor; background:transparent; color:var(--ink); cursor:pointer; display:grid; place-content:center; gap:5px;
-  transition:color .4s, background .3s, border-color .4s}
-.burger span{display:block; width:20px; height:1.5px; background:currentColor; transition:transform .45s cubic-bezier(.19,1,.22,1), opacity .3s}
-.burger:hover{background:rgba(255,255,255,.12)}
-:global(body.on-dark) .burger{color:#fff}
-:global(body.scrolled) .burger{color:var(--ink); background:rgba(237,237,237,.85)}
-:global(body.menu-open) .burger{color:#fff; background:transparent}
-:global(body.menu-open) .burger span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-:global(body.menu-open) .burger span:nth-child(2){opacity:0}
-:global(body.menu-open) .burger span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-
+/* 右上角選單鈕：實心膠囊，任何背景都醒目 */
+.burger{position:fixed; top:clamp(12px,1.6vw,22px); right:calc(var(--rail) + clamp(14px,2vw,26px)); z-index:95;
+  display:flex; align-items:center; gap:12px; height:54px; padding:0 22px 0 18px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.35); background:#2E2E2E; color:#fff; cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,.28); transition:background .3s, color .3s, transform .3s, box-shadow .3s; font-family:inherit}
+.burger:hover{background:#000; transform:translateY(-1px); box-shadow:0 12px 30px rgba(0,0,0,.34)}
+.burger .lines{display:grid; gap:5px}
+.burger .lines span{display:block; width:22px; height:2px; background:currentColor; border-radius:2px; transition:transform .45s cubic-bezier(.19,1,.22,1), opacity .3s}
+.burger .lbl{font-weight:500; font-size:14px; letter-spacing:.24em}
+:global(body.menu-open) .burger{background:#fff; color:#2E2E2E; border-color:#fff}
+:global(body.menu-open) .burger .lines span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+:global(body.menu-open) .burger .lines span:nth-child(2){opacity:0}
+:global(body.menu-open) .burger .lines span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media (prefers-reduced-motion:no-preference){
+  .burger::after{content:""; position:absolute; inset:-1px; border-radius:inherit; border:1px solid #2E2E2E; animation:ring 2.6s ease-out 1.2s 3; pointer-events:none}
+  @keyframes ring{0%{opacity:.7; transform:scale(1)} 100%{opacity:0; transform:scale(1.35)}}
+}
 .rail{position:fixed; top:0; right:0; bottom:0; width:var(--rail); z-index:70; display:grid; grid-template-rows:1fr 1fr}
 .rail > *{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; border:0; cursor:pointer; text-decoration:none; font-size:13px}
 .rail .en{writing-mode:vertical-rl; letter-spacing:.14em}
@@ -87,7 +91,7 @@ const links = [
 
 @media (max-width:960px){
   .rail{display:none}
-  .burger{right:16px; width:46px; height:46px}
+  .burger{right:14px; height:48px; padding:0 16px 0 14px}
   .logo small{display:none}
   .o-in{grid-template-columns:1fr; gap:30px}
   .o-nav{grid-template-columns:1fr}

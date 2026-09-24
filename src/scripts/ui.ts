@@ -23,6 +23,7 @@ const setMenu = (open: boolean) => {
   body.classList.toggle('menu-open', open);
   [openBtn, burgerBtn].forEach((b) => b?.setAttribute('aria-expanded', String(open)));
   burgerBtn?.setAttribute('aria-label', open ? '關閉選單' : '開啟選單');
+  const lbl = burgerBtn?.querySelector('.lbl'); if (lbl) lbl.textContent = open ? '關閉' : '選單';
   if (open) lenis?.stop(); else lenis?.start();
 };
 burgerBtn?.addEventListener('click', () => setMenu(!menu?.classList.contains('open')));
