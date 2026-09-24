@@ -162,7 +162,7 @@ const serviceSchema = {
 
     {services.map((s) => (
       <section class="item" id={s.id} data-io>
-        <img class="item-img reveal" src={`/illus/svc-${({'estate-tax':'estate','gift-tax':'gift','inheritance':'inherit','succession':'plan','property-tax':'ptax','transfer':'transfer'} as Record<string,string>)[s.id]}.svg`} alt="" width="400" height="220" loading="lazy" />
+        <img class="item-img reveal" src={`/photo/svc-${({'estate-tax':'estate','gift-tax':'gift','inheritance':'inherit','succession':'plan','property-tax':'ptax','transfer':'transfer'} as Record<string,string>)[s.id]}.webp`} alt="" width="400" height="220" loading="lazy" />
         <div>
         <h2 class="reveal">{s.name}</h2>
         <p class="item-lead reveal d1">{s.lead}</p>

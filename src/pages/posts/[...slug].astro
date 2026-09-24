@@ -33,7 +33,7 @@ const coverOf: Record<string, string> = { 稅務: 'tax', 繼承實務: 'inherit'
     <p class="meta"><span class="cat">{post.data.category}</span><time>{d}</time></p>
     <h1>{post.data.title}</h1>
 
-    <figure class="banner" aria-hidden="true"><img src={`/illus/cover-${coverOf[post.data.category] ?? 'tax'}.svg`} alt="" width="800" height="400" /></figure>
+    <figure class="banner" aria-hidden="true"><img src={`/photo/cover-${coverOf[post.data.category] ?? 'tax'}.webp`} alt="" width="800" height="400" /></figure>
 
     <Content />
 

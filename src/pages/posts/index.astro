@@ -17,7 +17,7 @@ const cover: Record<string, string> = { 稅務: 'tax', 繼承實務: 'inherit', 
       <div class="rows" id="rows">
         {posts.map((p) => (
           <a class="row" data-cat={p.data.category} href={`/posts/${p.id.replace(/\.md$/, '')}/`}>
-            <img class="thumb" src={`/illus/cover-${cover[p.data.category] ?? 'tax'}.svg`} alt="" width="800" height="400" loading="lazy" />
+            <img class="thumb" src={`/photo/cover-${cover[p.data.category] ?? 'tax'}.webp`} alt="" width="800" height="400" loading="lazy" />
             <span class="body">
               <span class="meta"><span class="cat">{p.data.category}</span><time>發佈：{p.data.date.toISOString().slice(0, 10).replaceAll('-', '/')}</time></span>
               <h2>{p.data.title}</h2>

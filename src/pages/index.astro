@@ -42,7 +42,7 @@ const faq = {
   <main>
     <!-- 首屏 -->
     <section class={`hero ${hasOffice ? 'office' : 'portrait'}`}>
-      <img class="bg" src={hasOffice ? '/img/hero-office.jpg' : '/illus/hero.svg'} alt="台中中友地政士事務所" width="1600" height="640" fetchpriority="high" />
+      <img class="bg" src={hasOffice ? '/img/hero-office.jpg' : '/photo/hero-street.webp'} alt="台中中友地政士事務所" width="1600" height="640" fetchpriority="high" />
       <div class="wrap hero-in">
         <div class="box">
           <h1>台中代書推薦｜中友地政士事務所</h1>
@@ -58,7 +58,7 @@ const faq = {
       <div class="wrap">
         <div class="sec-title"><h2>服務流程</h2><small>PROCESS</small></div>
         <ol class="flow">
-          {flow.map((f) => <li class="reveal"><span class="n"><img src={`/illus/flow-${f.i}.svg`} alt="" width="120" height="120" loading="lazy" /><i>{f.n}</i></span><b>{f.t}</b><p>{f.d}</p></li>)}
+          {flow.map((f) => <li class="reveal"><span class="n"><img src={`/photo/flow-${f.i}.webp`} alt="" width="240" height="240" loading="lazy" /><i>{f.n}</i></span><b>{f.t}</b><p>{f.d}</p></li>)}
         </ol>
       </div>
     </section>
@@ -86,7 +86,7 @@ const faq = {
       <div class="wrap">
         <div class="sec-title"><h2>服務項目</h2><small>SERVICE</small></div>
         <div class="svc">
-          {services.map((s) => <a class="card reveal" href={s.href}><img src={`/illus/svc-${s.img}.svg`} alt="" width="400" height="220" loading="lazy" /><div class="cb"><h3>{s.h}</h3><p>{s.d}</p><span>詳細說明 ›</span></div></a>)}
+          {services.map((s) => <a class="card reveal" href={s.href}><img src={`/photo/svc-${s.img}.webp`} alt="" width="800" height="450" loading="lazy" /><div class="cb"><h3>{s.h}</h3><p>{s.d}</p><span>詳細說明 ›</span></div></a>)}
         </div>
       </div>
     </section>
@@ -115,7 +115,7 @@ const faq = {
         <div class="news">
           {posts.map((p) => (
             <a class="post reveal" href={`/posts/${p.id.replace(/\.md$/, '')}/`}>
-              <img src={`/illus/cover-${cover[p.data.category] ?? 'tax'}.svg`} alt="" width="800" height="400" loading="lazy" />
+              <img src={`/photo/cover-${cover[p.data.category] ?? 'tax'}.webp`} alt="" width="800" height="400" loading="lazy" />
               <div class="pb">
               <span class="cat">{p.data.category}</span>
               <h3>{p.data.title}</h3>
@@ -143,7 +143,7 @@ const faq = {
 <style>
 /* 首屏 */
 .hero{position:relative; height:clamp(460px,40vw,620px); overflow:hidden; background:#EEF3FA}
-.hero .bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom}
+.hero .bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 60%}
 .hero-in{position:relative; height:100%; display:flex; align-items:flex-start; padding-top:clamp(28px,4vw,56px)}
 .hero .box{background:rgba(255,255,255,.94); border-left:6px solid var(--blue); padding:22px 28px 24px; border-radius:var(--radius);
   box-shadow:0 10px 30px rgba(20,40,80,.12); display:grid; gap:8px; max-width:470px}
@@ -153,7 +153,7 @@ const faq = {
 .hero-btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
 @media (max-width:760px){
   .hero{height:auto; display:flex; flex-direction:column-reverse}
-  .hero .bg{position:static; height:auto; aspect-ratio:4/3; object-position:52% bottom}
+  .hero .bg{position:static; height:auto; aspect-ratio:4/3; object-position:62% center}
   .hero-in{padding-block:22px 18px; background:#fff}
   .hero .box{box-shadow:none; padding:4px 0 4px 16px; max-width:none}
 }
@@ -162,8 +162,9 @@ const faq = {
 .flow{list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(5,1fr); gap:18px; counter-reset:f}
 .flow li{text-align:center; position:relative; padding:0 6px}
 .flow li:not(:last-child)::after{content:""; position:absolute; right:-14px; top:38px; width:12px; height:12px; border-right:2px solid var(--line); border-bottom:2px solid var(--line); transform:rotate(-45deg)}
-.flow .n{position:relative; display:grid; place-items:center; width:104px; height:104px; margin:0 auto 14px; border-radius:50%; border:2px solid var(--blue-l); background:#fff}
-.flow .n img{width:64px; height:64px}
+.flow .n{position:relative; display:grid; place-items:center; width:120px; height:120px; margin:0 auto 14px; border-radius:50%; border:4px solid #fff; box-shadow:var(--shadow); background:#fff}
+.flow .n{overflow:visible}
+.flow .n img{width:100%; height:100%; object-fit:cover; border-radius:50%}
 .flow .n i{position:absolute; right:-4px; top:-4px; width:30px; height:30px; border-radius:50%; background:var(--blue); color:#fff; font-style:normal; font-size:12px; font-weight:700; display:grid; place-items:center}
 .flow b{display:block; color:var(--ink); font-size:17px; letter-spacing:.1em; margin-bottom:6px}
 .flow p{font-size:13.5px; color:var(--sub); margin:0}
@@ -187,7 +188,7 @@ const faq = {
 .svc{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
 .card{background:#fff; border:1px solid var(--line); text-decoration:none; color:var(--text); overflow:hidden;
   border-radius:var(--radius); transition:transform .3s,box-shadow .3s; display:grid; grid-template-rows:auto 1fr}
-.card img{width:100%; height:auto; aspect-ratio:400/220; object-fit:cover; border-bottom:1px solid var(--line)}
+.card img{width:100%; height:auto; aspect-ratio:16/9; object-fit:cover}
 .card .cb{padding:20px 22px 22px; display:grid; gap:8px}
 .card:hover{transform:translateY(-4px); box-shadow:var(--shadow)}
 .card h3{font-size:18px}
