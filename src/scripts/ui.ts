@@ -16,12 +16,16 @@ if (!reduced) {
 const menu = document.getElementById('menu');
 const openBtn = document.getElementById('menu-open');
 const closeBtn = document.getElementById('menu-close');
+const burgerBtn = document.getElementById('menu-btn');
 const setMenu = (open: boolean) => {
   menu?.classList.toggle('open', open);
   menu?.setAttribute('aria-hidden', String(!open));
-  openBtn?.setAttribute('aria-expanded', String(open));
+  body.classList.toggle('menu-open', open);
+  [openBtn, burgerBtn].forEach((b) => b?.setAttribute('aria-expanded', String(open)));
+  burgerBtn?.setAttribute('aria-label', open ? '關閉選單' : '開啟選單');
   if (open) lenis?.stop(); else lenis?.start();
 };
+burgerBtn?.addEventListener('click', () => setMenu(!menu?.classList.contains('open')));
 menu?.querySelectorAll<HTMLElement>('.o-nav a').forEach((a, i) => a.style.setProperty('--i', String(i)));
 openBtn?.addEventListener('click', () => setMenu(true));
 closeBtn?.addEventListener('click', () => setMenu(false));
