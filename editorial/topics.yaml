@@ -43,7 +43,7 @@ topics:
     category: 稅務
     keyword: 繼承 房地合一稅 持有期間
     intent: 繼承後想賣房，擔心被課重稅
-    status: open
+    status: done
   - slug: gift-property-three-taxes
     title_hint: 把房子送給小孩，其實要繳三種稅
     category: 贈與節稅
@@ -61,7 +61,7 @@ topics:
     category: 稅務
     keyword: 遺產稅 未成年子女 扣除額
     intent: 家中有未成年子女，想知道扣除額怎麼加計
-    status: open
+    status: done
   - slug: two-degree-relative-sale
     title_hint: 賣給自己兒子？二親等買賣會被當成贈與
     category: 贈與節稅

@@ -1,0 +1,67 @@
+---
+// src/pages/faq.astro — 常見問題（含 FAQPage schema）
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+
+const groups = [
+  { g: '遺產稅', qa: [
+    ['遺產不到免稅額，還要申報嗎？', '要。只要有遺產，就要在死亡日起 6 個月內申報，不論有沒有稅。申報後拿到的免稅證明書，是辦繼承登記、領存款的必要文件。'],
+    ['2026（115年度）遺產稅免稅額是多少？', '免稅額 1,333 萬元。另有配偶扣除額 553 萬元、直系血親卑親屬每人 56 萬元、父母每人 138 萬元、喪葬費 138 萬元、重度以上身心障礙 693 萬元等扣除額。淨額 5,621 萬元以下 10%，5,621 萬至 1 億 1,242 萬元 15%，超過 20%。'],
+    ['遺產稅繳不出現金怎麼辦？', '納稅義務人確有困難時可以申請分期繳納；符合要件也可以申請用被繼承人遺留的實物（例如土地）抵繳。實物抵繳有價值認定與比例限制，建議申報階段就一併評估。'],
+    ['遺產稅要在什麼時候申報？可以延期嗎？', '應於被繼承人死亡之日起 6 個月內申報。有正當理由得於期限屆滿前申請延期，一般以 3 個月為限。逾期會有滯報金與利息。'],
+  ]},
+  { g: '贈與稅', qa: [
+    ['每年給小孩 244 萬，真的完全不用申報？', '同一年度贈與總額在 244 萬以內免稅、免申報。但「一年」是以贈與人為單位、合計所有受贈人，父母各自有各自的額度；給的是不動產，還有土地增值稅與契稅要另外算。'],
+    ['不動產生前贈與給子女，總共要繳哪些稅？', '贈與稅（以公告現值與評定現值計算，超過 244 萬的部分課 10% 至 20%）、土地增值稅（贈與案件由受贈人負擔）、契稅（受贈人負擔）。受贈人日後出售時，房地合一稅的取得成本以受贈時公告現值計算，可能墊高日後稅負。'],
+    ['賣給自己的小孩，算贈與嗎？', '二親等以內親屬間的買賣，法律上先推定為贈與，除非能證明價金確實支付且資金來源不是來自出賣人。沒有金流證明，就會被課贈與稅。'],
+  ]},
+  { g: '繼承登記', qa: [
+    ['繼承登記一定要 6 個月內辦完嗎？', '土地法規定死亡後 6 個月內要申請登記，逾期按月加罰登記費。繼承人談不攏，可以先辦公同共有登記保住期限，之後再處理分割。'],
+    ['兄弟姊妹對遺產分割談不攏，可以先辦繼承登記嗎？', '可以。全體繼承人可先辦理公同共有的繼承登記，守住 6 個月期限，之後再協議分割或訴請裁判分割。公同共有狀態下處分須全體同意，仍建議儘早完成分割協議。'],
+    ['繼承人在國外，文件怎麼辦？', '可在當地由我國駐外館處驗證授權書與印鑑證明相關文件，委託國內繼承人或地政士辦理。各國文件驗證方式不同，先聯絡我們確認要準備什麼。'],
+  ]},
+  { g: '委任與收費', qa: [
+    ['找地政士要多少錢？可以先問再決定嗎？', '可以。LINE 或電話先描述情況，我們會告訴你會遇到哪些稅、大概流程與費用，初步討論不收費，確定委任才報價。收費項目見收費標準頁。'],
+    ['台中地區可以到府或到醫院辦理嗎？', '可以。事務所位於台中市東區東英七街 55 號，服務範圍以台中市與中彰投地區為主。長輩行動不便或住院的案件，可安排到府、到院辦理對保與簽署。'],
+  ]},
+];
+const schema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: groups.flatMap((g) => g.qa.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } }))),
+};
+---
+<Base title="常見問題｜遺產稅・贈與稅・繼承登記｜台中中友地政士事務所" description="遺產稅免稅額、贈與稅 244 萬怎麼用、繼承登記 6 個月期限、代書費怎麼算。台中中友地政士事務所常見問題整理。" schema={schema}>
+  <PageBanner title="常見問題" sub="QUESTIONS" />
+  <main class="wrap faq">
+    <p class="crumb"><a href="/">首頁</a> / 常見問題</p>
+    <h1 class="page-title">來之前，先看這幾題</h1>
+    {groups.map((g) => (
+      <section class="grp">
+        <h2>{g.g}</h2>
+        {g.qa.map(([q, a]) => (
+          <details>
+            <summary><span class="q">Q</span>{q}</summary>
+            <div class="a"><span class="q">A</span><p>{a}</p></div>
+          </details>
+        ))}
+      </section>
+    ))}
+    <p class="tail">沒看到你的問題？<a href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 直接問</a>，或看<a href="/posts/">專欄文章</a>。</p>
+  </main>
+</Base>
+<style>
+.faq{max-width:860px}
+.grp{margin-bottom:34px}
+.grp h2{font-size:18px; color:var(--blue); letter-spacing:.1em; margin-bottom:8px; padding-bottom:8px; border-bottom:2px solid var(--blue)}
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none; cursor:pointer; display:flex; gap:12px; align-items:flex-start; padding:16px 4px; font-weight:700; color:var(--ink); font-size:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+"; margin-left:auto; color:var(--blue); font-size:20px; line-height:1}
+details[open] summary::after{content:"−"}
+.q{flex:none; width:26px; height:26px; border-radius:50%; display:grid; place-items:center; font-size:13px; font-weight:700; background:var(--blue); color:#fff; margin-top:2px}
+.a{display:flex; gap:12px; padding:0 4px 18px}
+.a .q{background:var(--accent)}
+.a p{margin:0; color:var(--text); font-size:15px}
+.tail{color:var(--sub); font-size:14.5px}
+.tail a{color:var(--blue); font-weight:700}
+</style>
