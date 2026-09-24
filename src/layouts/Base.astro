@@ -20,7 +20,7 @@ interface Props {
 const { title, description, article, schema, ogImage = '/og/default.jpg' } = Astro.props;
 const ogUrl = new URL(ogImage, Astro.site).href;
 // Google Analytics 4：在 Cloudflare Pages 環境變數設 PUBLIC_GA_ID（G-XXXXXXX）才會載入
-const gaId = import.meta.env.PUBLIC_GA_ID;
+const gaId = import.meta.env.PUBLIC_GA_ID || 'G-JVY3YEQ0YD';  // GA4 資源「中友地政士事務所 zoyoland.com」（house91049946 帳號）
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
 // 全站組織 schema：本地商家（台中）＋專業服務，主打稅務與財產傳承
@@ -91,8 +91,14 @@ const extra = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   <meta name="twitter:image" content={ogUrl} />
   <meta name="theme-color" content="#EDEDED" />
   <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM summary" />
-  {gaId && <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>}
-  {gaId && <script is:inline define:vars={{ gaId }}>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config',gaId);</script>}
+  {gaId && <script is:inline define:vars={{ gaId }}>
+    // 只在正式網址統計，預覽與本機不送資料
+    if (/(^|\.)zoyoland\.com$/.test(location.hostname)) {
+      var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId; document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || []; window.gtag = function(){ dataLayer.push(arguments); };
+      gtag('js', new Date()); gtag('config', gaId);
+    }
+  </script>}
   <script type="application/ld+json" set:html={JSON.stringify(org)} />
   {extra.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   {article && (
