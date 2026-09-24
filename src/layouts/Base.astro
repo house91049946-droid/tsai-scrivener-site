@@ -1,8 +1,10 @@
 ---
 // src/layouts/Base.astro
 import '@fontsource/noto-sans-tc/400.css';
+import '@fontsource/noto-sans-tc/500.css';
 import '@fontsource/noto-sans-tc/700.css';
 import '@fontsource/noto-sans-tc/900.css';
+import 'lenis/dist/lenis.css';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -12,8 +14,13 @@ interface Props {
   article?: { publishedTime: string; category: string };
   /** 頁面專屬 JSON-LD（FAQPage、Service、BreadcrumbList 等），會與全站組織 schema 併存 */
   schema?: Record<string, unknown> | Record<string, unknown>[];
+  /** 分享縮圖（站內路徑，1200x630），預設為品牌圖 */
+  ogImage?: string;
 }
-const { title, description, article, schema } = Astro.props;
+const { title, description, article, schema, ogImage = '/og/default.jpg' } = Astro.props;
+const ogUrl = new URL(ogImage, Astro.site).href;
+// Google Analytics 4：在 Cloudflare Pages 環境變數設 PUBLIC_GA_ID（G-XXXXXXX）才會載入
+const gaId = import.meta.env.PUBLIC_GA_ID;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
 // 全站組織 schema：本地商家（台中）＋專業服務，主打稅務與財產傳承
@@ -26,9 +33,11 @@ const org = {
   description:
     '台中中友地政士事務所，三位地政士的代書世家。專辦遺產稅、贈與稅、繼承登記與家族財產傳承規劃。',
   url: 'https://zoyoland.com',
-  telephone: '+886955377283',
+  telephone: '+886915006336',
   priceRange: '$$',
-  image: 'https://zoyoland.com/favicon.svg',
+  image: 'https://zoyoland.com/og/default.jpg',
+  logo: 'https://zoyoland.com/favicon.svg',
+  hasMap: 'https://www.google.com/maps/search/?api=1&query=台中市東區東英七街55號',
   address: {
     '@type': 'PostalAddress',
     streetAddress: '東英七街55號',
@@ -45,9 +54,9 @@ const org = {
     '房地合一稅', '土地增值稅', '不動產過戶', '抵押權設定', '節稅規劃',
   ],
   employee: [
-    { '@type': 'Person', name: '蔡峻豪', jobTitle: '地政士', knowsAbout: ['遺產稅', '贈與稅', '財產傳承規劃'] },
-    { '@type': 'Person', name: '蔡崇欽', jobTitle: '地政士' },
+    { '@type': 'Person', name: '蔡崇欽', jobTitle: '地政士（簽證人）' },
     { '@type': 'Person', name: '丁玉梅', jobTitle: '地政士' },
+    { '@type': 'Person', name: '蔡峻豪', jobTitle: '地政士', alumniOf: { '@type': 'CollegeOrUniversity', name: '逢甲大學' }, knowsAbout: ['遺產稅', '贈與稅', '財產傳承規劃'] },
   ],
   sameAs: ['https://www.facebook.com/chunhao.tsai1'],
 };
@@ -63,6 +72,9 @@ const extra = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" />
   <meta property="og:site_name" content="中友地政士事務所" />
   <meta property="og:locale" content="zh_TW" />
   <meta property="og:title" content={title} />
@@ -72,6 +84,15 @@ const extra = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
+  <meta property="og:image" content={ogUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={title} />
+  <meta name="twitter:image" content={ogUrl} />
+  <meta name="theme-color" content="#EDEDED" />
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM summary" />
+  {gaId && <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>}
+  {gaId && <script is:inline define:vars={{ gaId }}>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config',gaId);</script>}
   <script type="application/ld+json" set:html={JSON.stringify(org)} />
   {extra.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   {article && (
@@ -87,21 +108,13 @@ const extra = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       articleSection: article.category,
     })} />
   )}
-  <noscript>
-    <style>
-      .reveal, .line-inner, .eyebrow, .hero .sub, .names, .btns, .portrait {
-        opacity: 1 !important;
-        transform: none !important;
-      }
-    </style>
-  </noscript>
 </head>
 <body>
   <Nav />
   <slot />
   <Footer />
   <script>
-    import '../scripts/motion.ts';
+    import '../scripts/ui.ts';
   </script>
 </body>
 </html>

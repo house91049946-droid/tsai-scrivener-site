@@ -1,0 +1,125 @@
+---
+// src/pages/tools/property-tax.astro — 房地合一稅試算（境內居住之個人）
+// 法源（2026-09-24 查證）：所得稅法 §14-4 第1項（所得計算）、第3項（稅率：2年內45%、2-5年35%、5-10年20%、逾10年15%；自住超過400萬部分10%）、
+// 第4項（繼承或受遺贈得合併被繼承人持有期間）；§4-5（自住房地：設籍居住連續滿6年等要件，免稅所得額以400萬為限）。
+import Base from '../../layouts/Base.astro';
+import '../../styles/tool.css';
+---
+<Base title="房地合一稅試算｜持有年限與自住 400 萬免稅｜中友地政士事務所"
+  description="房地合一稅線上試算：依持有期間 45%、35%、20%、15% 自動計算；符合自住條件免稅 400 萬、超過部分 10%。繼承取得可合併持有期間。台中中友地政士事務所提供。">
+  <main class="tool">
+    <p class="crumb"><a href="/tools/">試算工具</a> / 房地合一稅</p>
+    <h1>房地合一稅試算<span class="yr">2026</span></h1>
+    <p class="lead">同一間房，晚一年賣，稅率可能從 35% 掉到 20%。輸入成交價與成本，看持有年限差多少。</p>
+
+    <div class="calc">
+      <div class="panel">
+        <label for="sale">成交價額（萬元）</label>
+        <input id="sale" type="number" inputmode="numeric" min="0" step="10" value="2000" />
+
+        <fieldset>
+          <legend>取得方式</legend>
+          <label class="opt"><input type="radio" name="how" value="buy" checked />買賣取得</label>
+          <label class="opt"><input type="radio" name="how" value="inherit" />繼承或受贈取得</label>
+        </fieldset>
+
+        <label for="cost" id="cost-label">原始取得成本（萬元）</label>
+        <input id="cost" type="number" inputmode="numeric" min="0" step="10" value="1500" />
+        <span class="hint" id="cost-hint">買進的價格。</span>
+
+        <label for="fee">取得、改良及移轉費用（萬元）</label>
+        <input id="fee" type="number" inputmode="numeric" min="0" step="1" value="40" />
+        <span class="hint">例如仲介費、代書費、契稅、裝修改良支出，以有單據者為準。</span>
+
+        <label for="lvi">土地漲價總數額（萬元，選填）</label>
+        <input id="lvi" type="number" inputmode="numeric" min="0" step="1" value="0" />
+        <span class="hint">土地增值稅繳款書上的「土地漲價總數額」，可以從所得中減除。</span>
+
+        <label for="hold">持有期間</label>
+        <select id="hold">
+          <option value="45">2 年以內（45%）</option>
+          <option value="35">超過 2 年、未逾 5 年（35%）</option>
+          <option value="20" selected>超過 5 年、未逾 10 年（20%）</option>
+          <option value="15">超過 10 年（15%）</option>
+        </select>
+
+        <label class="opt chk"><input type="checkbox" id="self" />符合自住房地條件（本人、配偶或未成年子女設籍並居住連續滿 6 年，交易前 6 年內未出租、營業，且 6 年內未用過此優惠）</label>
+
+        <button id="calc-btn" type="button">試算</button>
+      </div>
+
+      <div class="panel result" id="result" hidden>
+        <div class="sum"><span>應納房地合一稅</span><b id="tax-out">0</b><i>元</i></div>
+        <div class="steps" id="steps"></div>
+        <a class="cta" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">賣之前先算一次——LINE 找我們</a>
+      </div>
+    </div>
+
+    <section class="ref">
+      <h2>房地合一稅稅率（境內居住之個人）</h2>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>持有期間</th><th>稅率</th></tr></thead>
+          <tbody>
+            <tr><td>2 年以內</td><td>45%</td></tr>
+            <tr><td>超過 2 年、未逾 5 年</td><td>35%</td></tr>
+            <tr><td>超過 5 年、未逾 10 年</td><td>20%</td></tr>
+            <tr><td>超過 10 年</td><td>15%</td></tr>
+            <tr><td>符合自住房地條件</td><td>400 萬元以內免稅，超過部分 10%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="notes">
+        <li>課稅所得＝成交價額 − 取得成本 − 取得、改良及移轉費用 − 依土地稅法計算的土地漲價總數額。</li>
+        <li><b>繼承或受贈取得</b>的房地，取得成本是繼承或受贈時的房屋評定現值加公告土地現值，按消費者物價指數調整後的價值。</li>
+        <li>繼承或受遺贈取得的房地，<b>可以把被繼承人的持有期間合併計算</b>，稅率可能因此降低。</li>
+        <li>房地合一稅主要適用 105 年 1 月 1 日以後取得的房地；更早取得的房地多數仍適用舊制，出售前請先確認。</li>
+        <li>非境內居住之個人稅率不同（2 年以內 45%、超過 2 年 35%），本試算未涵蓋。</li>
+        <li>交易後 30 日內須申報，即使沒有獲利也要申報。</li>
+        <li>法條依據：<a href="https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340003&flno=14-4" rel="noopener">所得稅法第 14 條之 4</a>、<a href="https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340003&flno=4-5" rel="noopener">第 4 條之 5</a>。</li>
+      </ul>
+      <p class="disclaimer">本試算為一般性估算，未涵蓋預售屋、特定股權交易、營利事業、重購退抵稅額等個案情形，實際稅額以稽徵機關核定為準；非個案法律或稅務意見。</p>
+    </section>
+  </main>
+</Base>
+
+<script>
+  const fmt = (n: number) => Math.round(n).toLocaleString('zh-Hant-TW');
+  const $ = <T extends HTMLElement = HTMLInputElement>(id: string) => document.getElementById(id) as T;
+  const num = (id: string) => Math.max(0, Number($(id).value) || 0);
+
+  document.querySelectorAll<HTMLInputElement>('input[name="how"]').forEach((r) => r.addEventListener('change', () => {
+    const inherit = r.value === 'inherit' && r.checked;
+    $('cost-label').textContent = inherit ? '繼承或受贈時的現值（萬元）' : '原始取得成本（萬元）';
+    $('cost-hint').textContent = inherit ? '繼承或受贈時的房屋評定現值＋公告土地現值，按消費者物價指數調整後的金額。持有期間可與被繼承人合併計算。' : '買進的價格。';
+  }));
+
+  $('calc-btn').addEventListener('click', () => {
+    const sale = num('sale'), cost = num('cost'), fee = num('fee'), lvi = num('lvi');
+    const rate = Number($<HTMLSelectElement>('hold').value);
+    const self = $('self').checked;
+    const income = sale - cost - fee - lvi;
+    let tax = 0; const lines: string[] = [];
+    lines.push(`<p>課稅所得：${fmt(sale)} − ${fmt(cost)} − ${fmt(fee)} − ${fmt(lvi)} ＝ <b>${fmt(income)} 萬</b></p>`);
+    if (income <= 0) {
+      lines.push('<p class="good">沒有獲利，不用繳稅；但交易後 30 日內仍要申報。</p>');
+    } else if (self) {
+      const taxable = Math.max(0, income - 400);
+      tax = taxable * 0.10;
+      lines.push(`<p>自住房地：所得 ${fmt(income)} 萬 − 免稅 400 萬 ＝ ${fmt(taxable)} 萬，按 10% 課稅</p>`);
+      if (rate >= 35) lines.push('<p>提醒：自住優惠需要設籍並居住連續滿 6 年，你選的持有期間未滿 6 年，請確認是否符合。</p>');
+      if (taxable === 0) lines.push('<p class="good">所得在 400 萬以內，免稅。</p>');
+    } else {
+      tax = income * rate / 100;
+      lines.push(`<p>適用稅率 ${rate}%：${fmt(income)} 萬 × ${rate}% ＝ <b>${(income * rate / 100).toFixed(1)} 萬</b></p>`);
+      if (rate > 15) lines.push(`<p>若持有滿下一個年限，稅率會降到 ${rate === 45 ? 35 : rate === 35 ? 20 : 15}%。</p>`);
+    }
+    $('steps').innerHTML = lines.join('');
+    $('result').hidden = false;
+    const out = $('tax-out'), target = tax * 10000;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { out.textContent = fmt(target); return; }
+    let t0 = 0; const dur = 900;
+    const step = (t: number) => { if (!t0) t0 = t; const p = Math.min((t - t0) / dur, 1); out.textContent = fmt(target * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  });
+</script>

@@ -1,57 +1,340 @@
 ---
+// src/pages/index.astro — 首頁（2026-09 改版：參考 ateliercu.jp）
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import Hero from '../components/home/Hero.astro';
-import Chips from '../components/home/Chips.astro';
-import ThreePeople from '../components/home/ThreePeople.astro';
-import PainVow from '../components/home/PainVow.astro';
-import Stages from '../components/home/Stages.astro';
-import ColumnList from '../components/home/ColumnList.astro';
-import ContactCta from '../components/home/ContactCta.astro';
+import { coverFor } from '../lib/cover';
 
-// 首頁 FAQ：鎖定「遺產稅免稅額」「贈與稅怎麼算」等高搜尋量問題
+const all = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.data.date);
+const posts = all.slice(0, 6);
+const latest = all[0];
+const slug = (p: typeof all[number]) => `/posts/${p.id.replace(/\.md$/, '')}/`;
+
+const slides = [
+  { img: 'hero-street', label: 'Tax', h: '遺產稅・贈與稅規劃', t: '先把稅算清楚，再決定怎麼傳。', en: 'Calculate first, then pass it on.', href: '/services/#estate-tax' },
+  { img: 'svc-inherit', label: 'Inheritance', h: '繼承登記與遺產分割', t: '六個月的期限，一家人替你把關。', en: 'Six months. One family. Every document in order.', href: '/services/#inheritance' },
+  { img: 'svc-plan', label: 'Planning', h: '家族財產傳承規劃', t: '生前贈與還是身後繼承，兩條路算給你看。', en: 'Two paths, one clear answer.', href: '/services/#succession' },
+  { img: 'svc-transfer', label: 'Transfer', h: '不動產買賣過戶', t: '印章蓋下去之前，產權先查清楚。', en: 'Check the title before the seal.', href: '/services/#transfer' },
+];
+
+// 服務圓環：六等分扇形
+const svcs = [
+  { zh: '遺產稅', en: 'Estate Tax', id: 'estate-tax' },
+  { zh: '贈與稅', en: 'Gift Tax', id: 'gift-tax' },
+  { zh: '繼承登記', en: 'Inheritance', id: 'inheritance' },
+  { zh: '傳承規劃', en: 'Succession', id: 'succession' },
+  { zh: '房地合一稅', en: 'Property Tax', id: 'property-tax' },
+  { zh: '買賣過戶', en: 'Transfer', id: 'transfer' },
+];
+const R = 200, r = 82, cx = 210, cy = 210, gap = 1.4;
+const rad = (d: number) => (d - 90) * Math.PI / 180;
+const xy = (a: number, rr: number) => [cx + rr * Math.cos(rad(a)), cy + rr * Math.sin(rad(a))];
+const pt = (a: number, rr: number) => xy(a, rr).map((n) => n.toFixed(2)).join(' ');
+const wedges = svcs.map((s, i) => {
+  const a0 = i * 60 + gap, a1 = (i + 1) * 60 - gap, am = i * 60 + 30;
+  const d = `M${pt(a0, r)} L${pt(a0, R)} A${R} ${R} 0 0 1 ${pt(a1, R)} L${pt(a1, r)} A${r} ${r} 0 0 0 ${pt(a0, r)} Z`;
+  const [lx, ly] = xy(am, (R + r) / 2);
+  return { ...s, d, lx: lx.toFixed(1), ly: ly.toFixed(1) };
+});
+const svcList = [
+  ['遺產稅申報與規劃', 'estate-tax'], ['贈與稅與分年贈與', 'gift-tax'], ['繼承登記與遺產分割', 'inheritance'],
+  ['家族財產傳承規劃', 'succession'], ['房地合一稅與土增稅', 'property-tax'], ['買賣過戶與抵押設定', 'transfer'],
+];
+const tags = ['#遺產稅免稅額1,333萬', '#每人每年贈與免稅244萬', '#配偶扣除額553萬', '#繼承登記六個月內', '#公同共有先保期限', '#房地合一稅持有年限', '#自用住宅土增稅10%', '#分年贈與', '#二親等買賣視同贈與', '#遺產稅實物抵繳', '#子女婚嫁贈與100萬', '#死亡前兩年贈與併計'];
+
 const faq = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: [
-    {
-      '@type': 'Question',
-      name: '2026（民國115年）遺產稅免稅額是多少？',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: '遺產稅免稅額為新臺幣 1,333 萬元，115 年度維持不變。另有配偶扣除額 553 萬元、直系血親卑親屬每人 56 萬元、父母每人 138 萬元、喪葬費 138 萬元等扣除額。遺產淨額 5,621 萬元以下適用 10%，5,621 萬至 1 億 1,242 萬元適用 15%，超過部分適用 20%。',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: '贈與稅一年可以免稅贈與多少？',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: '每一位贈與人每年有 244 萬元免稅額，父母各自計算，一年合計可免稅贈與 488 萬元。子女婚嫁時，每位贈與人另有 100 萬元免稅額（須於結婚登記前後 6 個月內）。超過免稅額的部分應於贈與行為發生後 30 日內申報。',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: '生前贈與和身後繼承，哪一種比較省稅？',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: '沒有一體適用的答案，要看財產種類、金額、持有年限與家庭狀況。不動產生前贈與會產生贈與稅與土地增值稅，受贈人日後出售還可能適用房地合一稅；繼承則有 1,333 萬元免稅額與各項扣除額。實務上常見做法是分年贈與搭配繼承規劃，建議先試算再決定。',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: '繼承登記有期限嗎？沒辦會怎樣？',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: '遺產稅應於被繼承人死亡之日起 6 個月內申報，繼承登記亦應自繼承開始之日起 6 個月內申請。逾期未辦理繼承登記可能被處以罰鍰，且土地會被列冊管理；未完成登記前，該不動產無法出售、設定抵押或辦理其他處分。',
-      },
-    },
+    { '@type': 'Question', name: '2026（民國115年）遺產稅免稅額是多少？', acceptedAnswer: { '@type': 'Answer', text: '遺產稅免稅額為新臺幣 1,333 萬元。另有配偶扣除額 553 萬元、直系血親卑親屬每人 56 萬元、父母每人 138 萬元、喪葬費 138 萬元等扣除額。遺產淨額 5,621 萬元以下適用 10%，5,621 萬至 1 億 1,242 萬元適用 15%，超過部分適用 20%。' } },
+    { '@type': 'Question', name: '贈與稅一年可以免稅贈與多少？', acceptedAnswer: { '@type': 'Answer', text: '每一位贈與人每年有 244 萬元免稅額，父母各自計算。子女婚嫁時，每位贈與人另有 100 萬元免稅額（結婚登記前後 6 個月內）。超過免稅額的部分應於贈與後 30 日內申報。' } },
+    { '@type': 'Question', name: '繼承登記有期限嗎？沒辦會怎樣？', acceptedAnswer: { '@type': 'Answer', text: '遺產稅應於死亡之日起 6 個月內申報，繼承登記亦應自繼承開始之日起 6 個月內申請。逾期未辦繼承登記會被處罰鍰並列冊管理，未完成登記前該不動產無法出售、設定抵押或處分。' } },
   ],
 };
 ---
 <Base
-  title="遺產稅・贈與稅・財產傳承規劃｜台中中友地政士事務所"
-  description="遺產稅、贈與稅、繼承登記與家族財產傳承規劃。台中中友地政士事務所，三位地政士的代書世家：先把稅算清楚，再決定怎麼傳。諮詢 0955-377-283。"
+  title="台中代書推薦｜中友地政士事務所｜遺產稅・贈與稅・繼承登記"
+  description="台中中友地政士事務所，三位地政士的代書世家。專辦遺產稅申報、贈與稅規劃、繼承登記與家族財產傳承。台中東區、太平兩個據點，先把稅算清楚再決定。電話 0915-006-336。"
   schema={faq}
 >
-  <Hero /><Chips /><ThreePeople /><PainVow /><Stages /><ColumnList /><ContactCta />
+  <main>
+    <!-- 首屏輪播 -->
+    <section class="hero" id="hero" aria-roledescription="carousel">
+      {slides.map((s, i) => (
+        <div class={`slide${i === 0 ? ' on' : ''}`} data-i={i}>
+          <img src={`/photo/${s.img}.webp`} alt="" width="1600" height="900" fetchpriority={i === 0 ? 'high' : 'low'} loading={i === 0 ? 'eager' : 'lazy'} />
+          <div class="cap">
+            <p class="lab en">— {s.label}</p>
+            {i === 0 ? <h1>{s.h}<span class="sr">｜台中代書推薦・中友地政士事務所</span></h1> : <p class="h">{s.h}</p>}
+            <p class="t">{s.t}<a class="pill" href={s.href} aria-label={`${s.h} 詳細說明`}>→</a></p>
+            <p class="e en">{s.en}</p>
+          </div>
+        </div>
+      ))}
+      <a class="news" href={slug(latest)}><time class="en">{latest.data.date.toISOString().slice(0, 10).replaceAll('-', '.')}</time><span>{latest.data.title}</span></a>
+      <a class="scroll-cue" href="#people" aria-label="往下看三位地政士"><span>往下看　三位地政士</span><i aria-hidden="true"></i></a>
+      <div class="pager en">{slides.map((_, i) => <button class={i === 0 ? 'on' : ''} data-go={i} aria-label={`第 ${i + 1} 張`}>{String(i + 1).padStart(2, '0')}</button>)}</div>
+    </section>
+
+    <!-- Members：一滑就看到三位地政士 -->
+    <section class="section members" id="people">
+      <div class="wrap">
+        <div class="sec-title reveal"><h2>Members<small>三位地政士</small></h2><p>由蔡崇欽、丁玉梅兩位地政士主持，代書世家，一家人三張執照一起把關。</p></div>
+        <div class="m-grid">
+          <a class="reveal" href="/about/#people"><figure><img src="/img/p-cq.jpg" alt="蔡崇欽 地政士・簽證人" width="840" height="1050" /><figcaption><small class="r">地政士・簽證人</small><b>蔡崇欽</b><span class="en">Tsai Chung-Chin</span><span class="c">依地政士法登記之簽證人</span></figcaption></figure></a>
+          <a class="reveal" href="/about/#people"><figure><img src="/img/p-dg.jpg" alt="丁玉梅 地政士" width="840" height="1050" /><figcaption><small class="r">地政士</small><b>丁玉梅</b><span class="en">Ting Yu-Mei</span><span class="c">中友地政士事務所</span></figcaption></figure></a>
+          <a class="reveal" href="/about/#people"><figure><img src="/img/p-jh.jpg" alt="蔡峻豪 地政士" width="840" height="1050" /><figcaption><small class="r">地政士・專欄主筆</small><b>蔡峻豪</b><span class="en">Tsai Chun-Hao</span><span class="c">逢甲大學財經法律碩士班</span></figcaption></figure></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Concept -->
+    <section class="section concept" id="concept">
+      <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2 36 11v18L20 38 4 29V11z" fill="none" stroke="currentColor" stroke-width="3.2"/></svg>
+      <div class="wrap c-grid">
+        <div class="reveal">
+          <h2 class="en c-h">Concept</h2>
+          <p class="c-lead">把稅算清楚，是傳承的第一步<br>「Tax First, Family Always」</p>
+          <p class="c-en en">Understand the numbers.<br>Protect the family.<br>Pass it on with clarity.</p>
+        </div>
+        <div class="c-body reveal">
+          <p>我們不只是辦登記的代書，而是把每一筆不動產，當作一個家庭的「資產」來看待。</p>
+          <p>遺產稅、贈與稅、房地合一稅、土地增值稅——在傳承這件事上，登記只是最後一步，決定你多繳還是少繳的，是前面那些沒人跟你算清楚的數字。</p>
+          <p>中友地政士事務所是一個代書世家，三位地政士在同一個事務所執業。每一件案子，不是一個人的判斷，是一家人三張執照一起看。</p>
+          <p>我們習慣把生硬的法條翻成人話，透明報價、主動回報進度。先講你的情況，我們告訴你會遇到什麼、下一步是什麼。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 照片拼貼＋大字 -->
+    <section class="collage" aria-hidden="true">
+      <div class="row">
+        <img class="c1" src="/photo/flow-done.webp" alt="" width="300" height="300" loading="lazy" />
+        <img class="c2" src="/photo/svc-estate.webp" alt="" width="900" height="505" loading="lazy" />
+        <img class="c3" src="/photo/flow-sign.webp" alt="" width="300" height="300" loading="lazy" />
+        <img class="c4" src="/photo/svc-gift.webp" alt="" width="900" height="505" loading="lazy" />
+      </div>
+      <p class="word en" id="word">ZHONGYOU.</p>
+    </section>
+
+    <!-- What We Do -->
+    <section class="section wwd" id="service">
+      <div class="wrap">
+        <div class="sec-title reveal"><h2>What We Do<small>服務內容</small></h2></div>
+        <div class="w-grid">
+          <svg class="ring reveal" viewBox="0 0 420 420" role="img" aria-label="六項服務">
+            {wedges.map((w) => (
+              <a href={`/services/#${w.id}`}>
+                <path d={w.d} class="wedge" />
+                <text x={w.lx} y={Number(w.ly) - 3} text-anchor="middle" class="wz">{w.zh}</text>
+                <text x={w.lx} y={Number(w.ly) + 15} text-anchor="middle" class="we">{w.en}</text>
+              </a>
+            ))}
+            <text x="210" y="208" text-anchor="middle" class="core">中友</text>
+            <text x="210" y="226" text-anchor="middle" class="core-en">Land Scrivener</text>
+          </svg>
+          <div class="w-txt reveal">
+            <p class="w-h">稅務・傳承・登記<br>每一步，都先算清楚</p>
+            <p>不動產移轉，是一家人好幾代的事。遺產、贈與、買賣、繼承登記，每一種移轉背後都是幾十萬到幾百萬的稅。</p>
+            <p>從盤點財產、試算稅額、申報、完稅，到地政事務所送件領狀，我們陪你走完整條路。</p>
+          </div>
+        </div>
+        <div class="s-list">
+          {svcList.map(([n, id]) => <a class="reveal" href={`/services/#${id}`}><span>{n}</span><i class="pill">→</i></a>)}
+        </div>
+      </div>
+      <div class="marquee" aria-hidden="true">
+        {[0, 1].map((row) => (
+          <div class={`track${row ? ' rev' : ''}`}>{[...tags, ...tags].map((t) => <span class="tag">{t}</span>)}</div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Column -->
+    <section class="section column" id="column">
+      <div class="wrap">
+        <div class="sec-title reveal"><h2>Column<small>專欄文章</small></h2></div>
+        <div class="p-grid">
+          {posts.map((p) => (
+            <a class="post reveal" href={slug(p)}>
+              <span class="ph"><img src={coverFor(p.id, p.data.category, all)} alt="" width="1000" height="500" loading="lazy" /></span>
+              <span class="pt"><b>{p.data.title}</b><i class="pill">→</i></span>
+              <span class="tags"><span class="tag">#{p.data.category}</span><time class="en">{p.data.date.toISOString().slice(0, 10).replaceAll('-', '.')}</time></span>
+            </a>
+          ))}
+        </div>
+        <a class="all en reveal" href="/posts/">View all columns <i></i></a>
+      </div>
+    </section>
+
+    <!-- Questions / Company / Price / Simulator -->
+    <section class="section links" id="more">
+      <div class="wrap l-grid">
+        <div class="rows">
+          <a class="lrow reveal" href="/faq/"><h3 class="en">Questions<small>常見問題</small></h3><p>遺產稅免稅額、贈與 244 萬怎麼用、繼承登記期限，來之前先看這幾題。</p><span class="more en">View more <i class="pill">→</i></span></a>
+          <a class="lrow reveal" href="/about/"><h3 class="en">Company<small>關於本所</small></h3><p>我們是怎樣的代書世家、用什麼態度做事，也歡迎認識我們。</p><span class="more en">View more <i class="pill">→</i></span></a>
+          <a class="lrow reveal" href="/fees/"><h3 class="en">Price<small>收費標準</small></h3><p>委任前先報價，白紙黑字寫在委任書上，沒有事後加價。</p><span class="more en">View more <i class="pill">→</i></span></a>
+        </div>
+        <a class="sim reveal" href="/tools/">
+          <img src="/photo/svc-estate.webp" alt="" width="900" height="505" loading="lazy" />
+          <span class="sim-in"><b class="en">Simulator</b><span>遺產稅、贈與稅、房地合一稅、土地增值稅，四種稅線上試算，輸入金額馬上看稅額。</span><i class="pill">→</i></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+      <img src="/photo/hero-street.webp" alt="" width="1600" height="900" loading="lazy" />
+      <div class="wrap ct-in">
+        <div>
+          <h2 class="en">Contact</h2>
+          <p>先講你的情況，我們告訴你會遇到什麼、下一步是什麼。<br>遺產稅、贈與稅、繼承登記，任何不確定的地方都可以先問，初步討論不收費。</p>
+          <p class="tel">TEL <a href="tel:+886915006336" class="en">0915-006-336</a>　LINE <span class="en">@0955377283</span></p>
+        </div>
+        <a class="btn light big" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">諮詢・預約請由此 LINE 聯絡</a>
+      </div>
+    </section>
+  </main>
 </Base>
+
+<style>
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}
+
+/* 首屏 */
+.hero{position:relative; height:100svh; min-height:560px; overflow:hidden; background:#555; color:#fff}
+.slide{position:absolute; inset:0; opacity:0; transition:opacity 1.4s ease; pointer-events:none}
+.slide.on{opacity:1; pointer-events:auto}
+.slide img{width:100%; height:100%; object-fit:cover; transform:scale(1.08); transition:transform 7s linear}
+.slide.on img{transform:scale(1)}
+.slide::after{content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.12) 55%,rgba(0,0,0,.28) 100%)}
+.cap{position:absolute; left:clamp(22px,5vw,70px); bottom:clamp(60px,9vh,110px); z-index:2; max-width:640px}
+.cap > *{opacity:0; transform:translateY(16px); transition:opacity .9s ease .5s, transform .9s cubic-bezier(.19,1,.22,1) .5s}
+.slide.on .cap > *{opacity:1; transform:none}
+.slide.on .cap > *:nth-child(2){transition-delay:.62s}
+.slide.on .cap > *:nth-child(3){transition-delay:.74s}
+.slide.on .cap > *:nth-child(4){transition-delay:.86s}
+.lab{font-size:13px; letter-spacing:.1em; margin-bottom:10px}
+.cap h1, .cap .h{color:#fff; font-weight:500; font-size:clamp(26px,3vw,40px); letter-spacing:.1em; line-height:1.4; margin-bottom:8px}
+.t{display:flex; align-items:center; gap:14px; font-size:clamp(14px,1.2vw,16px); letter-spacing:.12em}
+.t .pill{color:#fff; text-decoration:none}
+.e{font-size:12.5px; opacity:.85; margin-top:14px; letter-spacing:.06em}
+.news{position:absolute; right:clamp(96px,8vw,120px); top:clamp(30px,3.2vw,40px); z-index:3; color:#fff; text-decoration:none; font-size:12px; display:flex; gap:16px; align-items:center; max-width:36%}
+.news span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.news time::after{content:""; display:inline-block; width:1px; height:10px; background:rgba(255,255,255,.6); margin-left:16px}
+.pager{position:absolute; right:clamp(22px,4vw,56px); bottom:clamp(60px,9vh,110px); z-index:3; display:flex; gap:12px}
+.pager button{background:none; border:0; color:rgba(255,255,255,.55); font-size:12px; cursor:pointer; padding:4px 0; border-bottom:1px solid transparent; font-family:var(--en)}
+.pager button.on{color:#fff; border-color:#fff}
+@media (max-width:760px){ .news{display:none} .cap{right:22px; bottom:80px} .pager{bottom:30px; left:22px; right:auto} }
+
+/* 長輩友善：首屏下滑提示，點擊捲到三位地政士 */
+.scroll-cue{position:absolute; left:50%; bottom:clamp(18px,3vh,34px); transform:translateX(-50%); z-index:4; display:flex; flex-direction:column; align-items:center; gap:8px;
+  padding:12px 26px 14px; border-radius:999px; background:rgba(255,255,255,.92); color:#222; text-decoration:none; box-shadow:0 8px 26px rgba(0,0,0,.22); transition:background .3s, transform .3s}
+.scroll-cue:hover{background:#fff; transform:translateX(-50%) translateY(-2px)}
+.scroll-cue span{font-size:15px; font-weight:500; letter-spacing:.16em; white-space:nowrap}
+.scroll-cue i{display:block; width:14px; height:14px; border-right:2.5px solid #0B5CFF; border-bottom:2.5px solid #0B5CFF; transform:rotate(45deg); margin-top:-4px}
+@media (prefers-reduced-motion:no-preference){ .scroll-cue i{animation:cue 1.6s ease-in-out infinite} @keyframes cue{0%,100%{transform:translateY(0) rotate(45deg)} 50%{transform:translateY(6px) rotate(45deg)}} }
+@media (max-width:760px){ .scroll-cue{bottom:18px; padding:10px 20px 12px} .scroll-cue span{font-size:14px} .cap{bottom:120px} .pager{bottom:auto; top:80px; left:22px} }
+
+/* Concept */
+.concept{position:relative; overflow:hidden}
+.mark{position:absolute; left:-80px; bottom:-120px; width:520px; height:520px; color:#fff; opacity:.9; pointer-events:none}
+.c-grid{position:relative; display:grid; grid-template-columns:1fr 1.15fr; gap:clamp(30px,6vw,90px)}
+.c-h{font-size:clamp(26px,2.6vw,34px); margin-bottom:26px}
+.c-lead{font-size:clamp(17px,1.5vw,20px); color:var(--ink); line-height:1.9; margin-bottom:22px; font-weight:500}
+.c-en{font-size:12px; color:var(--sub); line-height:2.2}
+.c-body p{line-height:2.6; margin-bottom:1.4em; font-size:14.5px}
+@media (max-width:860px){ .c-grid{grid-template-columns:1fr} }
+
+/* 拼貼 */
+.collage{position:relative; padding-bottom:40px; overflow:hidden}
+.collage .row{display:grid; grid-template-columns:.8fr 1.6fr 1fr 1.3fr; gap:16px; align-items:end}
+.collage img{width:100%; height:auto; object-fit:cover}
+.c1{aspect-ratio:3/4} .c2{aspect-ratio:4/5} .c3{aspect-ratio:3/4} .c4{aspect-ratio:1/1}
+.word{position:absolute; right:clamp(10px,3vw,40px); bottom:0; font-size:clamp(56px,11vw,170px); color:#fff; line-height:1; letter-spacing:.02em; text-shadow:0 2px 30px rgba(0,0,0,.08); will-change:transform}
+@media (max-width:760px){ .collage .row{grid-template-columns:1fr 1fr} .c3, .c4{display:none} }
+
+/* What We Do */
+.w-grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,6vw,90px); align-items:center}
+.ring{width:100%; max-width:440px}
+.wedge{fill:#DCDCDC; transition:fill .35s}
+.ring a:hover .wedge{fill:#C9C9C9}
+.wz{font-size:15px; fill:#444; letter-spacing:.06em; font-family:"Noto Sans TC",sans-serif}
+.we{font-size:9.5px; fill:#888; font-family:var(--en); letter-spacing:.04em}
+.core{font-size:16px; fill:#444; letter-spacing:.2em; font-family:"Noto Sans TC",sans-serif}
+.core-en{font-size:10px; fill:#777; font-family:var(--en)}
+.w-h{font-size:clamp(18px,1.7vw,22px); color:var(--ink); line-height:1.8; margin-bottom:26px; font-weight:500}
+.w-txt p{line-height:2.4; margin-bottom:1.2em; font-size:14.5px}
+.s-list{display:grid; grid-template-columns:repeat(3,1fr); gap:0 28px; margin-top:clamp(50px,6vw,80px); border-top:1px solid var(--line)}
+.s-list a{display:flex; justify-content:space-between; align-items:center; padding:22px 8px; border-bottom:1px solid var(--line); text-decoration:none; font-size:14.5px; transition:padding-left .35s}
+.s-list a:hover{padding-left:16px}
+.marquee{margin-top:clamp(60px,7vw,100px); display:grid; gap:14px; overflow:hidden}
+.track{display:flex; gap:12px; width:max-content; animation:mq 60s linear infinite}
+.track.rev{animation-direction:reverse; animation-duration:70s}
+.track .tag{background:#fff; border-color:#fff; color:#444; font-size:12.5px; padding:6px 16px; white-space:nowrap}
+@keyframes mq{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){ .track{animation:none} }
+@media (max-width:860px){ .w-grid{grid-template-columns:1fr} .ring{margin:0 auto} .s-list{grid-template-columns:1fr} }
+
+/* Members */
+.members{background:var(--bg); padding-block:clamp(70px,8vw,120px)}
+.m-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,40px)}
+.m-grid > a{text-decoration:none; color:inherit}
+.m-grid figure{margin:0; overflow:hidden}
+.m-grid img{width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; object-position:50% 20%; background:#E4E4E4; transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+.m-grid a:hover img{transform:scale(1.04)}
+.m-grid figcaption{display:grid; margin-top:18px}
+.m-grid .r{font-size:12px; color:var(--sub); letter-spacing:.18em}
+.m-grid b{font-weight:500; font-size:20px; letter-spacing:.24em; color:var(--ink); margin-top:2px}
+.m-grid .en{font-size:12.5px; color:var(--sub)}
+.m-grid .c{font-size:13px; margin-top:8px; padding-top:8px; border-top:1px solid var(--line)}
+.m-grid .reveal:nth-child(2){transition-delay:.12s}
+.m-grid .reveal:nth-child(3){transition-delay:.24s}
+@media (max-width:760px){ .m-grid{grid-template-columns:1fr; max-width:420px} }
+
+/* Column */
+.p-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,44px) clamp(18px,2.4vw,36px)}
+.post{display:grid; gap:14px; text-decoration:none; align-content:start}
+.post .ph{overflow:hidden; aspect-ratio:1/1}
+.post img{width:100%; height:100%; object-fit:cover; transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+.post:hover img{transform:scale(1.05)}
+.pt{display:flex; justify-content:space-between; gap:14px; align-items:flex-start}
+.pt b{font-weight:500; font-size:15px; line-height:1.8; letter-spacing:.06em}
+.pt .pill{margin-top:6px}
+.post .tags{display:flex; gap:10px; align-items:center; font-size:12px; color:var(--sub)}
+.all{display:flex; align-items:center; justify-content:center; gap:22px; margin-top:clamp(60px,7vw,110px); font-size:clamp(22px,2.4vw,32px); text-decoration:none; color:var(--ink)}
+.all i{display:block; width:40px; height:1px; background:var(--ink); position:relative; transition:width .4s}
+.all i::after{content:""; position:absolute; right:0; top:-4px; width:9px; height:9px; border-top:1px solid var(--ink); border-right:1px solid var(--ink); transform:rotate(45deg)}
+.all:hover i{width:60px}
+@media (max-width:900px){ .p-grid{grid-template-columns:1fr 1fr} }
+@media (max-width:560px){ .p-grid{grid-template-columns:1fr} .post .ph{aspect-ratio:16/10} }
+
+/* 連結區 */
+.l-grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,56px)}
+.lrow{display:block; padding:34px 0; border-top:1px solid var(--line); text-decoration:none}
+.lrow:last-child{border-bottom:1px solid var(--line)}
+.lrow h3{font-weight:400; font-size:24px; display:flex; align-items:center; gap:14px; margin-bottom:14px}
+.lrow h3 small{font-family:"Noto Sans TC",sans-serif; font-size:12px; color:var(--sub); display:inline-flex; gap:10px; align-items:center}
+.lrow h3 small::before{content:""; width:12px; height:1px; background:var(--sub)}
+.lrow p{font-size:14px; line-height:2.2}
+.more{display:flex; justify-content:flex-end; align-items:center; gap:10px; font-size:13px; margin-top:6px}
+.sim{position:relative; display:block; overflow:hidden; min-height:420px; color:#fff; text-decoration:none}
+.sim img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+.sim:hover img{transform:scale(1.05)}
+.sim::after{content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(0,0,0,.6),rgba(0,0,0,.1))}
+.sim-in{position:absolute; left:36px; right:36px; bottom:36px; z-index:1; display:grid; gap:12px}
+.sim-in b{font-weight:400; font-size:clamp(28px,3vw,40px)}
+.sim-in span{font-size:14px; line-height:2}
+.sim-in .pill{color:#fff}
+@media (max-width:860px){ .l-grid{grid-template-columns:1fr} .sim{min-height:320px} }
+
+/* Contact */
+.contact{position:relative; color:#fff; overflow:hidden}
+.contact > img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.contact::before{content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(35,35,35,.82) 0%,rgba(35,35,35,.62) 60%,rgba(35,35,35,.5) 100%); z-index:1}
+.ct-in{position:relative; z-index:2; display:grid; grid-template-columns:1.2fr 1fr; gap:40px; align-items:center; padding-block:clamp(100px,12vw,170px)}
+.contact h2{color:#fff; font-weight:400; font-size:clamp(30px,3.2vw,42px); margin-bottom:26px}
+.contact p{font-size:14px; line-height:2.4}
+.contact a{color:#fff}
+.tel{margin-top:14px}
+.btn.big{padding:26px 44px; justify-self:end}
+@media (max-width:860px){ .ct-in{grid-template-columns:1fr} .btn.big{justify-self:start; padding:20px 26px} }
+</style>
