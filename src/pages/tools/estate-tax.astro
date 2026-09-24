@@ -6,6 +6,7 @@
 // 級距：淨額 ≤5,621 萬 10%；5,621 萬–1 億 1,242 萬 15%（累進差額 281.05 萬）；
 //       >1 億 1,242 萬 20%（累進差額 843.15 萬）。
 import Base from '../../layouts/Base.astro';
+import '../../styles/tool.css';
 
 const faq = {
   '@context': 'https://schema.org',
@@ -157,50 +158,3 @@ const faq = {
   });
 </script>
 
-<style>
-.tool{max-width:46em; margin:0 auto; padding:130px 5vw 0}
-.crumb{font-size:13px; color:var(--sub); margin-bottom:10px}
-.crumb a{color:var(--gold-dark); text-decoration:none}
-.tool h1{font-size:clamp(30px,4.4vw,46px); margin-bottom:12px}
-.tool h1 .yr{font-size:.45em; color:var(--seal); border:1.5px solid var(--seal); border-radius:4px;
-  padding:2px 8px; margin-left:12px; vertical-align:6px; letter-spacing:.1em}
-.lead{color:var(--sub); margin-bottom:36px}
-.calc{display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start}
-.panel{border:1.5px solid var(--hairline); border-radius:16px; padding:28px; background:var(--paper)}
-.panel label{display:block; font-weight:700; font-size:14px; margin-bottom:8px}
-.panel input[type="number"]{width:100%; font-size:20px; font-weight:900; padding:11px 14px;
-  border:1.5px solid #C9C6BD; border-radius:10px; margin-bottom:18px; font-variant-numeric:tabular-nums;
-  background:var(--paper); color:var(--ink)}
-.panel input[type="number"]:focus{outline:2px solid var(--gold); border-color:var(--gold)}
-.opt{display:flex; gap:10px; align-items:flex-start; font-weight:400; font-size:14px; color:#3A3D45;
-  padding:6px 0; cursor:pointer}
-.opt input{margin-top:4px; accent-color:var(--gold-dark)}
-.chk{margin-bottom:14px}
-#calc-btn{width:100%; background:var(--ink); color:var(--paper); border:0; padding:15px; font-size:15px;
-  font-weight:700; letter-spacing:.14em; border-radius:10px; cursor:pointer; margin-top:6px;
-  transition:transform .25s cubic-bezier(.2,1.4,.4,1), box-shadow .25s}
-#calc-btn:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(21,23,28,.22)}
-.result{background:var(--ink); color:var(--paper); border-color:var(--ink)}
-.sum span{display:block; font-size:12.5px; letter-spacing:.24em; color:#9EA2AB; margin-bottom:6px}
-.sum b{font-size:clamp(36px,4.8vw,54px); font-weight:900; line-height:1.1}
-.sum i{font-style:normal; color:var(--gold); margin-left:6px}
-.steps{margin:18px 0 22px; font-size:13.5px; color:#D8D6CF; display:grid; gap:6px}
-.steps b{color:var(--paper)}
-.steps .good{color:var(--gold); font-weight:700}
-.cta{display:block; text-align:center; background:var(--gold); color:var(--ink); font-weight:700;
-  padding:13px 16px; border-radius:10px; text-decoration:none; font-size:14px}
-.ref{margin-top:70px}
-.ref h2{font-size:22px; margin:44px 0 16px}
-.ref h2:first-child{margin-top:0}
-.tbl-wrap{overflow-x:auto}
-table{width:100%; border-collapse:collapse; font-size:14.5px; font-variant-numeric:tabular-nums}
-th,td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--hairline)}
-thead th{border-bottom:2px solid var(--ink); font-size:13px; letter-spacing:.1em}
-.notes{margin:24px 0 0; padding-left:18px; font-size:13.5px; color:var(--sub); display:grid; gap:10px; line-height:1.8}
-.notes b{color:var(--ink)}
-.notes a{color:var(--gold-dark)}
-.disclaimer{margin-top:28px; font-size:12.5px; color:var(--sub); border-top:1px solid var(--hairline); padding-top:16px}
-.reveal{opacity:0; transform:translateY(46px)}
-@media (max-width:780px){ .calc{grid-template-columns:1fr} }
-@media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none} }
-</style>

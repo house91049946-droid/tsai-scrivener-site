@@ -1,13 +1,56 @@
 ---
-// src/components/Footer.astro
+// src/components/Footer.astro — 炭灰頁尾
+const year = new Date().getFullYear();
 ---
 <footer>
-  <span>中友地政士事務所｜台中市東區東英七街 55 號｜<a href="tel:+886955377283">0955-377-283</a>｜<a href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE</a>｜<a href="https://www.facebook.com/chunhao.tsai1" target="_blank" rel="noopener">Facebook</a></span>
-  <span>本站文章為一般性說明，非個案法律意見。<a href="/disclaimer/">免責聲明</a></span>
+  <div class="wrap top">
+    <div class="brand">
+      <p class="lg"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2 36 11v18L20 38 4 29V11z" fill="none" stroke="currentColor" stroke-width="2.2"/><text x="20" y="26.5" text-anchor="middle" font-size="15" fill="currentColor" font-weight="500">友</text></svg><span>中友地政士事務所<small class="en">Zhongyou Land Scrivener Office</small></span></p>
+      <p>台中市東區東英七街 55 號</p>
+      <p>TEL. <a href="tel:+886915006336">0915-006-336</a>　LINE <a href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">@0955377283</a></p>
+      <p><a href="https://www.facebook.com/chunhao.tsai1" target="_blank" rel="noopener">Facebook</a></p>
+    </div>
+    <nav>
+      <div><a href="/">首頁</a><a href="/about/">關於本所</a><a href="/services/">服務項目</a><a href="/posts/">專欄文章</a><a href="/contact/">聯絡我們</a></div>
+      <div><a href="/services/#estate-tax">遺產稅申報</a><a href="/services/#gift-tax">贈與稅規劃</a><a href="/services/#inheritance">繼承登記</a><a href="/services/#succession">財產傳承</a><a href="/services/#property-tax">房地合一稅</a></div>
+      <div><a href="/tools/">稅費試算</a><a href="/fees/">收費標準</a><a href="/faq/">常見問題</a></div>
+    </nav>
+  </div>
+  <div class="wrap bottom">
+    <span><a href="/">HOME</a>　|　<a href="/disclaimer/">免責聲明</a></span>
+    <span>本站內容為一般性說明，非個案法律意見。稅務數字依財政部 115 年度公告。</span>
+    <span class="en">© {year} Zhongyou Land Scrivener Office</span>
+  </div>
+  <button id="to-top" aria-label="回到頂端" class="en">↑</button>
 </footer>
+<div class="mbar" aria-label="快速聯絡">
+  <a href="tel:+886915006336">電話諮詢</a>
+  <a href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 諮詢</a>
+</div>
 <style>
-footer{padding:34px 5vw; display:flex; justify-content:space-between; gap:18px;
-  flex-wrap:wrap; font-size:12.5px; color:var(--sub); border-top:1px solid var(--hairline); margin-top:70px}
-footer a{color:var(--sub)}
-footer a:hover{color:var(--gold-dark)}
+footer{background:var(--char); color:rgba(255,255,255,.82); font-size:13px; padding-top:clamp(70px,8vw,120px)}
+.top{display:grid; grid-template-columns:1fr 1.1fr; gap:48px}
+.lg{display:flex; align-items:center; gap:12px; color:#fff; margin-bottom:18px}
+.lg svg{width:34px; height:34px}
+.lg span{font-size:15px; letter-spacing:.2em; line-height:1.4}
+.lg small{display:block; font-size:11px; letter-spacing:.06em; opacity:.8}
+.brand p{margin:0; line-height:2}
+footer a{color:#fff; text-decoration:none}
+footer a:hover{opacity:.7}
+footer nav{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+footer nav div{display:grid; gap:6px; align-content:start}
+.bottom{display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; padding-block:60px 30px; font-size:11.5px; color:rgba(255,255,255,.6)}
+#to-top{position:fixed; right:calc(var(--rail) + 16px); bottom:18px; width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:var(--bg); color:var(--ink);
+  cursor:pointer; opacity:0; pointer-events:none; transition:opacity .3s; z-index:40}
+#to-top.show{opacity:1; pointer-events:auto}
+.mbar{display:none}
+@media (max-width:960px){
+  .top{grid-template-columns:1fr}
+  #to-top{right:16px; bottom:64px}
+  .mbar{display:grid; grid-template-columns:1fr 1fr; position:fixed; left:0; right:0; bottom:0; z-index:80}
+  .mbar a{padding:14px 0; text-align:center; text-decoration:none; font-size:14px; letter-spacing:.14em; color:#fff; background:var(--char)}
+  .mbar a + a{background:#2E2E2E}
+  body{padding-bottom:48px}
+}
+@media (max-width:600px){ footer nav{grid-template-columns:1fr 1fr} }
 </style>
