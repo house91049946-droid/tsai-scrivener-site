@@ -11,7 +11,7 @@ const links = [
   <span><b>中友地政士事務所</b><small class="en">Zhongyou Land Scrivener Office</small></span>
 </a>
 
-<button class="burger" id="menu-btn" aria-label="開啟選單" aria-expanded="false" aria-controls="menu"><i class="lines"><span></span><span></span><span></span></i><b class="lbl">選單</b></button>
+<button class="burger" id="menu-btn" aria-label="開啟選單" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
 
 <aside class="rail" aria-label="側欄">
   <button class="r-menu" id="menu-open" aria-expanded="false" aria-controls="menu"><span class="bars"><i></i><i></i></span><span class="en">Menu</span></button>
@@ -27,7 +27,7 @@ const links = [
     <div class="o-info">
       <p class="en" style="font-size:22px">Zhongyou Land Scrivener</p>
       <p>台中市東區東英七街 55 號</p>
-      <p>TEL. <a href="tel:+886955377283">0955-377-283</a></p>
+      <p>TEL. <a href="tel:+886915006336">0915-006-336</a></p>
       <p>LINE <a href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">@0955377283</a></p>
       <a class="btn light" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 免費諮詢</a>
     </div>
@@ -43,23 +43,23 @@ const links = [
 :global(body.scrolled) .logo{color:var(--ink); background:rgba(237,237,237,.92); box-shadow:0 2px 14px rgba(0,0,0,.06)}
 :global(body.scrolled) .logo small{display:none}
 
-/* 右上角選單鈕：實心膠囊，任何背景都醒目 */
-.burger{position:fixed; top:clamp(12px,1.6vw,22px); right:calc(var(--rail) + clamp(14px,2vw,26px)); z-index:95;
-  display:flex; align-items:center; gap:12px; height:54px; padding:0 22px 0 18px; border-radius:999px;
-  border:1px solid rgba(255,255,255,.35); background:#2E2E2E; color:#fff; cursor:pointer;
-  box-shadow:0 8px 24px rgba(0,0,0,.28); transition:background .3s, color .3s, transform .3s, box-shadow .3s; font-family:inherit}
-.burger:hover{background:#000; transform:translateY(-1px); box-shadow:0 12px 30px rgba(0,0,0,.34)}
-.burger .lines{display:grid; gap:5px}
-.burger .lines span{display:block; width:22px; height:2px; background:currentColor; border-radius:2px; transition:transform .45s cubic-bezier(.19,1,.22,1), opacity .3s}
-.burger .lbl{font-weight:500; font-size:14px; letter-spacing:.24em}
-:global(body.menu-open) .burger{background:#fff; color:#2E2E2E; border-color:#fff}
-:global(body.menu-open) .burger .lines span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-:global(body.menu-open) .burger .lines span:nth-child(2){opacity:0}
-:global(body.menu-open) .burger .lines span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+/* 右上角選單鈕：圓形，強藍呼吸燈 */
+.burger{position:fixed; top:clamp(14px,1.8vw,24px); right:calc(var(--rail) + clamp(16px,2vw,28px)); z-index:95; width:54px; height:54px; border-radius:50%;
+  border:0; background:#0B5CFF; color:#fff; cursor:pointer; display:grid; place-content:center; gap:5px;
+  box-shadow:0 0 0 0 rgba(11,92,255,.55), 0 6px 18px rgba(11,92,255,.35); transition:background .3s, transform .3s}
+.burger span{display:block; width:22px; height:2px; border-radius:2px; background:currentColor; transition:transform .45s cubic-bezier(.19,1,.22,1), opacity .3s}
+.burger:hover{background:#0047E0; transform:scale(1.05)}
 @media (prefers-reduced-motion:no-preference){
-  .burger::after{content:""; position:absolute; inset:-1px; border-radius:inherit; border:1px solid #2E2E2E; animation:ring 2.6s ease-out 1.2s 3; pointer-events:none}
-  @keyframes ring{0%{opacity:.7; transform:scale(1)} 100%{opacity:0; transform:scale(1.35)}}
+  .burger{animation:breathe 2.4s ease-in-out infinite}
+  @keyframes breathe{
+    0%,100%{box-shadow:0 0 0 0 rgba(11,92,255,.55), 0 0 12px 2px rgba(11,92,255,.45)}
+    50%{box-shadow:0 0 0 12px rgba(11,92,255,0), 0 0 28px 8px rgba(11,92,255,.75)}
+  }
 }
+:global(body.menu-open) .burger{background:#fff; color:#0B5CFF; animation:none}
+:global(body.menu-open) .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+:global(body.menu-open) .burger span:nth-child(2){opacity:0}
+:global(body.menu-open) .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 .rail{position:fixed; top:0; right:0; bottom:0; width:var(--rail); z-index:70; display:grid; grid-template-rows:1fr 1fr}
 .rail > *{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; border:0; cursor:pointer; text-decoration:none; font-size:13px}
 .rail .en{writing-mode:vertical-rl; letter-spacing:.14em}
@@ -91,7 +91,7 @@ const links = [
 
 @media (max-width:960px){
   .rail{display:none}
-  .burger{right:14px; height:48px; padding:0 16px 0 14px}
+  .burger{right:14px; width:48px; height:48px}
   .logo small{display:none}
   .o-in{grid-template-columns:1fr; gap:30px}
   .o-nav{grid-template-columns:1fr}
