@@ -1,0 +1,126 @@
+---
+// src/pages/tools/land-tax.astro — 土地增值稅試算
+// 法源（2026-09-24 查證）：土地稅法 §33（一般稅率 20/30/40% 依漲價倍數累進；持有逾 20/30/40 年，超過最低稅率部分減徵 20/30/40%）、
+// §34（自用住宅用地 10%：都市 3 公畝、非都市 7 公畝以內，一生一次；一生一屋另有條件）。
+// 速算：T＝前次移轉現值×物價指數，G＝漲價總數額
+//   20 年以下：G<T 20%；T≤G<2T  G×30%−T×10%；G≥2T  G×40%−T×30%
+//   逾 20 年：20%；G×28%−T×8%；G×36%−T×24%
+//   逾 30 年：20%；G×27%−T×7%；G×34%−T×21%
+//   逾 40 年：20%；G×26%−T×6%；G×32%−T×18%
+import Base from '../../layouts/Base.astro';
+import '../../styles/tool.css';
+---
+<Base title="土地增值稅試算｜一般稅率與自用住宅 10%｜中友地政士事務所"
+  description="土地增值稅線上試算：依漲價倍數 20%、30%、40% 累進，持有逾 20、30、40 年自動減徵；自用住宅用地 10% 一次比較。台中中友地政士事務所提供。">
+  <main class="tool">
+    <p class="crumb"><a href="/tools/">試算工具</a> / 土地增值稅</p>
+    <h1>土地增值稅試算<span class="yr">2026</span></h1>
+    <p class="lead">賣地或贈與土地，漲價部分要繳土地增值稅。一般稅率和自用住宅 10% 差多少，移轉前先算。</p>
+
+    <div class="calc">
+      <div class="panel">
+        <label for="now">本次申報移轉現值總額（萬元）</label>
+        <input id="now" type="number" inputmode="numeric" min="0" step="1" value="800" />
+        <span class="hint">公告土地現值 × 土地面積 × 持分。可查地政事務所謄本或公告現值查詢網站。</span>
+
+        <label for="prev">前次移轉現值總額（萬元）</label>
+        <input id="prev" type="number" inputmode="numeric" min="0" step="1" value="300" />
+        <span class="hint">上次移轉時的申報現值 × 面積 × 持分；很久以前取得的土地，用原規定地價。</span>
+
+        <label for="cpi">消費者物價指數（%）</label>
+        <input id="cpi" type="number" inputmode="decimal" min="100" step="0.1" value="120" />
+        <span class="hint">財政部每月公告，依前次移轉的年月查表。例如 120 表示前次現值要乘以 1.2。</span>
+
+        <label for="imp">改良土地費用等可減除金額（萬元，選填）</label>
+        <input id="imp" type="number" inputmode="numeric" min="0" step="1" value="0" />
+
+        <label for="years">持有土地年限</label>
+        <select id="years">
+          <option value="0" selected>20 年以下</option>
+          <option value="20">超過 20 年</option>
+          <option value="30">超過 30 年</option>
+          <option value="40">超過 40 年</option>
+        </select>
+
+        <label class="opt chk"><input type="checkbox" id="self" />申請自用住宅用地優惠稅率 10%（都市土地 3 公畝、非都市土地 7 公畝以內；一生一次）</label>
+
+        <button id="calc-btn" type="button">試算</button>
+      </div>
+
+      <div class="panel result" id="result" hidden>
+        <div class="sum"><span>應納土地增值稅</span><b id="tax-out">0</b><i>元</i></div>
+        <div class="steps" id="steps"></div>
+        <a class="cta" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">自用住宅資格怎麼判斷——LINE 找我們</a>
+      </div>
+    </div>
+
+    <section class="ref">
+      <h2>一般稅率（漲價倍數累進）</h2>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>漲價倍數</th><th>20 年以下</th><th>逾 20 年</th><th>逾 30 年</th><th>逾 40 年</th></tr></thead>
+          <tbody>
+            <tr><td>未達 1 倍</td><td>20%</td><td>20%</td><td>20%</td><td>20%</td></tr>
+            <tr><td>1 倍以上、未達 2 倍</td><td>30%</td><td>28%</td><td>27%</td><td>26%</td></tr>
+            <tr><td>2 倍以上</td><td>40%</td><td>36%</td><td>34%</td><td>32%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="notes">
+        <li>漲價總數額＝本次申報移轉現值 − 前次移轉現值 × 物價指數 − 改良土地費用等。</li>
+        <li>持有土地超過 20、30、40 年，<b>超過最低稅率 20% 的部分</b>分別減徵 20%、30%、40%，表中是換算後的稅率。</li>
+        <li>自用住宅用地 10% 優惠<b>一生只能用一次</b>；第二次出售要符合「一生一屋」條件（出售面積都市 1.5 公畝、非都市 3.5 公畝以內，本人、配偶及未成年子女無其他房屋，持有滿 6 年並設籍連續滿 6 年，出售前 5 年內未營業或出租）。</li>
+        <li>誰繳：買賣由賣方繳，贈與由受贈人繳；<b>繼承取得不課土地增值稅</b>。</li>
+        <li>賣房後的所得，另外可能要繳<a href="/tools/property-tax/">房地合一稅</a>，土地漲價總數額可以從房地合一稅的所得中減除。</li>
+        <li>法條依據：<a href="https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340096&flno=33" rel="noopener">土地稅法第 33 條</a>、<a href="https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340096&flno=34" rel="noopener">第 34 條</a>。</li>
+      </ul>
+      <p class="disclaimer">本試算為一般性估算，未涵蓋重劃、徵收、公共設施保留地、農地等減免或不課徵情形，實際稅額以地方稅稽徵機關核定為準；非個案法律或稅務意見。</p>
+    </section>
+  </main>
+</Base>
+
+<script>
+  const fmt = (n: number) => Math.round(n).toLocaleString('zh-Hant-TW');
+  const $ = <T extends HTMLElement = HTMLInputElement>(id: string) => document.getElementById(id) as T;
+  const num = (id: string) => Math.max(0, Number($(id).value) || 0);
+  // [第二級稅率, 第二級差額係數, 第三級稅率, 第三級差額係數]
+  const table: Record<number, [number, number, number, number]> = {
+    0: [0.30, 0.10, 0.40, 0.30],
+    20: [0.28, 0.08, 0.36, 0.24],
+    30: [0.27, 0.07, 0.34, 0.21],
+    40: [0.26, 0.06, 0.32, 0.18],
+  };
+
+  $('calc-btn').addEventListener('click', () => {
+    const now = num('now'), prev = num('prev'), cpi = Math.max(100, Number($('cpi').value) || 100), imp = num('imp');
+    const years = Number($<HTMLSelectElement>('years').value);
+    const self = $('self').checked;
+    const T = prev * cpi / 100;
+    const G = now - T - imp;
+    const lines: string[] = [];
+    lines.push(`<p>前次移轉現值按物價指數調整：${fmt(prev)} 萬 × ${cpi}% ＝ ${T.toFixed(1)} 萬</p>`);
+    lines.push(`<p>漲價總數額：${fmt(now)} − ${T.toFixed(1)} − ${fmt(imp)} ＝ <b>${G.toFixed(1)} 萬</b></p>`);
+    let tax = 0, general = 0;
+    if (G > 0) {
+      const [r2, d2, r3, d3] = table[years];
+      general = G < T ? G * 0.20 : G < 2 * T ? G * r2 - T * d2 : G * r3 - T * d3;
+      const mult = T > 0 ? G / T : Infinity;
+      lines.push(`<p>漲價倍數約 ${isFinite(mult) ? mult.toFixed(2) : '—'} 倍，一般稅率稅額 ${general.toFixed(1)} 萬</p>`);
+      if (self) {
+        tax = G * 0.10;
+        lines.push(`<p>自用住宅用地 10%：${G.toFixed(1)} 萬 × 10% ＝ <b>${tax.toFixed(1)} 萬</b>，比一般稅率少 ${(general - tax).toFixed(1)} 萬</p>`);
+      } else {
+        tax = general;
+      }
+    } else {
+      lines.push('<p class="good">沒有漲價，不用繳土地增值稅。</p>');
+    }
+    $('steps').innerHTML = lines.join('');
+    $('result').hidden = false;
+    const out = $('tax-out'), target = tax * 10000;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { out.textContent = fmt(target); return; }
+    let t0 = 0; const dur = 900;
+    const step = (t: number) => { if (!t0) t0 = t; const p = Math.min((t - t0) / dur, 1); out.textContent = fmt(target * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  });
+</script>

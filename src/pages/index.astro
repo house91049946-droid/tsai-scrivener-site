@@ -74,6 +74,18 @@ const faq = {
       <div class="pager en">{slides.map((_, i) => <button class={i === 0 ? 'on' : ''} data-go={i} aria-label={`第 ${i + 1} 張`}>{String(i + 1).padStart(2, '0')}</button>)}</div>
     </section>
 
+    <!-- Members：一滑就看到三位地政士 -->
+    <section class="section members" id="people">
+      <div class="wrap">
+        <div class="sec-title reveal"><h2>Members<small>三位地政士</small></h2><p>代書世家，一家人三張執照一起把關。</p></div>
+        <div class="m-grid">
+          <a class="reveal" href="/about/#people"><figure><img src="/img/p-jh.jpg" alt="蔡峻豪 地政士" width="840" height="1050" /><figcaption><small class="r">地政士・主筆</small><b>蔡峻豪</b><span class="en">Tsai Chun-Hao</span><span class="c">逢甲大學財經法律碩士班</span></figcaption></figure></a>
+          <a class="reveal" href="/about/#people"><figure><img src="/img/p-cq.jpg" alt="蔡崇欽 地政士" width="840" height="1050" /><figcaption><small class="r">地政士・簽證人</small><b>蔡崇欽</b><span class="en">Tsai Chung-Chin</span><span class="c">依地政士法登記之簽證人</span></figcaption></figure></a>
+          <a class="reveal" href="/about/#people"><figure><img src="/img/p-dg.jpg" alt="丁玉梅 地政士" width="840" height="1050" /><figcaption><small class="r">地政士</small><b>丁玉梅</b><span class="en">Ting Yu-Mei</span><span class="c">中友地政士事務所</span></figcaption></figure></a>
+        </div>
+      </div>
+    </section>
+
     <!-- Concept -->
     <section class="section concept" id="concept">
       <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2 36 11v18L20 38 4 29V11z" fill="none" stroke="currentColor" stroke-width="3.2"/></svg>
@@ -136,18 +148,6 @@ const faq = {
       </div>
     </section>
 
-    <!-- Members -->
-    <section class="section members" id="people">
-      <div class="wrap">
-        <div class="sec-title reveal"><h2>Members<small>三位地政士</small></h2><p>代書世家，一家人三張執照一起把關。</p></div>
-        <div class="m-grid">
-          <figure class="reveal"><img src="/img/p-jh.jpg" alt="蔡峻豪 地政士" width="840" height="1120" loading="lazy" /><figcaption><b>蔡峻豪</b><span class="en">Tsai Chun-Hao</span><small>地政士・主筆　不動產經紀人、土地開發師</small></figcaption></figure>
-          <figure class="reveal"><img src="/img/p-cq.jpg" alt="蔡崇欽 地政士" width="840" height="1120" loading="lazy" /><figcaption><b>蔡崇欽</b><span class="en">Tsai Chung-Chin</span><small>地政士</small></figcaption></figure>
-          <figure class="reveal"><img src="/img/p-dg.jpg" alt="丁玉梅 地政士" width="840" height="1120" loading="lazy" /><figcaption><b>丁玉梅</b><span class="en">Ting Yu-Mei</span><small>地政士</small></figcaption></figure>
-        </div>
-      </div>
-    </section>
-
     <!-- Column -->
     <section class="section column" id="column">
       <div class="wrap">
@@ -175,7 +175,7 @@ const faq = {
         </div>
         <a class="sim reveal" href="/tools/">
           <img src="/photo/svc-estate.webp" alt="" width="900" height="505" loading="lazy" />
-          <span class="sim-in"><b class="en">Simulator</b><span>遺產稅、贈與稅線上試算。115 年度數字，輸入金額馬上看稅額與級距。</span><i class="pill">→</i></span>
+          <span class="sim-in"><b class="en">Simulator</b><span>遺產稅、贈與稅、房地合一稅、土地增值稅，四種稅線上試算，輸入金額馬上看稅額。</span><i class="pill">→</i></span>
         </a>
       </div>
     </section>
@@ -265,15 +265,20 @@ const faq = {
 @media (max-width:860px){ .w-grid{grid-template-columns:1fr} .ring{margin:0 auto} .s-list{grid-template-columns:1fr} }
 
 /* Members */
-.members{background:var(--bg-2)}
+.members{background:var(--bg); padding-block:clamp(70px,8vw,120px)}
 .m-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,40px)}
-.m-grid figure{margin:0}
-.m-grid img{width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; object-position:50% 25%; background:#DDD}
-.m-grid figcaption{display:grid; margin-top:16px}
-.m-grid b{font-weight:500; font-size:18px; letter-spacing:.2em; color:var(--ink)}
+.m-grid > a{text-decoration:none; color:inherit}
+.m-grid figure{margin:0; overflow:hidden}
+.m-grid img{width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; object-position:50% 20%; background:#E4E4E4; transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+.m-grid a:hover img{transform:scale(1.04)}
+.m-grid figcaption{display:grid; margin-top:18px}
+.m-grid .r{font-size:12px; color:var(--sub); letter-spacing:.18em}
+.m-grid b{font-weight:500; font-size:20px; letter-spacing:.24em; color:var(--ink); margin-top:2px}
 .m-grid .en{font-size:12.5px; color:var(--sub)}
-.m-grid small{font-size:12px; color:var(--sub); margin-top:6px}
-@media (max-width:760px){ .m-grid{grid-template-columns:1fr 1fr} .m-grid figure:first-child{grid-column:1/-1} }
+.m-grid .c{font-size:13px; margin-top:8px; padding-top:8px; border-top:1px solid var(--line)}
+.m-grid .reveal:nth-child(2){transition-delay:.12s}
+.m-grid .reveal:nth-child(3){transition-delay:.24s}
+@media (max-width:760px){ .m-grid{grid-template-columns:1fr 1fr} .m-grid > a:first-child{grid-column:1/-1} }
 
 /* Column */
 .p-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,44px) clamp(18px,2.4vw,36px)}

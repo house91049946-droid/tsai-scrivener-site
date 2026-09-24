@@ -1,57 +1,109 @@
 ---
-// src/pages/about.astro
+// src/pages/about.astro — 關於本所：代書世家與三位地政士
+// 資歷只寫業主提供或已查證的事實，不寫年資、件數、頭銜誇飾。
 import Base from '../layouts/Base.astro';
 import PageBanner from '../components/PageBanner.astro';
+
+const people = [
+  {
+    img: '/img/p-jh.jpg', name: '蔡峻豪', en: 'Tsai Chun-Hao', role: '地政士・主筆',
+    creds: ['地政士', '逢甲大學財經法律碩士班', '不動產經紀人', '土地開發師'],
+    body: [
+      '本站所有文章的執筆與審定人。專注在遺產稅、贈與稅與家族財產傳承，習慣先把稅算清楚，再談要不要做、怎麼做。',
+      '傳承同時牽涉民法繼承、稅法與土地登記三塊，文章與諮詢都會把三塊一起講清楚，並附上法條出處。',
+    ],
+  },
+  {
+    img: '/img/p-cq.jpg', name: '蔡崇欽', en: 'Tsai Chung-Chin', role: '地政士・簽證人',
+    creds: ['地政士', '簽證人'],
+    body: [
+      '依地政士法登記的簽證人。簽證人須經地政士公會全國聯合會推薦，並向主管機關登記，才能為不動產契約或協議辦理簽證。',
+      '地政士辦理簽證時，應查明簽訂人的身分為真正；契約經簽證後，地政機關得免重複查核簽訂人身分（地政士法第 22 條）。',
+    ],
+  },
+  {
+    img: '/img/p-dg.jpg', name: '丁玉梅', en: 'Ting Yu-Mei', role: '地政士',
+    creds: ['地政士'],
+    body: ['中友地政士事務所地政士，與蔡崇欽、蔡峻豪共同承辦事務所的登記與稅務案件。'],
+  },
+];
 ---
-<Base title="關於中友地政士事務所｜台中代書世家・三位地政士" description="中友地政士事務所位於台中市東區，三位地政士的代書世家：蔡峻豪、蔡崇欽、丁玉梅。專辦遺產稅、贈與稅、繼承登記與財產傳承規劃。">
-  <PageBanner title="關於本所" sub="ABOUT" />
-  <main class="about">
+<Base title="關於本所｜台中代書世家・三位地政士｜中友地政士事務所" description="中友地政士事務所位於台中市東區，三位地政士的代書世家：蔡峻豪（逢甲大學財經法律碩士班）、蔡崇欽（地政士・簽證人）、丁玉梅。專辦遺產稅、贈與稅、繼承登記與財產傳承規劃。">
+  <PageBanner title="關於本所" sub="COMPANY" />
+  <main class="wrap about">
     <p class="crumb"><a href="/">首頁</a> / 關於本所</p>
-    <h1 class="page-title">關於中友——代書世家</h1>
 
-    <section class="story">
-      <p>中友地政士事務所是一個名副其實的代書世家：事務所裡有三位地政士——蔡峻豪、蔡崇欽、丁玉梅。在這裡，房子的事從來不是一個人的判斷，每一件案子背後，是一家人三張執照的把關。</p>
+    <section class="intro">
+      <h1 class="lead-h">代書世家，一家人三張執照一起把關。</h1>
+      <div class="intro-body">
+        <p>中友地政士事務所在台中市東區執業，三位地政士在同一個事務所：蔡峻豪、蔡崇欽、丁玉梅。每一件案子，不是一個人的判斷，是一家人一起看。</p>
+        <p>我們把重心放在稅：遺產稅、贈與稅、房地合一稅、土地增值稅。在傳承這件事上，登記只是最後一步，決定你多繳還是少繳的，是前面那些沒人跟你算清楚的數字。</p>
+        <p>委任前先報價，白紙黑字寫在委任書上；案件進行中主動回報進度；每一篇專欄文章都附法條出處。</p>
+      </div>
     </section>
 
-    <section class="creds">
-      <h2>三位地政士</h2>
-      <ul>
-        <li>蔡峻豪 地政士（另具不動產經紀人、土地開發師資格）</li>
-        <li>蔡崇欽 地政士</li>
-        <li>丁玉梅 地政士</li>
-      </ul>
+    <section class="people">
+      <h2 class="en sub-h">Members<small>三位地政士</small></h2>
+      {people.map((p) => (
+        <article class="person">
+          <img src={p.img} alt={`${p.name} ${p.role}`} width="840" height="1050" loading="lazy" />
+          <div>
+            <p class="role">{p.role}</p>
+            <h3>{p.name}<span class="en">{p.en}</span></h3>
+            <ul class="creds">{p.creds.map((c) => <li>{c}</li>)}</ul>
+            {p.body.map((t) => <p>{t}</p>)}
+          </div>
+        </article>
+      ))}
     </section>
 
-    <h2 class="byline-head">主筆的話｜蔡峻豪</h2>
-    <img class="portrait" src="/img/p-jh.jpg" alt="蔡峻豪地政士" width="160" height="160" />
-
-    <section class="story">
-      <p>我是蔡峻豪，Ted，逢甲大學畢業。最早的工作經驗是在高雄醫學大學附設中和紀念醫院，每天面對的是病患與家屬最無助的時刻。後來轉進不動產業，說實話一開始也沒想這麼多，但做了之後才發現，房子這件事帶給一個家庭的衝擊，其實不亞於一場病——差別在於，很多時候是可以事先避免的。</p>
-      <p>我看過太多家庭在「房子的事」上吃虧：一份沒看懂的契約、一個沒算清楚的產權、一次來不及問清楚的登記程序，往後可能要花好幾年去收拾。這是我從醫院走進不動產這一行的原因，也是我後來決定考取地政士、不動產經紀人、土地開發師三項專業資格的原因——我想成為那個在事情發生「之前」，能幫忙把關的人。</p>
-      <p>現在我在有巢氏房屋太平中山富盛加盟店（台中太平）服務。平常我也喜歡把工作中遇到的法律眉角，用短影音、貼文的方式講出來，儘量講成大家聽得懂的人話，而不是艱澀的法條——畢竟法律知識如果只留在專業人士手裡，對一般人幫助不大。</p>
+    <section class="note-sec">
+      <h2 class="en sub-h">Message<small>主筆的話｜蔡峻豪</small></h2>
+      <div class="msg">
+        <p>我最早的工作經驗在醫院，每天面對的是病患與家屬最無助的時刻。後來走進不動產這一行才發現，房子這件事帶給一個家庭的衝擊，其實不亞於一場病——差別在於，很多時候是可以事先避免的。</p>
+        <p>一份沒看懂的契約、一個沒算清楚的稅額、一次來不及問清楚的登記程序，往後可能要花好幾年去收拾。我想成為那個在事情發生「之前」幫忙把關的人。</p>
+        <p>平常我也把工作中遇到的法律眉角，用短影音和貼文講出來。法律知識如果只留在專業人士手裡，對一般人幫助不大。</p>
+      </div>
     </section>
 
-    <section class="contact-block">
-      <h2>聯絡資訊</h2>
-      <ul>
-        <li><span class="label">電話</span><a href="tel:+886955377283">0955-377-283</a></li>
-        <li><span class="label">Facebook</span><a href="https://www.facebook.com/chunhao.tsai1" target="_blank" rel="noopener">蔡峻豪（Ted）</a></li>
-        <li><span class="label">LINE</span><a href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">@0955377283</a></li>
-        <li><span class="label">服務據點</span>中友地政士事務所｜台中市東區東英七街 55 號</li>
-        <li><span class="label"></span>有巢氏房屋太平中山富盛店｜台中市太平區中山路四段 122 號</li>
-      </ul>
+    <section class="info">
+      <h2 class="en sub-h">Office<small>事務所資訊</small></h2>
+      <dl>
+        <div><dt>名稱</dt><dd>中友地政士事務所</dd></div>
+        <div><dt>地址</dt><dd>台中市東區東英七街 55 號</dd></div>
+        <div><dt>電話</dt><dd><a href="tel:+886955377283">0955-377-283</a></dd></div>
+        <div><dt>LINE</dt><dd><a href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">@0955377283</a></dd></div>
+        <div><dt>Facebook</dt><dd><a href="https://www.facebook.com/chunhao.tsai1" target="_blank" rel="noopener">蔡峻豪地政士</a></dd></div>
+        <div><dt>服務範圍</dt><dd>台中市與中彰投地區；長輩行動不便或住院，可安排到府、到院辦理</dd></div>
+      </dl>
+      <a class="btn" href="/contact/">聯絡我們</a>
     </section>
   </main>
 </Base>
 <style>
-.about{max-width:42em; margin:0 auto; padding:0 5vw 40px; font-size:16.5px}
-.about h1{margin-bottom:30px}
-.portrait{display:block; width:160px; height:160px; border-radius:50%; object-fit:cover; margin:0 0 40px; border:1px solid var(--hairline)}
-.story p{margin:0 0 1.2em; color:#3A3D45}
-.about h2{font-size:22px; margin:44px 0 14px}
-.creds ul, .contact-block ul{list-style:none; padding:0; margin:0}
-.creds li{padding:10px 0; border-bottom:1px solid var(--hairline); color:#3A3D45}
-.contact-block{margin-bottom:0}
-.contact-block li{padding:10px 0; border-bottom:1px solid var(--hairline); color:var(--sub); display:flex; gap:14px}
-.contact-block .label{font-weight:700; color:var(--ink); min-width:5em}
+.about{padding-bottom:40px}
+.intro{display:grid; grid-template-columns:1fr 1.2fr; gap:clamp(30px,5vw,80px); margin-bottom:clamp(70px,9vw,120px)}
+.lead-h{font-size:clamp(20px,2vw,26px); line-height:1.8; font-weight:500}
+.intro-body p{line-height:2.5; margin-bottom:1.2em; font-size:14.5px}
+.sub-h{font-weight:400; font-size:clamp(24px,2.4vw,30px); display:flex; align-items:center; gap:14px; margin-bottom:36px}
+.sub-h small{font-family:"Noto Sans TC",sans-serif; font-size:12px; color:var(--sub); display:inline-flex; align-items:center; gap:10px}
+.sub-h small::before{content:""; width:14px; height:1px; background:var(--sub)}
+.people{margin-bottom:clamp(70px,9vw,120px)}
+.person{display:grid; grid-template-columns:minmax(200px,300px) 1fr; gap:clamp(24px,4vw,60px); padding:40px 0; border-top:1px solid var(--line); align-items:start}
+.person:last-child{border-bottom:1px solid var(--line)}
+.person img{width:100%; height:auto; aspect-ratio:4/5; object-fit:cover}
+.role{font-size:12.5px; color:var(--sub); letter-spacing:.16em; margin-bottom:4px}
+.person h3{font-size:24px; font-weight:500; letter-spacing:.24em; display:flex; align-items:baseline; gap:16px; margin-bottom:14px}
+.person h3 .en{font-size:14px; letter-spacing:.04em; color:var(--sub)}
+.creds{list-style:none; padding:0; margin:0 0 18px; display:flex; flex-wrap:wrap; gap:8px}
+.creds li{font-size:12.5px; padding:2px 14px; border:1px solid var(--ink); border-radius:999px; letter-spacing:.1em}
+.person p{line-height:2.4; font-size:14.5px; margin-bottom:1em; max-width:36em}
+.note-sec{margin-bottom:clamp(70px,9vw,120px)}
+.msg{max-width:44em}
+.msg p{line-height:2.6; font-size:14.5px; margin-bottom:1.3em}
+.info dl{margin:0 0 30px; border-top:1px solid var(--line)}
+.info dl div{display:grid; grid-template-columns:8em 1fr; gap:20px; padding:16px 0; border-bottom:1px solid var(--line); font-size:14.5px}
+.info dt{color:var(--sub); letter-spacing:.12em}
+.info dd{margin:0}
+@media (max-width:760px){ .intro{grid-template-columns:1fr} .person{grid-template-columns:1fr} .person img{max-width:320px} }
 </style>
