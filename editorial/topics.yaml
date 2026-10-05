@@ -97,7 +97,7 @@ topics:
     category: 稅務
     keyword: 土地增值稅 自用住宅
     intent: 要移轉土地，想用優惠稅率但不確定資格
-    status: open
+    status: done
   - slug: succession-order
     title_hint: 誰有資格繼承？順位與應繼分一次搞懂
     category: 繼承實務
