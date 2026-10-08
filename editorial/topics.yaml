@@ -103,7 +103,7 @@ topics:
     category: 繼承實務
     keyword: 繼承順位 應繼分
     intent: 家庭關係複雜，想確認誰能分、分多少
-    status: open
+    status: done
   - slug: reserved-portion
     title_hint: 遺囑寫「全部給老大」，其他子女真的分不到嗎
     category: 繼承實務
