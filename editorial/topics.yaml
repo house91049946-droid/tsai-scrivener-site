@@ -91,7 +91,7 @@ topics:
     category: 繼承實務
     keyword: 拋棄繼承 限定繼承
     intent: 長輩留下債務，怕繼承後要背債
-    status: open
+    status: done
   - slug: land-value-increment-tax-self-use
     title_hint: 土地增值稅自用住宅優惠，一生只能用一次嗎
     category: 稅務
