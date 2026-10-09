@@ -2,21 +2,37 @@
 # 一旦生效，就要回頭改所有受影響的文章與試算工具。
 # status: pending=三讀通過待公布 / effective=已施行（處理完就刪除本筆）/ watching=草案階段僅觀察
 watch:
-  - id: 2026-estate-gift-tax-amendment
+  - id: 51-penalty-wording-conflict
     passed_date: 2026-08-21
-    title: 遺產及贈與稅法部分條文修正（大老婆條款等）
+    title: 遺產及贈與稅法第51條（滯納金）修正後條文內容來源矛盾，待人工覆核
     status: pending
     what_changed: |
-      1. 刪除遺贈稅分期繳納「應納稅額須達 30 萬元以上」的門檻（§30）。
-      2. 「大老婆條款」：死亡前 2 年內贈與配偶及特定親屬之財產，
-         應依受贈財產占總遺產比重，由受贈人負擔遺產稅。
-      3. 增訂繼承人得以多數決方式，用遺產中的存款繳稅。
+      2026-08-21修正、2026-09-11公布施行的遺贈稅法修正案，媒體報導（如udn、cnyes）
+      稱已刪除第51條滯納金加徵方式、改回歸稅捐稽徵法辦理；但本輪查證時
+      law.moj.gov.tw與law-out.mof.gov.tw兩個獨立來源抓取到的現行條文內容仍完整
+      保留原本滯納金／按日加計利息文字，未見刪除或轉介稅捐稽徵法字樣。兩類來源
+      互相矛盾，AI工具查證無法確認真實現狀。目前站內文章未引用第51條，不影響
+      已發布內容，純粹列管待確認。
+    affects: []
+    check: 請人工查全國法規資料庫第51條原始PDF或立法院公報確認最終條文，確認後
+      再視是否需要調整站內文章。
+    source: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340072&flno=51
+
+  - id: civil-code-1223-sibling-special-reserve
+    passed_date: 2026-08-17
+    title: 民法第1223條刪除「兄弟姊妹特留分」規定
+    status: pending
+    what_changed: |
+      2026-07-28三讀、2026-08-17公布，刪除兄弟姊妹之特留分（原為應繼分1/3）。
+      施行日為公布後6個月，即2027-02-17。不影響第1138條法定繼承順序本身。
+      siblings-cannot-agree.md目前僅在家事事件法§23的事件類型列舉中提到
+      「特留分」一詞，未寫明兄弟姊妹特留分的具體比例，暫無錯誤內容需要修正，
+      但2027-02-17生效後若有文章要寫到特留分比例，須排除兄弟姊妹。
     affects:
-      - src/content/posts/2026-08-29-estate-tax-cannot-pay-cash.md
-      - src/pages/tools/estate-tax.astro
-      - src/pages/services.astro
-    check: 立法院三讀通過後須經總統公布始生效；每月查證是否已公布施行及施行日期。
-    source: https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0340072
+      - src/content/posts/2026-08-29-siblings-cannot-agree.md
+    check: 2027-02-17前後確認是否已依期施行；屆時若有文章提及各順序繼承人特留分
+      比例，須同步排除兄弟姊妹。
+    source: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=B0000001&flno=1223
 
   - id: annual-exemption-adjustment
     passed_date: null
@@ -26,6 +42,9 @@ watch:
       依遺贈稅法規定，免稅額、扣除額與課稅級距在消費者物價指數較上次調整年度
       累計上漲達 10% 以上時調升。財政部通常在前一年 11–12 月公告次年度適用金額。
       115 年度（2026）維持：遺產稅免稅額 1,333 萬、贈與稅免稅額 244 萬。
+      2026-10-01查證：財政部尚未公告116年度（2027）金額，僅有媒體依CPI累計
+      漲幅（至2026-07為11.49%）推估遺產稅免稅額約1,486萬以上、贈與稅免稅額
+      約272萬以上，均為推估值非官方數字，不可採用。
     affects:
       - src/pages/tools/estate-tax.astro
       - src/pages/tools/gift-tax.astro
