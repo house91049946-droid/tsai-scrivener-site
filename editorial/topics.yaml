@@ -85,7 +85,7 @@ topics:
     category: 稅務
     keyword: 農地 繼承 免稅
     intent: 家中有農地要繼承，想知道免稅條件與限制
-    status: open
+    status: done
   - slug: debt-in-estate
     title_hint: 遺產有債務怎麼辦？限定繼承與拋棄繼承的差別
     category: 繼承實務
