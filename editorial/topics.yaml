@@ -145,7 +145,7 @@ topics:
     category: 繼承實務
     keyword: 查詢 遺產 財產清單
     intent: 不知道長輩名下有哪些財產
-    status: open
+    status: done
   - slug: trust-for-succession
     title_hint: 信託傳承真的比較好嗎？地政士的實務觀察
     category: 稅務
