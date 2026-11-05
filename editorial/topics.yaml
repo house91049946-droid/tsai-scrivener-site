@@ -151,7 +151,7 @@ topics:
     category: 稅務
     keyword: 信託 財產傳承
     intent: 被推薦做信託，想知道值不值得
-    status: open
+    status: done
   - slug: house-for-child-then-divorce
     title_hint: 房子過戶給兒子後，媳婦離婚會分走嗎
     category: 贈與節稅
