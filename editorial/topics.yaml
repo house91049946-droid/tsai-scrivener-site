@@ -139,7 +139,7 @@ topics:
     category: 抵押設定
     keyword: 抵押權 塗銷
     intent: 貸款還清了，不知道還要辦手續
-    status: open
+    status: done
   - slug: estate-inventory
     title_hint: 長輩過世後，第一步該去查什麼財產
     category: 繼承實務
