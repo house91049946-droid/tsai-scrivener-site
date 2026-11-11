@@ -109,7 +109,7 @@ topics:
     category: 繼承實務
     keyword: 特留分 遺囑
     intent: 家人立了偏心的遺囑，想知道有沒有保障
-    status: open
+    status: done
   - slug: gift-within-two-years
     title_hint: 過世前兩年內的贈與，會被抓回來算遺產
     category: 稅務
