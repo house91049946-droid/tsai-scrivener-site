@@ -1,0 +1,169 @@
+---
+// src/pages/guides/inheritance-registration.astro — 懶人包：自己辦繼承登記
+import Base from '../../layouts/Base.astro';
+import PageBanner from '../../components/PageBanner.astro';
+
+const L = {
+  civil1138: 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=B0000001&flno=1138',
+  civil1174: 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=B0000001&flno=1174',
+  estate23: 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340072&flno=23',
+  estate26: 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340072&flno=26',
+  estate42: 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340072&flno=42',
+  land73: 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=D0060001&flno=73',
+  land76: 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=D0060001&flno=76',
+};
+
+const steps = [
+  { n: '01', when: '死亡後 30 天內', where: '戶政事務所', h: '辦死亡登記、拿除戶謄本',
+    p: '帶死亡證明書辦死亡登記。可以順便申請「遺產稅財產參考清單」或全國財產總歸戶，不用自己一家一家翻存摺、找權狀。',
+    img: '/img/guides/inherit-1.webp' },
+  { n: '02', when: '第 1 個月', where: '自己在家', h: '排出繼承系統表，確認誰是繼承人',
+    p: '依民法順位：子女 → 父母 → 兄弟姊妹 → 祖父母，配偶一定是繼承人。把每個人寫進系統表，前順位有人，後順位就不是繼承人。',
+    law: [['民法第 1138 條', L.civil1138]], img: '/img/guides/inherit-2.webp' },
+  { n: '03', when: '知道繼承後 3 個月內', where: '地方法院', h: '負債比財產多？先決定要不要拋棄',
+    p: '拋棄繼承要在知道自己是繼承人後 3 個月內，以書面向法院表示。過了期限就不能拋棄，只剩以遺產為限負責。',
+    law: [['民法第 1174 條', L.civil1174]], img: '/img/guides/inherit-3.webp' },
+  { n: '04', when: '死亡後 6 個月內', where: '國稅局', h: '申報遺產稅，拿到證明書',
+    p: '就算遺產沒超過免稅額也要申報。繳清後拿「遺產稅繳清證明書」，沒稅的拿「免稅證明書」，這張是下一步辦登記的必備文件。來不及可以在期限內申請延長 3 個月。',
+    law: [['遺產及贈與稅法第 23 條', L.estate23], ['第 26 條', L.estate26], ['第 42 條', L.estate42]], img: '/img/guides/inherit-4.webp' },
+  { n: '05', when: '拿到證明書後', where: '自己在家', h: '備齊文件、寫申請書',
+    p: '照下面的文件清單準備。如果要把房子分給特定的人，全體繼承人要簽遺產分割協議書，並附印鑑證明；先不分割就辦「公同共有」。',
+    img: '/img/guides/inherit-5.webp' },
+  { n: '06', when: '死亡後 6 個月內', where: '地政事務所', h: '送件、繳規費、領新權狀',
+    p: '到不動產所在地的地政事務所送件（多數地政事務所也可跨所收件）。補正一次通過後，約一到兩週可以領權狀。超過 6 個月才辦，每逾 1 個月罰 1 倍登記費，最多 20 倍。',
+    law: [['土地法第 73 條', L.land73], ['土地法第 76 條', L.land76]], img: '/img/guides/inherit-6.webp' },
+];
+
+const docs = [
+  ['土地登記申請書、登記清冊', '地政事務所索取或網站下載', '全體申請人簽名蓋章'],
+  ['被繼承人除戶謄本', '戶政事務所', '要能看出死亡日期'],
+  ['全體繼承人現戶戶籍謄本', '戶政事務所', '死亡日之後申請的'],
+  ['繼承系統表', '自己寫', '末端註明「如有遺漏或錯誤致他人受損害者，申請人願負法律責任」並簽名'],
+  ['遺產稅繳清（或免稅）證明書', '國稅局', '正本'],
+  ['遺產分割協議書＋印鑑證明', '自己寫、戶政事務所申請印鑑證明', '只有分割繼承才需要'],
+  ['拋棄繼承准予備查文件', '地方法院', '有人拋棄繼承才需要'],
+  ['土地、建物所有權狀', '被繼承人的保險箱', '找不到可以切結遺失'],
+];
+
+const fees = [
+  ['登記費', '土地按申報地價、建物按房屋評定現值，乘以千分之一'],
+  ['書狀費', '每張 80 元（土地、建物各一張起算）'],
+  ['謄本費', '戶籍、地籍謄本依各機關規定，通常每張幾十元'],
+  ['逾期罰鍰', '超過 6 個月，每逾 1 個月罰 1 倍登記費，最多 20 倍'],
+];
+
+const callUs = [
+  '繼承人有人在國外、行蹤不明，或有人不肯簽名',
+  '有再婚、收養、代位繼承等複雜親屬關係',
+  '遺產淨額接近或超過免稅額，扣除額怎麼用影響稅金',
+  '兄弟姊妹對怎麼分談不攏，需要先辦公同共有守住期限',
+  '房子有貸款、被查封，或土地是農地、公設地',
+];
+
+const schema = {
+  '@context': 'https://schema.org', '@type': 'HowTo',
+  name: '自己辦繼承登記：6 個步驟懶人包',
+  totalTime: 'P6M',
+  step: steps.map((s) => ({ '@type': 'HowToStep', name: s.h, text: s.p })),
+};
+---
+<Base title="自己辦繼承登記懶人包｜6 步驟、文件清單、規費｜中友地政士事務所"
+  description="長輩過世後，繼承登記可以自己辦。6 個步驟、要跑的機關、文件清單與規費一次整理，附法條連結。也告訴你哪些情況建議交給地政士。"
+  schema={schema}>
+  <PageBanner title="自己辦懶人包" sub="DIY GUIDE" img="/photo/svc-inherit.webp" />
+  <main class="wrap guide">
+    <p class="crumb"><a href="/">首頁</a> / <a href="/guides/">自己辦懶人包</a> / 繼承登記</p>
+    <h1 class="page-title">自己辦繼承登記：6 個步驟懶人包</h1>
+    <p class="lead">家人過世後，房子、土地要過到繼承人名下，就是「繼承登記」。單純的案子自己辦得來，只要抓好兩個期限：<b>遺產稅 6 個月</b>、<b>繼承登記 6 個月</b>（都從死亡那天起算）。下面照順序做就對了。</p>
+
+    <div class="clock">
+      <div><span class="k">30 天</span><span>死亡登記</span></div>
+      <div><span class="k">3 個月</span><span>拋棄繼承</span></div>
+      <div><span class="k">6 個月</span><span>遺產稅申報</span></div>
+      <div><span class="k">6 個月</span><span>繼承登記</span></div>
+    </div>
+
+    <ol class="steps">
+      {steps.map((s) => (
+        <li class="step reveal">
+          <span class="ph"><img src={s.img} alt="" width="800" height="600" loading="lazy" /></span>
+          <div class="tx">
+            <span class="no en">STEP {s.n}</span>
+            <h2>{s.h}</h2>
+            <p class="meta"><span>⏱ {s.when}</span><span>📍 {s.where}</span></p>
+            <p>{s.p}</p>
+            {s.law && <p class="law">依據：{s.law.map(([n, u], i) => <>{i > 0 && '、'}<a href={u} target="_blank" rel="noopener">{n}</a></>)}</p>}
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <section class="grp">
+      <h2>文件清單（送件前逐項打勾）</h2>
+      <table>
+        <thead><tr><th>文件</th><th>去哪裡拿</th><th>注意</th></tr></thead>
+        <tbody>{docs.map(([a, b, c]) => <tr><td><label><input type="checkbox" /> {a}</label></td><td>{b}</td><td class="sub">{c}</td></tr>)}</tbody>
+      </table>
+    </section>
+
+    <section class="grp">
+      <h2>要花多少錢</h2>
+      <table><tbody>{fees.map(([a, b]) => <tr><td>{a}</td><td class="v">{b}</td></tr>)}</tbody></table>
+      <p class="note">遺產稅另計，可以先用<a href="/tools/estate-tax/">遺產稅試算</a>算看看。</p>
+    </section>
+
+    <section class="grp warn">
+      <h2>遇到這些情況，建議找地政士</h2>
+      <ul>{callUs.map((c) => <li>{c}</li>)}</ul>
+      <p>這些情況自己辦很容易被退件補正，或因為來回補件拖過 6 個月期限而被罰。先問一下不用錢。</p>
+    </section>
+
+    <div class="cta">
+      <b>想自己辦，但有一兩步卡住？</b>
+      <p>把情況傳給我們，先告訴你缺什麼、下一步怎麼做，不收諮詢費。</p>
+      <div class="btns"><a class="btn line" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 詢問</a><a class="btn outline" href="tel:+886915006336">撥打 0915-006-336</a></div>
+    </div>
+    <p class="note">本頁依 2026 年 11 月現行規定整理，實際文件以各地政事務所要求為準。延伸閱讀：<a href="/posts/2026-08-29-inheritance-deadline-6months/">繼承登記拖過 6 個月會怎樣</a>、<a href="/posts/2026-09-24-undivided-co-ownership/">公同共有登記是什麼</a>。</p>
+  </main>
+</Base>
+<style>
+.guide{max-width:900px; padding-bottom:30px}
+.lead{color:var(--sub); margin-bottom:28px}
+.lead b{color:var(--ink)}
+.clock{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:40px}
+.clock div{background:var(--grey); border-radius:var(--radius); padding:14px 8px; text-align:center; display:grid; gap:2px}
+.clock .k{font-size:22px; font-weight:700; color:var(--blue)}
+.clock span:last-child{font-size:13px; color:var(--sub)}
+.steps{list-style:none; padding:0; margin:0 0 44px; display:grid; gap:36px}
+.step{display:grid; grid-template-columns:280px 1fr; gap:28px; align-items:start}
+.step .ph{overflow:hidden; aspect-ratio:4/3; border-radius:var(--radius); background:var(--grey)}
+.step img{width:100%; height:100%; object-fit:cover}
+.no{font-size:13px; color:var(--blue); letter-spacing:.12em}
+.step h2{font-size:20px; font-weight:700; margin:4px 0 8px}
+.meta{display:flex; gap:16px; flex-wrap:wrap; font-size:13.5px; color:var(--sub); margin:0 0 8px}
+.step p{margin:0 0 8px; line-height:2}
+.law{font-size:13px; color:var(--sub)}
+.law a, .note a{color:var(--blue)}
+.grp{margin-bottom:36px}
+.grp h2{font-size:18px; color:var(--blue); letter-spacing:.1em; margin-bottom:10px; padding-bottom:8px; border-bottom:2px solid var(--blue)}
+table{width:100%; border-collapse:collapse; font-size:15px}
+th{text-align:left; font-size:13px; color:var(--sub); padding:8px 10px; border-bottom:1px solid var(--line)}
+td{padding:12px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+td.sub{font-size:13.5px; color:var(--sub)}
+td.v{color:var(--ink)}
+label{display:flex; gap:8px; align-items:flex-start; cursor:pointer}
+input[type=checkbox]{margin-top:5px; accent-color:var(--blue)}
+.note{font-size:13.5px; color:var(--sub); margin-top:12px}
+.warn{background:var(--grey); border-radius:var(--radius); padding:22px 26px}
+.warn h2{border:0; padding:0}
+.warn ul{margin:0 0 10px; padding-left:20px; line-height:2}
+.cta{background:var(--grey); border-radius:var(--radius); padding:28px; text-align:center; margin-bottom:16px}
+.cta b{font-size:18px; color:var(--ink)}
+.cta p{color:var(--sub); margin:6px 0 16px}
+.btns{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+@media (max-width:700px){
+  .clock{grid-template-columns:repeat(2,1fr)}
+  .step{grid-template-columns:1fr; gap:14px}
+  th:nth-child(3), td.sub{display:none}
+}
+</style>
