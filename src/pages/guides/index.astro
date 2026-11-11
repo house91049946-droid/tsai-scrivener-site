@@ -1,0 +1,42 @@
+---
+// src/pages/guides/index.astro — 自己辦懶人包總覽
+import Base from '../../layouts/Base.astro';
+import PageBanner from '../../components/PageBanner.astro';
+const guides = [
+  { href: '/guides/inheritance-registration/', en: 'Inheritance', h: '自己辦繼承登記', p: '6 個步驟、兩個 6 個月期限、文件清單與規費，照順序做就對了。', img: '/photo/svc-inherit.webp' },
+];
+---
+<Base title="自己辦懶人包｜繼承登記・買賣過戶 DIY 步驟｜中友地政士事務所"
+  description="單純的案子可以自己辦。繼承登記、買賣過戶的步驟、文件清單、規費與期限，一頁看懂。卡住了再找我們。">
+  <PageBanner title="自己辦懶人包" sub="DIY GUIDE" img="/photo/svc-estate.webp" />
+  <main class="wrap guides">
+    <p class="crumb"><a href="/">首頁</a> / 自己辦懶人包</p>
+    <h1 class="page-title">自己辦懶人包</h1>
+    <p class="lead">單純的案子，自己辦得來。我們把步驟、要跑的機關、文件和規費整理好；複雜的地方會告訴你，什麼時候該找地政士。</p>
+    <div class="grid">
+      {guides.map((g) => (
+        <a class="card reveal" href={g.href}>
+          <span class="ph"><img src={g.img} alt="" width="900" height="505" loading="lazy" /></span>
+          <span class="en">{g.en}</span>
+          <h2>{g.h}</h2>
+          <p>{g.p}</p>
+          <span class="go">看懶人包 <i class="pill">→</i></span>
+        </a>
+      ))}
+    </div>
+  </main>
+</Base>
+<style>
+.guides{padding-bottom:40px}
+.lead{color:var(--sub); margin-bottom:40px; font-size:14.5px}
+.grid{display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(24px,3vw,44px)}
+.card{display:grid; gap:8px; text-decoration:none; color:inherit}
+.card .ph{overflow:hidden; aspect-ratio:16/9; margin-bottom:10px}
+.card img{width:100%; height:100%; object-fit:cover; transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+.card:hover img{transform:scale(1.05)}
+.card .en{font-size:13px; color:var(--sub)}
+.card h2{font-size:20px; font-weight:500; letter-spacing:.14em}
+.card p{font-size:14px; line-height:2.1; margin:0}
+.go{display:flex; align-items:center; gap:10px; font-size:13px; margin-top:6px}
+@media (max-width:700px){ .grid{grid-template-columns:1fr} }
+</style>
