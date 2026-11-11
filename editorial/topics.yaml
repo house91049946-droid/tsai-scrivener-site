@@ -121,7 +121,7 @@ topics:
     category: 稅務
     keyword: 遺產稅 分期繳納
     intent: 稅額太大一次繳不出來
-    status: open
+    status: done
   - slug: real-estate-in-kind-payment
     title_hint: 用土地抵遺產稅，國稅局會收嗎
     category: 稅務
