@@ -1,0 +1,167 @@
+---
+// src/pages/guides/sale-transfer.astro — 懶人包：自己辦買賣過戶
+import Base from '../../layouts/Base.astro';
+import PageBanner from '../../components/PageBanner.astro';
+
+const L = {
+  civil758: 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=B0000001&flno=758',
+  deed16: 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340105&flno=16',
+  land49: 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340096&flno=49',
+  land73: 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=D0060001&flno=73',
+  income14_5: 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340003&flno=14-5',
+};
+
+const steps = [
+  { n: '01', when: '交易前', where: '雙方面談', h: '簽買賣契約，談好價金怎麼付',
+    p: '寫清楚總價、分幾期付、什麼時候交屋、稅費誰負擔。金額大的交易，建議價金走銀行的履約保證專戶，不要直接匯給對方。付清錢不等於房子是你的，要辦完登記才算。',
+    law: [['民法第 758 條', L.civil758]], img: '/img/guides/sale-1.webp' },
+  { n: '02', when: '簽約後 30 天內', where: '地方稅務局', h: '申報契稅和土地增值稅',
+    p: '買方申報契稅、賣方申報土地增值稅，兩張通常一起送。自住的賣方記得同時申請自用住宅優惠稅率，事後才申請會比較麻煩。',
+    law: [['契稅條例第 16 條', L.deed16], ['土地稅法第 49 條', L.land49]], img: '/img/guides/sale-2.webp' },
+  { n: '03', when: '收到稅單後', where: '銀行或線上繳', h: '繳契稅、土地增值稅',
+    p: '稅務局核發稅單後照期限繳清，收據要留著，下一步送件要用。賣方的土增稅也可以約定從價金裡扣。',
+    img: '/img/guides/sale-3.webp' },
+  { n: '04', when: '繳完稅', where: '自己在家', h: '備齊文件、寫申請書',
+    p: '照下面的清單準備。賣方要親自申請印鑑證明，或到場親自核對身分。實價登錄申報書在買賣登記時一起送。',
+    img: '/img/guides/sale-4.webp' },
+  { n: '05', when: '繳稅後盡快（不超過 1 個月）', where: '地政事務所', h: '送件、繳規費、領新權狀',
+    p: '到不動產所在地的地政事務所送件。權利變更後超過 1 個月才申請登記，每逾 1 個月罰 1 倍登記費，最多 20 倍。順利的話約一週可以領新權狀。',
+    law: [['土地法第 73 條', L.land73]], img: '/img/guides/sale-5.webp' },
+  { n: '06', when: '登記完成後 30 天內', where: '國稅局（賣方）', h: '賣方申報房地合一稅、交屋',
+    p: '賣方在完成移轉登記的隔天起 30 天內申報房地合一稅，就算沒賺錢也要申報。最後交屋、點交鑰匙，水電瓦斯和房屋稅、地價稅的納稅人也記得改名。',
+    law: [['所得稅法第 14 條之 5', L.income14_5]], img: '/img/guides/sale-6.webp' },
+];
+
+const docs = [
+  ['土地登記申請書、登記清冊', '地政事務所索取或網站下載', '雙方簽名蓋章'],
+  ['不動產買賣契約書（公定契約）', '地政事務所索取', '按公告現值、評定現值貼印花稅票'],
+  ['土地、建物所有權狀', '賣方', '正本'],
+  ['賣方印鑑證明', '戶政事務所', '或由賣方親自到場核對身分'],
+  ['雙方身分證、戶籍謄本', '戶政事務所', '影本，資料和權狀上要一致'],
+  ['契稅、土地增值稅繳款收據', '繳完稅拿到', '正本'],
+  ['實價登錄申報書', '地政事務所或內政部網站', '買賣登記時一起送'],
+];
+
+const fees = [
+  ['登記費', '權利價值（土地申報地價、建物評定現值）的千分之一'],
+  ['書狀費', '每張 80 元'],
+  ['印花稅', '公定契約按公告現值、評定現值的千分之一'],
+  ['契稅', '房屋評定現值的 6%，買方繳'],
+  ['土地增值稅', '依漲價倍數 20% 至 40%，自用住宅 10%，賣方繳'],
+  ['逾期罰鍰', '超過 1 個月才登記，每逾 1 個月罰 1 倍登記費，最多 20 倍'],
+];
+
+const callUs = [
+  '房子還有房貸，要先清償再塗銷抵押權，或買方要同時辦貸款',
+  '父母子女、兄弟姊妹之間的買賣（二親等內會先被認定成贈與）',
+  '賣方是共有人之一、只賣持分，或有人不肯簽名',
+  '房子有租約、被查封，或土地是農地',
+  '價金很高、雙方互不認識，需要履約保證和專業把關',
+];
+
+const schema = {
+  '@context': 'https://schema.org', '@type': 'HowTo',
+  name: '自己辦買賣過戶：6 個步驟懶人包',
+  step: steps.map((s) => ({ '@type': 'HowToStep', name: s.h, text: s.p })),
+};
+---
+<Base title="自己辦買賣過戶懶人包｜6 步驟、文件清單、稅費｜中友地政士事務所"
+  description="房屋買賣過戶可以自己辦。6 個步驟、契稅與土增稅申報、文件清單、規費和稅費一次整理，附法條連結。也告訴你哪些情況建議交給地政士。"
+  schema={schema}>
+  <PageBanner title="自己辦懶人包" sub="DIY GUIDE" img="/photo/svc-transfer.webp" />
+  <main class="wrap guide">
+    <p class="crumb"><a href="/">首頁</a> / <a href="/guides/">自己辦懶人包</a> / 買賣過戶</p>
+    <h1 class="page-title">自己辦買賣過戶：6 個步驟懶人包</h1>
+    <p class="lead">雙方認識、沒有貸款、價金單純的買賣，可以自己辦過戶。要抓好三個期限：<b>簽約 30 天內報稅</b>、<b>權利變更 1 個月內登記</b>、<b>登記後 30 天內賣方報房地合一稅</b>。照順序做就對了。</p>
+
+    <div class="clock">
+      <div><span class="k">30 天</span><span>報契稅、土增稅</span></div>
+      <div><span class="k">1 個月</span><span>送件登記</span></div>
+      <div><span class="k">30 天</span><span>房地合一稅</span></div>
+      <div><span class="k">約 1 週</span><span>領新權狀</span></div>
+    </div>
+
+    <ol class="steps">
+      {steps.map((s) => (
+        <li class="step reveal">
+          <span class="ph"><img src={s.img} alt="" width="800" height="600" loading="lazy" /></span>
+          <div class="tx">
+            <span class="no en">STEP {s.n}</span>
+            <h2>{s.h}</h2>
+            <p class="meta"><span>⏱ {s.when}</span><span>📍 {s.where}</span></p>
+            <p>{s.p}</p>
+            {s.law && <p class="law">依據：{s.law.map(([n, u], i) => <>{i > 0 && '、'}<a href={u} target="_blank" rel="noopener">{n}</a></>)}</p>}
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <section class="grp">
+      <h2>文件清單（送件前逐項打勾）</h2>
+      <table>
+        <thead><tr><th>文件</th><th>去哪裡拿</th><th>注意</th></tr></thead>
+        <tbody>{docs.map(([a, b, c]) => <tr><td><label><input type="checkbox" /> {a}</label></td><td>{b}</td><td class="sub">{c}</td></tr>)}</tbody>
+      </table>
+    </section>
+
+    <section class="grp">
+      <h2>要花多少錢</h2>
+      <table><tbody>{fees.map(([a, b]) => <tr><td>{a}</td><td class="v">{b}</td></tr>)}</tbody></table>
+      <p class="note">土地增值稅和房地合一稅可以先用<a href="/tools/land-tax/">土地增值稅試算</a>、<a href="/tools/property-tax/">房地合一稅試算</a>算看看。</p>
+    </section>
+
+    <section class="grp warn">
+      <h2>遇到這些情況，建議找地政士</h2>
+      <ul>{callUs.map((c) => <li>{c}</li>)}</ul>
+      <p>這些情況牽涉到銀行、稅務認定或其他權利人，自己辦很容易卡關，甚至付了錢卻拿不到房子。先問一下不用錢。</p>
+    </section>
+
+    <div class="cta">
+      <b>想自己辦，但有一兩步卡住？</b>
+      <p>把情況傳給我們，先告訴你缺什麼、下一步怎麼做，不收諮詢費。</p>
+      <div class="btns"><a class="btn line" href="https://line.me/R/ti/p/%400955377283" target="_blank" rel="noopener">LINE 詢問</a><a class="btn outline" href="tel:+886915006336">撥打 0915-006-336</a></div>
+    </div>
+    <p class="note">本頁依 2026 年 11 月現行規定整理，實際文件以各地政事務所要求為準。延伸閱讀：<a href="/posts/2026-08-28-transfer-registration/">房子過戶少一道手續，付了錢也不算你的</a>、<a href="/posts/2026-09-21-two-degree-relative-sale/">二親等內買賣會被當成贈與</a>。</p>
+  </main>
+</Base>
+<style>
+.guide{max-width:900px; padding-bottom:30px}
+.lead{color:var(--sub); margin-bottom:28px}
+.lead b{color:var(--ink)}
+.clock{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:40px}
+.clock div{background:var(--grey); border-radius:var(--radius); padding:14px 8px; text-align:center; display:grid; gap:2px}
+.clock .k{font-size:22px; font-weight:700; color:var(--blue)}
+.clock span:last-child{font-size:13px; color:var(--sub)}
+.steps{list-style:none; padding:0; margin:0 0 44px; display:grid; gap:36px}
+.step{display:grid; grid-template-columns:280px 1fr; gap:28px; align-items:start}
+.step .ph{overflow:hidden; aspect-ratio:4/3; border-radius:var(--radius); background:var(--grey)}
+.step img{width:100%; height:100%; object-fit:cover}
+.no{font-size:13px; color:var(--blue); letter-spacing:.12em}
+.step h2{font-size:20px; font-weight:700; margin:4px 0 8px}
+.meta{display:flex; gap:16px; flex-wrap:wrap; font-size:13.5px; color:var(--sub); margin:0 0 8px}
+.step p{margin:0 0 8px; line-height:2}
+.law{font-size:13px; color:var(--sub)}
+.law a, .note a{color:var(--blue)}
+.grp{margin-bottom:36px}
+.grp h2{font-size:18px; color:var(--blue); letter-spacing:.1em; margin-bottom:10px; padding-bottom:8px; border-bottom:2px solid var(--blue)}
+table{width:100%; border-collapse:collapse; font-size:15px}
+th{text-align:left; font-size:13px; color:var(--sub); padding:8px 10px; border-bottom:1px solid var(--line)}
+td{padding:12px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+td.sub{font-size:13.5px; color:var(--sub)}
+td.v{color:var(--ink)}
+label{display:flex; gap:8px; align-items:flex-start; cursor:pointer}
+input[type=checkbox]{margin-top:5px; accent-color:var(--blue)}
+.note{font-size:13.5px; color:var(--sub); margin-top:12px}
+.warn{background:var(--grey); border-radius:var(--radius); padding:22px 26px}
+.warn h2{border:0; padding:0}
+.warn ul{margin:0 0 10px; padding-left:20px; line-height:2}
+.cta{background:var(--grey); border-radius:var(--radius); padding:28px; text-align:center; margin-bottom:16px}
+.cta b{font-size:18px; color:var(--ink)}
+.cta p{color:var(--sub); margin:6px 0 16px}
+.btns{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+@media (max-width:700px){
+  .clock{grid-template-columns:repeat(2,1fr)}
+  .step{grid-template-columns:1fr; gap:14px}
+  th:nth-child(3), td.sub{display:none}
+}
+</style>
