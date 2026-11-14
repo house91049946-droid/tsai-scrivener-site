@@ -27,6 +27,7 @@ const tools = [
         </a>
       ))}
     </div>
+    <p class="more">想查判決、法規或函釋的原文？主筆另外做了免費的<a href="https://lawoctopus.tw/" target="_blank" rel="noopener">法律八爪魚</a>，可以直接查台灣的判決、法規與函釋，回答都附字號和出處。</p>
   </main>
 </Base>
 <style>
@@ -41,5 +42,7 @@ const tools = [
 .card h2{font-size:20px; font-weight:500; letter-spacing:.14em}
 .card p{font-size:14px; line-height:2.1; margin:0}
 .go{display:flex; align-items:center; gap:10px; font-size:13px; margin-top:6px}
+.more{margin-top:48px; font-size:14px; color:var(--sub); line-height:2}
+.more a{color:var(--blue); font-weight:700}
 @media (max-width:700px){ .grid{grid-template-columns:1fr} }
 </style>
