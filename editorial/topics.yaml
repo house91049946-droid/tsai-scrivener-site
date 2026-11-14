@@ -1,6 +1,7 @@
 # 主筆題庫。狀態欄 open＝待寫，done＝已發布。
 # 新增題目時 keyword 要對應真實搜尋字，intent 說明讀者想解決什麼。
 # 主軸：稅務、遺產、財產傳承規劃（2026-08-29 業主定調）。
+# 2026-11-14 業主追加：每週 10 篇，優先寫繼承實務與共有物分割（共有物分割歸在「繼承實務」或「買賣過戶」分類）。
 topics:
   - slug: estate-tax-cannot-pay-cash
     title_hint: 遺產稅繳不出現金，房子又不能賣，怎麼辦
@@ -182,3 +183,245 @@ topics:
     keyword: 遺產稅 申報 流程
     intent: 第一次辦，想知道整條路怎麼走
     status: done
+
+  # 2026-11-14 業主要求：每週 10 篇，加重繼承與共有物分割
+  - slug: co-ownership-partition-lawsuit
+    title_hint: 共有物分割訴訟怎麼打？流程、費用、大概要多久
+    category: 繼承實務
+    keyword: 共有物分割訴訟
+    intent: 共有人談不攏，想知道上法院分割的流程與成本
+    status: open
+  - slug: land-law-34-1-sale
+    title_hint: 土地法第34條之1：過半數共有人就能賣掉整筆土地？
+    category: 買賣過戶
+    keyword: 土地法34條之1 共有土地出售
+    intent: 持分少數或多數的共有人，想知道能不能不經全體同意處分
+    status: open
+  - slug: co-owner-preemption-right
+    title_hint: 別人賣持分，你可以用同樣價格優先買下
+    category: 買賣過戶
+    keyword: 共有人優先購買權
+    intent: 其他共有人要把持分賣給外人，想主張優先購買
+    status: open
+  - slug: partition-in-kind-vs-sale
+    title_hint: 原物分割還是變價分割？法院怎麼決定
+    category: 繼承實務
+    keyword: 變價分割 原物分割
+    intent: 想知道分割訴訟結果會分地還是拍賣
+    status: open
+  - slug: sell-own-share-only
+    title_hint: 只賣自己的持分可以嗎？持分買賣的價格與風險
+    category: 買賣過戶
+    keyword: 持分 出售
+    intent: 只擁有一部分持分，想自己先賣掉
+    status: open
+  - slug: co-ownership-management-agreement
+    title_hint: 共有房子誰住誰用？先簽分管契約
+    category: 繼承實務
+    keyword: 分管契約 共有
+    intent: 兄弟姊妹共有房子，想約定使用與收租方式
+    status: open
+  - slug: co-owner-exclusive-use-rent
+    title_hint: 一個共有人獨佔房子，其他人能要租金嗎
+    category: 繼承實務
+    keyword: 共有人 不當得利 租金
+    intent: 共有房子被其中一人占用，其他人想討回相當租金
+    status: open
+  - slug: partition-land-value-increment-tax
+    title_hint: 共有物分割要繳土地增值稅嗎？不等值分割的眉角
+    category: 稅務
+    keyword: 共有物分割 土地增值稅
+    intent: 分割共有土地，擔心被課土增稅
+    status: open
+  - slug: partition-unequal-gift-tax
+    title_hint: 分割後分到的價值不一樣，差額會被課贈與稅
+    category: 贈與節稅
+    keyword: 共有物分割 贈與稅 差額
+    intent: 協議分割價值不等，怕被認定贈與
+    status: open
+  - slug: co-owned-house-mortgage
+    title_hint: 共有房子能拿去貸款嗎？要幾個人同意
+    category: 抵押設定
+    keyword: 共有房屋 貸款 抵押
+    intent: 想用共有的房子設定抵押借錢
+    status: open
+  - slug: co-owner-missing
+    title_hint: 共有人找不到、聯絡不上，土地怎麼處理
+    category: 繼承實務
+    keyword: 共有人 失聯 處分
+    intent: 共有人行蹤不明，土地卡住無法處理
+    status: open
+  - slug: partition-mediation
+    title_hint: 共有物分割先走調解：調解成立就能直接登記
+    category: 繼承實務
+    keyword: 共有物分割 調解
+    intent: 想避免打官司，用調解處理共有分割
+    status: open
+  - slug: public-vs-separate-co-ownership
+    title_hint: 公同共有和分別共有差在哪？一次看懂
+    category: 繼承實務
+    keyword: 公同共有 分別共有 差別
+    intent: 繼承後權狀寫公同共有，不懂和分別共有的差異
+    status: open
+  - slug: building-on-co-owned-land
+    title_hint: 共有土地上蓋了房子，分割後地上物怎麼辦
+    category: 繼承實務
+    keyword: 共有土地 地上物 分割
+    intent: 共有地上有房屋，擔心分割後要拆或付租金
+    status: open
+  - slug: renounce-inheritance-steps
+    title_hint: 拋棄繼承怎麼辦？3個月期限、文件與費用
+    category: 繼承實務
+    keyword: 拋棄繼承 流程
+    intent: 長輩負債多，想拋棄繼承
+    status: open
+  - slug: limited-inheritance-inventory
+    title_hint: 限定繼承要不要陳報遺產清冊？不陳報會怎樣
+    category: 繼承實務
+    keyword: 限定繼承 遺產清冊
+    intent: 怕繼承到債務，想了解清冊陳報
+    status: open
+  - slug: holographic-will-requirements
+    title_hint: 自書遺囑怎麼寫才有效？少一項就整份無效
+    category: 繼承實務
+    keyword: 自書遺囑 要件
+    intent: 想自己寫遺囑，怕格式錯誤
+    status: open
+  - slug: notarized-vs-holographic-will
+    title_hint: 公證遺囑和自書遺囑差在哪？哪一種比較保險
+    category: 繼承實務
+    keyword: 公證遺囑 自書遺囑
+    intent: 選擇遺囑方式
+    status: open
+  - slug: representation-inheritance
+    title_hint: 子女比父母早過世，孫子還能繼承嗎（代位繼承）
+    category: 繼承實務
+    keyword: 代位繼承
+    intent: 家族中有人先過世，確認孫輩繼承權
+    status: open
+  - slug: adopted-step-child-inheritance
+    title_hint: 養子女、繼子女有沒有繼承權
+    category: 繼承實務
+    keyword: 養子女 繼子女 繼承權
+    intent: 再婚或收養家庭確認繼承人範圍
+    status: open
+  - slug: overseas-heir-registration
+    title_hint: 繼承人住國外，繼承登記文件怎麼準備
+    category: 繼承實務
+    keyword: 繼承人 國外 授權書
+    intent: 有繼承人在海外無法回台
+    status: open
+  - slug: minor-heir-special-agent
+    title_hint: 繼承人是未成年，遺產分割要選特別代理人
+    category: 繼承實務
+    keyword: 未成年 繼承 特別代理人
+    intent: 繼承人中有未成年子女
+    status: open
+  - slug: dementia-heir-guardianship
+    title_hint: 繼承人失智了，要先聲請監護宣告才能辦
+    category: 繼承實務
+    keyword: 失智 繼承 監護宣告
+    intent: 繼承人無法自己簽名蓋章
+    status: open
+  - slug: deceased-bank-deposit
+    title_hint: 長輩過世，銀行存款怎麼領出來
+    category: 繼承實務
+    keyword: 過世 存款 提領
+    intent: 家屬要處理被繼承人的銀行帳戶
+    status: open
+  - slug: inherited-house-tax-name-change
+    title_hint: 繼承房子後，房屋稅和地價稅要記得改名
+    category: 稅務
+    keyword: 繼承 房屋稅 地價稅 過戶
+    intent: 辦完繼承後不知道稅籍要變更
+    status: open
+  - slug: deceased-was-guarantor
+    title_hint: 長輩生前當保證人，繼承人要替他還錢嗎
+    category: 繼承實務
+    keyword: 保證人 過世 繼承
+    intent: 擔心繼承到保證債務
+    status: open
+  - slug: sell-before-inheritance-registration
+    title_hint: 還沒辦繼承登記，房子可以先賣嗎
+    category: 買賣過戶
+    keyword: 未辦繼承登記 出售
+    intent: 繼承人想盡快賣掉繼承的房子
+    status: open
+  - slug: estate-partition-agreement-howto
+    title_hint: 遺產分割協議書怎麼寫？一定要有的5個項目
+    category: 繼承實務
+    keyword: 遺產分割協議書 範本
+    intent: 繼承人談好怎麼分，要寫成協議書
+    status: open
+  - slug: heir-refuses-to-sign
+    title_hint: 有繼承人不蓋章，其他人怎麼辦繼承登記
+    category: 繼承實務
+    keyword: 繼承人 不蓋章 登記
+    intent: 有人不配合，登記辦不下去
+    status: open
+  - slug: no-heir-estate-administrator
+    title_hint: 沒有繼承人的遺產會歸誰？遺產管理人怎麼選
+    category: 繼承實務
+    keyword: 無人繼承 遺產管理人
+    intent: 親人過世後找不到繼承人或債權人要求償
+    status: open
+  - slug: special-gift-collation
+    title_hint: 生前給過房子或錢，分遺產時要扣回來（歸扣）
+    category: 繼承實務
+    keyword: 歸扣 特種贈與
+    intent: 有兄弟姊妹生前拿過較多財產
+    status: open
+  - slug: cohabiting-partner-protection
+    title_hint: 同居人沒有繼承權，怎麼提早保障對方
+    category: 繼承實務
+    keyword: 同居人 繼承權
+    intent: 未婚伴侶想保障另一半
+    status: open
+  - slug: multi-generation-unregistered-land
+    title_hint: 祖父的土地一直沒辦繼承，現在怎麼處理
+    category: 繼承實務
+    keyword: 多代繼承 未辦繼承登記
+    intent: 家族土地好幾代沒辦登記
+    status: open
+  - slug: sale-contract-key-clauses
+    title_hint: 房屋買賣契約一定要看的10個條款
+    category: 買賣過戶
+    keyword: 買賣契約 注意事項
+    intent: 準備簽買賣契約
+    status: open
+  - slug: escrow-performance-guarantee
+    title_hint: 履約保證是什麼？買賣價金怎麼保護
+    category: 買賣過戶
+    keyword: 履約保證 價金信託
+    intent: 擔心付了錢拿不到房子
+    status: open
+  - slug: name-borrowing-registration-risk
+    title_hint: 借名登記的風險：房子掛別人名下，出事拿得回來嗎
+    category: 買賣過戶
+    keyword: 借名登記 風險
+    intent: 把房子登記在親友名下
+    status: open
+  - slug: divorce-house-transfer
+    title_hint: 離婚時房子過戶：剩餘財產分配和贈與的稅差很多
+    category: 贈與節稅
+    keyword: 離婚 房子過戶 剩餘財產分配
+    intent: 離婚要把房子過給對方
+    status: open
+  - slug: land-registry-alert-service
+    title_hint: 地籍異動即時通：防止房子被偷賣
+    category: 買賣過戶
+    keyword: 地籍異動即時通
+    intent: 擔心長輩房子被盜賣或假冒
+    status: open
+  - slug: private-loan-mortgage
+    title_hint: 私人借款設定抵押權，債權人要注意什麼
+    category: 抵押設定
+    keyword: 私人借款 抵押權設定
+    intent: 借錢給別人想用房子擔保
+    status: open
+  - slug: landlocked-right-of-way
+    title_hint: 袋地通行權：土地沒有路可以出去怎麼辦
+    category: 買賣過戶
+    keyword: 袋地通行權
+    intent: 買到或繼承到沒有聯外道路的土地
+    status: open
