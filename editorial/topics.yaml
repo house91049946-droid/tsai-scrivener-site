@@ -170,7 +170,7 @@ topics:
     category: 繼承實務
     keyword: 失智 過戶 意思能力
     intent: 長輩認知退化，想趁還可以時處理財產
-    status: open
+    status: done
   - slug: multiple-heirs-abroad
     title_hint: 繼承人在國外，文件怎麼辦
     category: 繼承實務
