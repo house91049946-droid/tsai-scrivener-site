@@ -158,7 +158,7 @@ topics:
     category: 贈與節稅
     keyword: 贈與 房子 婚後財產
     intent: 想給子女又擔心變成夫妻財產被分走
-    status: open
+    status: done
   - slug: repurchase-tax-refund
     title_hint: 賣屋換屋可以退稅？重購退稅的條件與時限
     category: 稅務
