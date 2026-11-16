@@ -128,7 +128,7 @@ topics:
     category: 稅務
     keyword: 遺產稅 實物抵繳
     intent: 遺產都是不動產沒有現金
-    status: open
+    status: done
   - slug: transfer-registration-basics
     title_hint: 房子過戶少一道手續，付了錢也不算你的
     category: 買賣過戶
