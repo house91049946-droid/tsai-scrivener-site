@@ -176,7 +176,7 @@ topics:
     category: 繼承實務
     keyword: 繼承人 國外 授權書
     intent: 家人旅居海外無法回台辦手續
-    status: open
+    status: done
   - slug: estate-tax-filing-steps
     title_hint: 遺產稅申報全流程：從死亡證明到核定通知
     category: 稅務
