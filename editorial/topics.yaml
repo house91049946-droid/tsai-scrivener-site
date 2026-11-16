@@ -164,7 +164,7 @@ topics:
     category: 稅務
     keyword: 重購退稅 條件
     intent: 換屋想省稅但不知道規則
-    status: open
+    status: done
   - slug: elderly-transfer-capacity
     title_hint: 長輩失智了還能辦過戶嗎？意思能力這一關
     category: 繼承實務
