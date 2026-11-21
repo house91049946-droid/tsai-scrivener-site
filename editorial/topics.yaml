@@ -220,7 +220,7 @@ topics:
     category: 繼承實務
     keyword: 分管契約 共有
     intent: 兄弟姊妹共有房子，想約定使用與收租方式
-    status: open
+    status: done
   - slug: co-owner-exclusive-use-rent
     title_hint: 一個共有人獨佔房子，其他人能要租金嗎
     category: 繼承實務
