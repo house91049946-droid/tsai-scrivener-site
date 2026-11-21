@@ -226,7 +226,7 @@ topics:
     category: 繼承實務
     keyword: 共有人 不當得利 租金
     intent: 共有房子被其中一人占用，其他人想討回相當租金
-    status: open
+    status: done
   - slug: partition-land-value-increment-tax
     title_hint: 共有物分割要繳土地增值稅嗎？不等值分割的眉角
     category: 稅務
