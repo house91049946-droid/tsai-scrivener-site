@@ -190,7 +190,7 @@ topics:
     category: 繼承實務
     keyword: 共有物分割訴訟
     intent: 共有人談不攏，想知道上法院分割的流程與成本
-    status: open
+    status: done
   - slug: land-law-34-1-sale
     title_hint: 土地法第34條之1：過半數共有人就能賣掉整筆土地？
     category: 買賣過戶
