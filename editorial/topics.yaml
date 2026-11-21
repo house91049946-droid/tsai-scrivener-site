@@ -202,7 +202,7 @@ topics:
     category: 買賣過戶
     keyword: 共有人優先購買權
     intent: 其他共有人要把持分賣給外人，想主張優先購買
-    status: open
+    status: done
   - slug: partition-in-kind-vs-sale
     title_hint: 原物分割還是變價分割？法院怎麼決定
     category: 繼承實務
