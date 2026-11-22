@@ -214,7 +214,7 @@ topics:
     category: 買賣過戶
     keyword: 持分 出售
     intent: 只擁有一部分持分，想自己先賣掉
-    status: open
+    status: done
   - slug: co-ownership-management-agreement
     title_hint: 共有房子誰住誰用？先簽分管契約
     category: 繼承實務
