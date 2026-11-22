@@ -346,7 +346,7 @@ topics:
     category: 買賣過戶
     keyword: 未辦繼承登記 出售
     intent: 繼承人想盡快賣掉繼承的房子
-    status: open
+    status: done
   - slug: estate-partition-agreement-howto
     title_hint: 遺產分割協議書怎麼寫？一定要有的5個項目
     category: 繼承實務
