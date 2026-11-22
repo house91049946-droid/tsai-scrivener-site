@@ -334,7 +334,7 @@ topics:
     category: 稅務
     keyword: 繼承 房屋稅 地價稅 過戶
     intent: 辦完繼承後不知道稅籍要變更
-    status: open
+    status: done
   - slug: deceased-was-guarantor
     title_hint: 長輩生前當保證人，繼承人要替他還錢嗎
     category: 繼承實務
