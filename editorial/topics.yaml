@@ -208,7 +208,7 @@ topics:
     category: 繼承實務
     keyword: 變價分割 原物分割
     intent: 想知道分割訴訟結果會分地還是拍賣
-    status: open
+    status: done
   - slug: sell-own-share-only
     title_hint: 只賣自己的持分可以嗎？持分買賣的價格與風險
     category: 買賣過戶
