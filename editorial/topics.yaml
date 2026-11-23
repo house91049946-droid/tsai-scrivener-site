@@ -196,7 +196,7 @@ topics:
     category: 買賣過戶
     keyword: 土地法34條之1 共有土地出售
     intent: 持分少數或多數的共有人，想知道能不能不經全體同意處分
-    status: open
+    status: done
   - slug: co-owner-preemption-right
     title_hint: 別人賣持分，你可以用同樣價格優先買下
     category: 買賣過戶
