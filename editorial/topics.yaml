@@ -274,7 +274,7 @@ topics:
     category: 繼承實務
     keyword: 拋棄繼承 流程
     intent: 長輩負債多，想拋棄繼承
-    status: open
+    status: done
   - slug: limited-inheritance-inventory
     title_hint: 限定繼承要不要陳報遺產清冊？不陳報會怎樣
     category: 繼承實務
