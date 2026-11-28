@@ -232,7 +232,7 @@ topics:
     category: 稅務
     keyword: 共有物分割 土地增值稅
     intent: 分割共有土地，擔心被課土增稅
-    status: open
+    status: done
   - slug: partition-unequal-gift-tax
     title_hint: 分割後分到的價值不一樣，差額會被課贈與稅
     category: 贈與節稅
