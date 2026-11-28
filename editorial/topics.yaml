@@ -244,7 +244,7 @@ topics:
     category: 抵押設定
     keyword: 共有房屋 貸款 抵押
     intent: 想用共有的房子設定抵押借錢
-    status: open
+    status: done
   - slug: co-owner-missing
     title_hint: 共有人找不到、聯絡不上，土地怎麼處理
     category: 繼承實務
