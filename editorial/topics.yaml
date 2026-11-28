@@ -256,7 +256,7 @@ topics:
     category: 繼承實務
     keyword: 共有物分割 調解
     intent: 想避免打官司，用調解處理共有分割
-    status: open
+    status: done
   - slug: public-vs-separate-co-ownership
     title_hint: 公同共有和分別共有差在哪？一次看懂
     category: 繼承實務
