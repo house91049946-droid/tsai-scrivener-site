@@ -250,7 +250,7 @@ topics:
     category: 繼承實務
     keyword: 共有人 失聯 處分
     intent: 共有人行蹤不明，土地卡住無法處理
-    status: open
+    status: done
   - slug: partition-mediation
     title_hint: 共有物分割先走調解：調解成立就能直接登記
     category: 繼承實務
